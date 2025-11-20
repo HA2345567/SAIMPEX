@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { MessageCircle, Phone, Mail, MapPin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -22,7 +23,9 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -35,25 +38,92 @@ const Contact = () => {
       return;
     }
 
-    // Here you would typically send the data to your backend
-    console.log("Form submitted:", formData);
-    
-    toast({
-      title: "Inquiry Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    // Reset form
-    setFormData({
-      name: "",
-      company: "",
-      email: "",
-      whatsapp: "",
-      product: "",
-      quantity: "",
-      sampleRequest: false,
-      message: "",
-    });
+    setIsSubmitting(true);
+
+    try {
+      // Save inquiry to database
+      const { data: inquiryData, error: dbError } = await supabase
+        .from('inquiries')
+        .insert([
+          {
+            name: formData.name.trim(),
+            company: formData.company.trim() || null,
+            email: formData.email.trim(),
+            whatsapp: formData.whatsapp.trim() || null,
+            product: formData.product.trim() || null,
+            quantity: formData.quantity.trim() || null,
+            sample_request: formData.sampleRequest,
+            message: formData.message.trim(),
+            status: 'new'
+          }
+        ])
+        .select()
+        .single();
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        throw new Error("Failed to save inquiry");
+      }
+
+      console.log("Inquiry saved:", inquiryData);
+
+      // Send email notification
+      const { error: emailError } = await supabase.functions.invoke('send-inquiry-email', {
+        body: {
+          name: formData.name,
+          company: formData.company,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          product: formData.product,
+          quantity: formData.quantity,
+          sampleRequest: formData.sampleRequest,
+          message: formData.message,
+        }
+      });
+
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Don't throw error - inquiry is saved, email is secondary
+      }
+
+      toast({
+        title: "Inquiry Sent!",
+        description: "We'll get back to you within 24 hours.",
+      });
+
+      // Reset form
+      setFormData({
+        name: "",
+        company: "",
+        email: "",
+        whatsapp: "",
+        product: "",
+        quantity: "",
+        sampleRequest: false,
+        message: "",
+      });
+
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit inquiry. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -266,8 +336,14 @@ const Contact = () => {
                     </Label>
                   </div>
 
-                  <Button type="submit" variant="premium" size="lg" className="w-full">
-                    Send Inquiry
+                  <Button 
+                    type="submit" 
+                    variant="premium" 
+                    size="lg" 
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Inquiry"}
                   </Button>
                 </form>
               </CardContent>

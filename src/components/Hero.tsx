@@ -33,12 +33,14 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <Button variant="premium" size="xl" className="group">
-              View Our Catalog
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <Button variant="premium" size="xl" className="group" asChild>
+              <Link to="/products">
+                View Our Catalog
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
             <Button variant="hero" size="xl" asChild>
-              <a href="#" download>
+              <a href="/catalog.pdf" download>
                 <Download className="mr-2 h-5 w-5" />
                 Download PDF Catalog
               </a>

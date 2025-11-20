@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -190,8 +191,8 @@ const Products = () => {
                       <span className="font-semibold">Best for:</span> {product.usage}
                     </p>
                     <div className="flex gap-2">
-                      <Button variant="premium" className="flex-1">
-                        Request Quote
+                      <Button variant="premium" className="flex-1" asChild>
+                        <Link to="/contact">Request Quote</Link>
                       </Button>
                       <Button variant="whatsapp" size="icon" asChild>
                         <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
