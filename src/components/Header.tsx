@@ -1,10 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone, Shield } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    checkAdminStatus();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+      checkAdminStatus();
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const checkAdminStatus = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      const { data: roles } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+
+      setIsAdmin(!!roles);
+    } else {
+      setIsAdmin(false);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-md">
@@ -42,8 +71,16 @@ const Header = () => {
               <Phone className="h-4 w-4 mr-2" />
               +91 123 456 7890
             </a>
-            <Button variant="premium" size="lg">
-              Get Quote
+            {isAdmin && (
+              <Button variant="outline" size="lg" asChild>
+                <Link to="/admin">
+                  <Shield className="mr-2 h-4 w-4" />
+                  Admin
+                </Link>
+              </Button>
+            )}
+            <Button variant="premium" size="lg" asChild>
+              <Link to="/contact">Get Quote</Link>
             </Button>
           </div>
 
@@ -100,8 +137,18 @@ const Header = () => {
                 <Phone className="h-4 w-4 mr-2" />
                 +91 123 456 7890
               </a>
-              <Button variant="premium" className="w-full">
-                Get Quote
+              {isAdmin && (
+                <Button variant="outline" className="w-full" asChild>
+                  <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
+                    <Shield className="mr-2 h-4 w-4" />
+                    Admin Dashboard
+                  </Link>
+                </Button>
+              )}
+              <Button variant="premium" className="w-full" asChild>
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  Get Quote
+                </Link>
               </Button>
             </div>
           </div>
