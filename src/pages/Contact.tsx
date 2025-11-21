@@ -6,9 +6,23 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { MessageCircle, Phone, Mail, MapPin } from "lucide-react";
+import { MessageCircle, Phone, Mail, MapPin, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+// Form validation schema
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
+  company: z.string().trim().max(100, "Company name is too long").optional(),
+  email: z.string().trim().email("Please enter a valid email address").max(255, "Email is too long"),
+  whatsapp: z.string().trim().max(20, "Phone number is too long").optional(),
+  product: z.string().trim().max(100, "Product name is too long").optional(),
+  quantity: z.string().trim().max(50, "Quantity is too long").optional(),
+  sampleRequest: z.boolean(),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000, "Message is too long"),
+});
 
 const Contact = () => {
   const { toast } = useToast();
@@ -24,29 +38,31 @@ const Contact = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
     
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      return;
+    // Validate form data
+    try {
+      contactSchema.parse(formData);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            newErrors[err.path[0].toString()] = err.message;
+          }
+        });
+        setErrors(newErrors);
+        toast({
+          title: "Validation Error",
+          description: "Please check the form for errors.",
+          variant: "destructive",
+        });
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -98,11 +114,11 @@ const Contact = () => {
       }
 
       toast({
-        title: "Inquiry Sent!",
-        description: "We'll get back to you within 24 hours.",
+        title: "✓ Inquiry Sent Successfully!",
+        description: "Thank you for contacting us. We'll get back to you within 24 hours.",
       });
 
-      // Reset form
+      // Reset form and errors
       setFormData({
         name: "",
         company: "",
@@ -113,6 +129,7 @@ const Contact = () => {
         sampleRequest: false,
         message: "",
       });
+      setErrors({});
 
     } catch (error) {
       console.error("Submission error:", error);
@@ -247,7 +264,11 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
+                        className={errors.name ? "border-destructive" : ""}
                       />
+                      {errors.name && (
+                        <p className="text-sm text-destructive">{errors.name}</p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="company">Company Name</Label>
@@ -257,7 +278,11 @@ const Contact = () => {
                         placeholder="Your Company"
                         value={formData.company}
                         onChange={handleChange}
+                        className={errors.company ? "border-destructive" : ""}
                       />
+                      {errors.company && (
+                        <p className="text-sm text-destructive">{errors.company}</p>
+                      )}
                     </div>
                   </div>
 
@@ -272,7 +297,11 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
+                        className={errors.email ? "border-destructive" : ""}
                       />
+                      {errors.email && (
+                        <p className="text-sm text-destructive">{errors.email}</p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="whatsapp">WhatsApp Number</Label>
@@ -282,7 +311,11 @@ const Contact = () => {
                         placeholder="+91 1234567890"
                         value={formData.whatsapp}
                         onChange={handleChange}
+                        className={errors.whatsapp ? "border-destructive" : ""}
                       />
+                      {errors.whatsapp && (
+                        <p className="text-sm text-destructive">{errors.whatsapp}</p>
+                      )}
                     </div>
                   </div>
 
@@ -319,17 +352,20 @@ const Contact = () => {
                       onChange={handleChange}
                       rows={6}
                       required
+                      className={errors.message ? "border-destructive" : ""}
                     />
+                    {errors.message && (
+                      <p className="text-sm text-destructive">{errors.message}</p>
+                    )}
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
+                    <Checkbox
                       id="sampleRequest"
-                      name="sampleRequest"
                       checked={formData.sampleRequest}
-                      onChange={handleChange}
-                      className="h-4 w-4 rounded border-border"
+                      onCheckedChange={(checked) =>
+                        setFormData((prev) => ({ ...prev, sampleRequest: checked as boolean }))
+                      }
                     />
                     <Label htmlFor="sampleRequest" className="font-normal cursor-pointer">
                       I would like to order sample packs
@@ -343,8 +379,20 @@ const Contact = () => {
                     className="w-full"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Sending..." : "Send Inquiry"}
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-pulse">Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" />
+                        Send Inquiry
+                      </>
+                    )}
                   </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Your inquiry will be saved and our team will contact you within 24 hours.
+                  </p>
                 </form>
               </CardContent>
             </Card>
