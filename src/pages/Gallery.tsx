@@ -10,6 +10,16 @@ import woodenButtons from "@/assets/wooden-buttons.jpg";
 import snapButtons from "@/assets/snap-buttons.jpg";
 import manufacturing from "@/assets/manufacturing.jpg";
 import heroBanner from "@/assets/hero-banner.jpg";
+import plasticCollection from "@/assets/gallery/plastic-buttons-collection.jpg";
+import luxuryMetal from "@/assets/gallery/luxury-metal-buttons.jpg";
+import woodenNatural from "@/assets/gallery/wooden-buttons-natural.jpg";
+import snapIndustrial from "@/assets/gallery/snap-buttons-industrial.jpg";
+import manufacturingFacility from "@/assets/gallery/manufacturing-facility.jpg";
+import pearlButtons from "@/assets/gallery/pearl-decorative-buttons.jpg";
+import qualityControl from "@/assets/gallery/quality-control.jpg";
+import customLogo from "@/assets/gallery/custom-logo-buttons.jpg";
+import packagingDisplay from "@/assets/gallery/packaging-display.jpg";
+import designerWorkspace from "@/assets/gallery/designer-workspace.jpg";
 
 const galleryImages = [
   {
@@ -20,30 +30,90 @@ const galleryImages = [
   },
   {
     id: 2,
+    src: plasticCollection,
+    title: "Plastic Button Collection",
+    category: "Products",
+  },
+  {
+    id: 3,
     src: metalButtons,
     title: "Premium Metal Buttons",
     category: "Products",
   },
   {
-    id: 3,
+    id: 4,
+    src: luxuryMetal,
+    title: "Luxury Engraved Metal Buttons",
+    category: "Products",
+  },
+  {
+    id: 5,
     src: woodenButtons,
     title: "Natural Wooden Buttons",
     category: "Products",
   },
   {
-    id: 4,
+    id: 6,
+    src: woodenNatural,
+    title: "Eco-Friendly Wooden Buttons",
+    category: "Products",
+  },
+  {
+    id: 7,
     src: snapButtons,
     title: "Industrial Snap Buttons",
     category: "Products",
   },
   {
-    id: 5,
+    id: 8,
+    src: snapIndustrial,
+    title: "Heavy Duty Snap Buttons",
+    category: "Products",
+  },
+  {
+    id: 9,
+    src: pearlButtons,
+    title: "Pearl & Decorative Buttons",
+    category: "Products",
+  },
+  {
+    id: 10,
+    src: customLogo,
+    title: "Custom Logo Buttons",
+    category: "Custom Logo",
+  },
+  {
+    id: 11,
     src: manufacturing,
     title: "Manufacturing Facility",
     category: "Manufacturing",
   },
   {
-    id: 6,
+    id: 12,
+    src: manufacturingFacility,
+    title: "Modern Production Line",
+    category: "Manufacturing",
+  },
+  {
+    id: 13,
+    src: qualityControl,
+    title: "Quality Control Process",
+    category: "Manufacturing",
+  },
+  {
+    id: 14,
+    src: designerWorkspace,
+    title: "Designer Workspace",
+    category: "Manufacturing",
+  },
+  {
+    id: 15,
+    src: packagingDisplay,
+    title: "Wholesale Packaging",
+    category: "Packaging",
+  },
+  {
+    id: 16,
     src: heroBanner,
     title: "Product Collection",
     category: "Products",
