@@ -9,6 +9,10 @@ import plasticButtons from "@/assets/buttons-showcase.jpg";
 import metalButtons from "@/assets/metal-buttons.jpg";
 import woodenButtons from "@/assets/wooden-buttons.jpg";
 import snapButtons from "@/assets/snap-buttons.jpg";
+import shellCoconutButtons from "@/assets/products/shell-coconut-buttons.jpg";
+import vintageCollection from "@/assets/products/vintage-collection.jpg";
+import luxuryMetal from "@/assets/gallery/luxury-metal-buttons.jpg";
+import pearlButtons from "@/assets/gallery/pearl-decorative-buttons.jpg";
 
 const products = [
   {
@@ -37,6 +41,18 @@ const products = [
   },
   {
     id: 3,
+    name: "Luxury Engraved Buttons",
+    material: "Premium Brass, Gold Plated",
+    sizes: "18mm - 28mm",
+    colors: "Gold, Rose Gold, Antique Bronze",
+    moq: "8,000 pieces",
+    category: "Metal",
+    finish: "Laser Engraved, Hand-finished",
+    usage: "Designer Fashion, High-end Apparel",
+    image: luxuryMetal,
+  },
+  {
+    id: 4,
     name: "Wooden Buttons - Natural",
     material: "Hardwood, Bamboo",
     sizes: "15mm - 30mm",
@@ -48,7 +64,19 @@ const products = [
     image: woodenButtons,
   },
   {
-    id: 4,
+    id: 5,
+    name: "Shell & Coconut Buttons",
+    material: "Natural Shell, Coconut Shell",
+    sizes: "12mm - 25mm",
+    colors: "Natural, Polished",
+    moq: "10,000 pieces",
+    category: "Wooden",
+    finish: "Polished, Natural",
+    usage: "Sustainable Fashion, Resort Wear",
+    image: shellCoconutButtons,
+  },
+  {
+    id: 6,
     name: "Snap Buttons - Industrial",
     material: "Stainless Steel, Brass",
     sizes: "8mm - 17mm",
@@ -60,7 +88,31 @@ const products = [
     image: snapButtons,
   },
   {
-    id: 5,
+    id: 7,
+    name: "Pearl & Decorative Buttons",
+    material: "Pearl, Crystal, Resin",
+    sizes: "10mm - 30mm",
+    colors: "Pearl White, Cream, Gold Accent",
+    moq: "6,000 pieces",
+    category: "Custom",
+    finish: "Pearl Finish, Crystal Embellished",
+    usage: "Bridal Wear, Evening Gowns",
+    image: pearlButtons,
+  },
+  {
+    id: 8,
+    name: "Vintage Decorative Buttons",
+    material: "Aged Brass, Copper, Zinc",
+    sizes: "15mm - 35mm",
+    colors: "Antique Gold, Copper, Silver",
+    moq: "7,000 pieces",
+    category: "Custom",
+    finish: "Antique Finish, Ornate Patterns",
+    usage: "Vintage Fashion, Heritage Collections",
+    image: vintageCollection,
+  },
+  {
+    id: 9,
     name: "Jeans Buttons - Heavy Duty",
     material: "Copper, Zinc Alloy",
     sizes: "14mm - 20mm",
@@ -72,7 +124,7 @@ const products = [
     image: snapButtons,
   },
   {
-    id: 6,
+    id: 10,
     name: "Custom Logo Buttons",
     material: "Metal, Plastic (as per requirement)",
     sizes: "Custom sizes",
