@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getWhatsAppUrl } from "@/lib/constants";
 import plasticButtons from "@/assets/buttons-showcase.jpg";
 import metalButtons from "@/assets/metal-buttons.jpg";
 import woodenButtons from "@/assets/wooden-buttons.jpg";
 import snapButtons from "@/assets/snap-buttons.jpg";
+import { getWhatsAppUrl } from "@/lib/constants";
 
 const products = [
   {
