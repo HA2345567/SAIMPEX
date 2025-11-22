@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MessageCircle } from "lucide-react";
+import { getWhatsAppUrl } from "@/lib/constants";
 import plasticButtons from "@/assets/buttons-showcase.jpg";
 import metalButtons from "@/assets/metal-buttons.jpg";
 import woodenButtons from "@/assets/wooden-buttons.jpg";
@@ -247,7 +248,7 @@ const Products = () => {
                         <Link to="/contact">Request Quote</Link>
                       </Button>
                       <Button variant="whatsapp" size="icon" asChild>
-                        <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                        <a href={getWhatsAppUrl(`I'm interested in ${product.name}`)} target="_blank" rel="noopener noreferrer">
                           <MessageCircle className="h-4 w-4" />
                         </a>
                       </Button>

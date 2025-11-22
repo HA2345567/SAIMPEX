@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import { COMPANY_INFO, getWhatsAppUrl } from "@/lib/constants";
 
 const CTASection = () => {
   return (
@@ -27,7 +28,7 @@ const CTASection = () => {
               </Link>
             </Button>
             <Button variant="whatsapp" size="xl" asChild>
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+              <a href={getWhatsAppUrl("I'd like to inquire about bulk orders")} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 WhatsApp Now
               </a>
@@ -37,12 +38,15 @@ const CTASection = () => {
           <div className="flex items-center justify-center gap-6 text-primary-foreground/80">
             <div className="flex items-center gap-2">
               <Phone className="h-5 w-5" />
-              <a href="tel:+1234567890" className="hover:text-accent transition-colors">
-                +91 123 456 7890
+              <a href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`} className="hover:text-accent transition-colors">
+                {COMPANY_INFO.phone}
               </a>
             </div>
             <span>|</span>
-            <span>Email: info@saimpex.com</span>
+            <div className="flex items-center gap-2">
+              <Mail className="h-5 w-5" />
+              <span>{COMPANY_INFO.email}</span>
+            </div>
           </div>
         </div>
       </div>
