@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { MessageCircle, Phone, Mail, MapPin, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import { COMPANY_INFO, getWhatsAppUrl } from "@/lib/constants";
 
 // Form validation schema
 const contactSchema = z.object({
@@ -180,10 +181,10 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
                       <a
-                        href="tel:+1234567890"
+                        href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
                         className="text-muted-foreground hover:text-accent transition-colors"
                       >
-                        +91 123 456 7890
+                        {COMPANY_INFO.phone}
                       </a>
                     </div>
                   </div>
@@ -199,12 +200,12 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold mb-1">WhatsApp</h3>
                       <a
-                        href="https://wa.me/1234567890"
+                        href={getWhatsAppUrl("Hello, I have an inquiry")}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-muted-foreground hover:text-accent transition-colors"
                       >
-                        Chat with us
+                        {COMPANY_INFO.whatsappDisplay}
                       </a>
                     </div>
                   </div>
@@ -220,10 +221,10 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
                       <a
-                        href="mailto:info@saimpex.com"
+                        href={`mailto:${COMPANY_INFO.email}`}
                         className="text-muted-foreground hover:text-accent transition-colors"
                       >
-                        info@saimpex.com
+                        {COMPANY_INFO.email}
                       </a>
                     </div>
                   </div>
@@ -239,9 +240,9 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold mb-1">Address</h3>
                       <p className="text-muted-foreground">
-                        123 Industrial Area<br />
-                        Mumbai, Maharashtra<br />
-                        India - 400001
+                        {COMPANY_INFO.address.line1}<br />
+                        {COMPANY_INFO.address.line2}<br />
+                        {COMPANY_INFO.address.country} - {COMPANY_INFO.address.postal}
                       </p>
                     </div>
                   </div>

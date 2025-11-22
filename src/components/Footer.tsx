@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
+import { COMPANY_INFO } from "@/lib/constants";
 
 const Footer = () => {
   return (
@@ -72,19 +73,19 @@ const Footer = () => {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 mt-1 flex-shrink-0" />
                 <span className="text-primary-foreground/80">
-                  123 Industrial Area, Mumbai, Maharashtra, India
+                  {COMPANY_INFO.address.line1}, {COMPANY_INFO.address.line2}, {COMPANY_INFO.address.country}
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 flex-shrink-0" />
-                <a href="tel:+1234567890" className="text-primary-foreground/80 hover:text-accent transition-colors">
-                  +91 123 456 7890
+                <a href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`} className="text-primary-foreground/80 hover:text-accent transition-colors">
+                  {COMPANY_INFO.phone}
                 </a>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 mr-2 flex-shrink-0" />
-                <a href="mailto:info@saimpex.com" className="text-primary-foreground/80 hover:text-accent transition-colors">
-                  info@saimpex.com
+                <a href={`mailto:${COMPANY_INFO.email}`} className="text-primary-foreground/80 hover:text-accent transition-colors">
+                  {COMPANY_INFO.email}
                 </a>
               </li>
             </ul>

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { getWhatsAppUrl } from "@/lib/constants";
 import plasticButtons from "@/assets/buttons-showcase.jpg";
 import metalButtons from "@/assets/metal-buttons.jpg";
 import woodenButtons from "@/assets/wooden-buttons.jpg";
@@ -85,7 +86,7 @@ const FeaturedProducts = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-foreground">MOQ: {product.moq}</span>
                   <Button variant="ghost" size="sm" asChild>
-                    <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                    <a href={getWhatsAppUrl(`I'm interested in ${product.name}`)} target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="h-4 w-4" />
                     </a>
                   </Button>

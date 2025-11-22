@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Download, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroBanner from "@/assets/hero-banner.jpg";
+import { getWhatsAppUrl } from "@/lib/constants";
 
 const Hero = () => {
   return (
@@ -49,7 +50,7 @@ const Hero = () => {
 
           <div className="flex items-center gap-4">
             <Button variant="whatsapp" size="lg" asChild>
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+              <a href={getWhatsAppUrl("Hello, I'd like to inquire about your products")} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 WhatsApp Us
               </a>
