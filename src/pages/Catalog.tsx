@@ -76,7 +76,7 @@ const Catalog = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 py-20 bg-secondary/30">
+      <main className="flex-1 py-20 bg-background">
         <div className="container mx-auto px-4">
           {/* Page Header */}
           <div className="text-center mb-12">
@@ -89,8 +89,10 @@ const Catalog = () => {
           </div>
 
           {/* Featured Download */}
-          <Card className="mb-12 bg-gradient-primary text-primary-foreground shadow-2xl">
-            <CardContent className="p-8 md:p-12">
+          <Card className="mb-12 bg-[#0f172a] text-white shadow-2xl border-none relative overflow-hidden">
+            {/* Background Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-transparent pointer-events-none" />
+            <CardContent className="p-8 md:p-12 relative z-10">
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="inline-block mb-4 px-4 py-2 bg-accent/20 backdrop-blur-sm rounded-full border border-accent">

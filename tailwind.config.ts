@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Source Sans 3', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
+        body: ['Source Sans 3', 'system-ui', '-apple-system', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -53,11 +54,11 @@ export default {
         },
       },
       backgroundImage: {
-        'gradient-primary': 'var(--gradient-primary)',
-        'gradient-accent': 'var(--gradient-accent)',
-        'gradient-hero': 'var(--gradient-hero)',
-        'gradient-card': 'var(--gradient-card)',
-        'gradient-mesh': 'var(--gradient-mesh)',
+        'gradient-primary': 'linear-gradient(135deg, hsl(215 28% 17%) 0%, hsl(215 28% 25%) 100%)',
+        'gradient-accent': 'linear-gradient(135deg, hsl(30 61% 50%) 0%, hsl(35 70% 45%) 100%)',
+        'gradient-hero': 'linear-gradient(135deg, hsl(220 13% 98%) 0%, hsl(220 13% 100%) 100%)',
+        'gradient-card': 'linear-gradient(to bottom, hsl(0 0% 100%), hsl(220 13% 99%))',
+        'gradient-mesh': 'radial-gradient(at 40% 20%, hsl(215 28% 17% / 0.03) 0px, transparent 50%), radial-gradient(at 80% 0%, hsl(30 61% 50% / 0.05) 0px, transparent 50%), radial-gradient(at 0% 50%, hsl(220 13% 95%) 0px, transparent 50%)',
       },
       boxShadow: {
         'sm': 'var(--shadow-sm)',

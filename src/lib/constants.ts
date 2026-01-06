@@ -1,15 +1,15 @@
 // Company contact information constants
 export const COMPANY_INFO = {
   name: "SAIMPEX",
-  phone: "+91 123 456 7890",
-  whatsapp: "911234567890", // Without + or spaces for WhatsApp URL
-  whatsappDisplay: "+91 123 456 7890", // For display purposes
-  email: "info@saimpex.com",
+  phone: "+91 83830 37041",
+  whatsapp: "918383037041", // Without + or spaces for WhatsApp URL
+  whatsappDisplay: "+91 83830 37041", // For display purposes
+  email: "saimpex2023@gmail.com",
   address: {
-    line1: "123 Industrial Area",
-    line2: "Mumbai, Maharashtra",
+    line1: "276, 3rd floor, LHS",
+    line2: "Govindpuri, New Delhi",
     country: "India",
-    postal: "400001",
+    postal: "110044",
   },
 } as const;
 

@@ -1,141 +1,107 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, MessageCircle, Package, Sparkles } from "lucide-react";
+import { ArrowRight, ShoppingCart, Info } from "lucide-react";
 import { Link } from "react-router-dom";
-import plasticButtons from "@/assets/buttons-showcase.jpg";
-import metalButtons from "@/assets/metal-buttons.jpg";
-import woodenButtons from "@/assets/wooden-buttons.jpg";
-import snapButtons from "@/assets/snap-buttons.jpg";
-import { getWhatsAppUrl } from "@/lib/constants";
-
-const products = [
-  {
-    id: 1,
-    name: "Plastic Buttons",
-    description: "Colorful, durable plastic buttons in various sizes and finishes",
-    image: plasticButtons,
-    moq: "10,000 pieces",
-    category: "Plastic",
-    features: ["Multiple Colors", "All Sizes", "Fast Production"],
-  },
-  {
-    id: 2,
-    name: "Metal Buttons",
-    description: "Premium metal buttons with custom logo engraving options",
-    image: metalButtons,
-    moq: "5,000 pieces",
-    category: "Metal",
-    features: ["Custom Engraving", "Premium Quality", "Logo Options"],
-  },
-  {
-    id: 3,
-    name: "Wooden Buttons",
-    description: "Eco-friendly natural wooden buttons for sustainable fashion",
-    image: woodenButtons,
-    moq: "8,000 pieces",
-    category: "Wooden",
-    features: ["Eco-Friendly", "Natural Finish", "Sustainable"],
-  },
-  {
-    id: 4,
-    name: "Snap Buttons",
-    description: "Industrial-grade snap and jeans buttons for denim manufacturing",
-    image: snapButtons,
-    moq: "15,000 pieces",
-    category: "Metal",
-    features: ["Heavy Duty", "Rust Proof", "Industrial Grade"],
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts, Product } from "@/integrations/supabase/products";
 
 const FeaturedProducts = () => {
+  const { data: products, isLoading } = useQuery({
+    queryKey: ['featured-products'],
+    queryFn: fetchProducts,
+  });
+
+  // Group products by category
+  const categoriesToShow = ["Metal Buttons", "Polyester Buttons", "Zippers", "Buckles"];
+
+  const groupedProducts = categoriesToShow.map(category => {
+    const categoryProducts = products?.filter(p => p.category === category).slice(0, 4) || [];
+    return {
+      title: category,
+      products: categoryProducts
+    };
+  }).filter(group => group.products.length > 0);
+
+  if (isLoading) {
+    return <div className="py-20 text-center">Loading collections...</div>;
+  }
+
   return (
-    <section className="section-padding bg-gradient-to-b from-background via-secondary/30 to-background">
+    <section className="section-padding bg-muted/30">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-16 space-y-4 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-4">
-            <Sparkles className="h-4 w-4 text-accent" />
-            <span className="text-sm font-semibold text-accent">Our Best Sellers</span>
+
+        {/* Main Section Header */}
+        <div className="flex flex-col items-center text-center mb-16 space-y-4">
+          <div className="inline-block px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold font-display">
+            Featured Products
           </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold">
-            Featured <span className="text-accent">Products</span>
+          <h2 className="font-display">
+            Best Selling Collections
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover our premium collection of buttons and garment accessories trusted by leading manufacturers worldwide
+          <p className="text-xl text-muted-foreground max-w-2xl font-body leading-relaxed">
+            Explore our most popular categories. Factory direct pricing for bulk orders.
           </p>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {products.map((product, index) => (
-            <Card 
-              key={product.id} 
-              className="group overflow-hidden hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-card animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="relative overflow-hidden aspect-square">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                {/* Gradient Overlay on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                  <Button variant="premium" size="sm" className="w-full shadow-glow" asChild>
-                    <Link to="/contact">Request Quote</Link>
-                  </Button>
-                </div>
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4 px-3 py-1.5 bg-background/90 backdrop-blur-sm rounded-full border border-border/50 shadow-lg">
-                  <span className="text-xs font-bold text-accent">{product.category}</span>
-                </div>
+        {/* Categories Loop */}
+        <div className="space-y-20">
+          {groupedProducts.map((section) => (
+            <div key={section.title} className="space-y-8">
+
+              {/* Category Title */}
+              <div className="flex items-center justify-between border-b border-border pb-4">
+                <h3 className="text-2xl font-bold font-display text-foreground">{section.title}</h3>
+                <Link to={`/products?category=${encodeURIComponent(section.title)}`} className="text-accent font-semibold hover:text-accent/80 text-sm flex items-center gap-1 group font-display">
+                  View {section.title} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
-              <CardContent className="p-6 space-y-4">
-                <div>
-                  <h3 className="text-xl font-display font-bold mb-2 group-hover:text-accent transition-colors">
-                    {product.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{product.description}</p>
-                </div>
 
-                {/* Features */}
-                <div className="flex flex-wrap gap-2">
-                  {product.features.map((feature, idx) => (
-                    <span key={idx} className="text-xs px-2 py-1 bg-accent/5 text-accent rounded-md border border-accent/10">
-                      {feature}
-                    </span>
-                  ))}
-                </div>
+              {/* Products Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {section.products.map((product) => (
+                  <Link to={`/product/${product.id}`} key={product.id} className="block group">
+                    <div className="bg-card rounded-2xl border border-border/50 overflow-hidden hover-lift hover:border-accent/30 h-full flex flex-col">
 
-                {/* MOQ & Action */}
-                <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                  <div className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-muted-foreground" />
-                    <div className="text-xs">
-                      <p className="text-muted-foreground">MOQ</p>
-                      <p className="font-bold text-foreground">{product.moq}</p>
+                      {/* Image */}
+                      <div className="relative aspect-square bg-gradient-card overflow-hidden">
+                        <img
+                          src={product.image_url || '/placeholder.svg'}
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        {/* Overlay Actions */}
+                        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                          <Button size="icon" className="rounded-full bg-accent text-white hover:bg-accent/90 shadow-glow transition-all">
+                            <ShoppingCart className="w-4 h-4" />
+                          </Button>
+                          <Button size="icon" className="rounded-full glass border border-border/50 text-foreground hover:bg-muted shadow-md transition-all">
+                            <Info className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-5 flex-1">
+                        <h4 className="font-bold font-display text-foreground line-clamp-1 mb-2 group-hover:text-accent transition-colors">{product.name}</h4>
+                        <p className="text-xs text-muted-foreground mb-4 font-body">MOQ: {product.min_order_quantity || 'N/A'}</p>
+                      </div>
                     </div>
-                  </div>
-                  <Button variant="ghost" size="icon" className="hover:bg-accent/10 hover:text-accent" asChild>
-                    <a href={getWhatsAppUrl(`I'm interested in ${product.name}`)} target="_blank" rel="noopener noreferrer">
-                      <MessageCircle className="h-5 w-5" />
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* View All CTA */}
-        <div className="text-center">
-          <Button variant="hero" size="xl" className="group shadow-glow" asChild>
+        {/* Global View All CTA */}
+        <div className="mt-24 text-center">
+          <Button size="lg" className="h-14 px-10 text-base rounded-xl bg-gradient-accent text-white font-semibold font-display shadow-lg shadow-accent/20 hover:shadow-glow hover:-translate-y-0.5 transition-all" asChild>
             <Link to="/products">
               View All Products
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>
+
       </div>
     </section>
   );

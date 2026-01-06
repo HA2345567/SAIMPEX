@@ -44,7 +44,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
-    
+
     // Validate form data
     try {
       contactSchema.parse(formData);
@@ -157,7 +157,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 py-20 bg-secondary/30">
+      <main className="flex-1 py-20 bg-background">
         <div className="container mx-auto px-4">
           {/* Page Header */}
           <div className="text-center mb-12">
@@ -294,7 +294,7 @@ const Contact = () => {
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="email@example.com"
+                        placeholder="test@gmail.com"
                         value={formData.email}
                         onChange={handleChange}
                         required
@@ -373,10 +373,10 @@ const Contact = () => {
                     </Label>
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    variant="premium" 
-                    size="lg" 
+                  <Button
+                    type="submit"
+                    variant="premium"
+                    size="lg"
                     className="w-full"
                     disabled={isSubmitting}
                   >

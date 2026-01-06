@@ -1,130 +1,112 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download, MessageCircle, CheckCircle, TrendingUp, Award } from "lucide-react";
+import { ArrowRight, Star, ShieldCheck, Sparkles, CheckCircle2, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroBanner from "@/assets/hero-banner.jpg";
-import { getWhatsAppUrl } from "@/lib/constants";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-mesh">
-      {/* Background Image with Modern Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroBanner}
-          alt="Premium buttons and garment accessories"
-          className="w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90" />
-      </div>
+    <div className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-hero">
 
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse delay-700" />
-      </div>
+      {/* Mesh Background */}
+      <div className="absolute inset-0 bg-gradient-mesh pointer-events-none" />
 
-      {/* Content */}
-      <div className="container mx-auto px-4 relative z-10 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Hero Text */}
-          <div className="space-y-8 animate-fade-in">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 backdrop-blur-sm">
-              <Award className="h-4 w-4 text-accent" />
-              <span className="text-sm font-semibold text-accent">Trusted by 500+ Global Brands</span>
+      {/* Subtle Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.015]" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(220 13% 13%) 1px, transparent 0)`,
+        backgroundSize: '40px 40px'
+      }} />
+
+      <div className="container relative z-10 px-4 py-20 md:py-32">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+          {/* Left: Text Content */}
+          <div className="flex flex-col items-start text-left space-y-8">
+
+            {/* Trust Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent animate-fade-in">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-sm font-semibold font-display">Premier B2B Manufacturer</span>
             </div>
-            
-            {/* Main Heading */}
+
+            {/* Headline */}
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight text-balance">
-                Premium Button 
-                <span className="block text-accent">Wholesale</span>
-                <span className="text-4xl md:text-5xl lg:text-6xl block mt-2 text-muted-foreground font-sans font-medium">
-                  & Garment Accessories
+              <h1 className="font-display font-bold tracking-tight text-balance">
+                Premium Garment
+                <br />
+                <span
+                  className="bg-gradient-accent bg-clip-text text-transparent"
+                  style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}
+                >
+                  Accessories
                 </span>
               </h1>
-              
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                Supplying high-quality buttons and accessories to garment manufacturers, exporters, and fashion brands worldwide. Custom manufacturing with quick turnaround times.
+
+              <p className="text-xl md:text-2xl text-muted-foreground font-body leading-relaxed max-w-xl">
+                Manufacturing excellence in buttons, zippers, and hardware.
+                <span className="block mt-2 text-foreground font-semibold">
+                  Trusted by 500+ global fashion brands
+                </span>
               </p>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-accent" />
-                <span className="font-medium">MOQ from 5K pieces</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-accent" />
-                <span className="font-medium">7-14 Days Delivery</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Award className="h-5 w-5 text-accent" />
-                <span className="font-medium">ISO Certified</span>
-              </div>
-            </div>
-
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button variant="premium" size="xl" className="group shadow-glow" asChild>
-                <Link to="/products">
-                  Explore Products
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-4">
+              <Button
+                size="lg"
+                className="h-14 px-8 rounded-xl bg-gradient-accent text-white font-semibold shadow-lg shadow-accent/20 hover:shadow-glow hover:-translate-y-0.5 transition-all"
+                asChild
+              >
+                <Link to="/contact">
+                  Get a Quote
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="glass" size="xl" asChild>
-                <a href="/catalog.pdf" download>
-                  <Download className="mr-2 h-5 w-5" />
-                  Download Catalog
-                </a>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-14 px-8 rounded-xl border-2 font-semibold hover:bg-muted"
+                asChild
+              >
+                <Link to="/products">
+                  View Catalog
+                </Link>
               </Button>
             </div>
 
-            {/* Quick Contact */}
-            <div className="flex items-center gap-4 pt-4">
-              <Button variant="whatsapp" size="lg" className="shadow-md" asChild>
-                <a href={getWhatsAppUrl("Hello, I'd like to inquire about your products")} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="mr-2 h-5 w-5" />
-                  WhatsApp Us
-                </a>
-              </Button>
-              <div className="text-sm text-muted-foreground">
-                <p className="font-medium">Quick Response Guaranteed</p>
-                <p className="text-xs">Average reply time: 2 hours</p>
+            {/* Trust Indicators */}
+            <div className="grid grid-cols-3 gap-8 pt-8 w-full max-w-lg border-t border-border">
+              <div className="space-y-1">
+                <div className="text-3xl font-bold font-display text-accent">500+</div>
+                <div className="text-sm text-muted-foreground">Global Clients</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-3xl font-bold font-display text-accent">20+</div>
+                <div className="text-sm text-muted-foreground">Years Experience</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-3xl font-bold font-display text-accent">100M+</div>
+                <div className="text-sm text-muted-foreground">Units Annually</div>
               </div>
             </div>
           </div>
 
-          {/* Right Column - Featured Stats */}
-          <div className="hidden lg:grid grid-cols-2 gap-6 animate-fade-in delay-300">
-            <div className="glass p-8 rounded-2xl card-hover">
-              <div className="text-5xl font-display font-bold text-accent mb-2">500+</div>
-              <p className="text-lg font-semibold mb-1">Global Clients</p>
-              <p className="text-sm text-muted-foreground">Trusted manufacturers worldwide</p>
-            </div>
-            <div className="glass p-8 rounded-2xl card-hover mt-8">
-              <div className="text-5xl font-display font-bold text-accent mb-2">50M+</div>
-              <p className="text-lg font-semibold mb-1">Buttons Produced</p>
-              <p className="text-sm text-muted-foreground">Annual production capacity</p>
-            </div>
-            <div className="glass p-8 rounded-2xl card-hover -mt-4">
-              <div className="text-5xl font-display font-bold text-accent mb-2">15+</div>
-              <p className="text-lg font-semibold mb-1">Years Experience</p>
-              <p className="text-sm text-muted-foreground">In button manufacturing</p>
-            </div>
-            <div className="glass p-8 rounded-2xl card-hover mt-4">
-              <div className="text-5xl font-display font-bold text-accent mb-2">100%</div>
-              <p className="text-lg font-semibold mb-1">Quality Assured</p>
-              <p className="text-sm text-muted-foreground">ISO certified production</p>
+          {/* Right: Visual Content */}
+          <div className="relative">
+            {/* Main Image Container */}
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border/50 group">
+              <div className="aspect-[4/3] bg-muted relative">
+                <img
+                  src="/images/hero-premium.png"
+                  alt="Premium Garment Accessories - Buttons, Zippers, and Hardware"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
             </div>
           </div>
+
         </div>
       </div>
-
-      {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
-    </section>
+    </div>
   );
 };
 

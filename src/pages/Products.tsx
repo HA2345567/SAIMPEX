@@ -3,269 +3,173 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { MessageCircle } from "lucide-react";
+import { ArrowRight, Filter, ShoppingBag, Eye, Star, MessageCircle } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/constants";
-import plasticButtons from "@/assets/buttons-showcase.jpg";
-import metalButtons from "@/assets/metal-buttons.jpg";
-import woodenButtons from "@/assets/wooden-buttons.jpg";
-import snapButtons from "@/assets/snap-buttons.jpg";
-import shellCoconutButtons from "@/assets/products/shell-coconut-buttons.jpg";
-import vintageCollection from "@/assets/products/vintage-collection.jpg";
-import luxuryMetal from "@/assets/gallery/luxury-metal-buttons.jpg";
-import pearlButtons from "@/assets/gallery/pearl-decorative-buttons.jpg";
-
-const products = [
-  {
-    id: 1,
-    name: "Plastic Buttons - Colorful",
-    material: "High-grade Plastic",
-    sizes: "14L, 16L, 18L, 20L, 24L",
-    colors: "All colors available",
-    moq: "10,000 pieces",
-    category: "Plastic",
-    finish: "Glossy, Matte",
-    usage: "Shirts, Blouses, Kids wear",
-    image: plasticButtons,
-  },
-  {
-    id: 2,
-    name: "Metal Buttons - Premium Logo",
-    material: "Brass, Copper, Zinc Alloy",
-    sizes: "10mm - 25mm",
-    colors: "Gold, Silver, Antique Brass",
-    moq: "5,000 pieces",
-    category: "Metal",
-    finish: "Polished, Brushed, Engraved",
-    usage: "Blazers, Coats, Premium Garments",
-    image: metalButtons,
-  },
-  {
-    id: 3,
-    name: "Luxury Engraved Buttons",
-    material: "Premium Brass, Gold Plated",
-    sizes: "18mm - 28mm",
-    colors: "Gold, Rose Gold, Antique Bronze",
-    moq: "8,000 pieces",
-    category: "Metal",
-    finish: "Laser Engraved, Hand-finished",
-    usage: "Designer Fashion, High-end Apparel",
-    image: luxuryMetal,
-  },
-  {
-    id: 4,
-    name: "Wooden Buttons - Natural",
-    material: "Hardwood, Bamboo",
-    sizes: "15mm - 30mm",
-    colors: "Natural, Dyed",
-    moq: "8,000 pieces",
-    category: "Wooden",
-    finish: "Natural, Lacquered",
-    usage: "Eco-fashion, Cardigans, Coats",
-    image: woodenButtons,
-  },
-  {
-    id: 5,
-    name: "Shell & Coconut Buttons",
-    material: "Natural Shell, Coconut Shell",
-    sizes: "12mm - 25mm",
-    colors: "Natural, Polished",
-    moq: "10,000 pieces",
-    category: "Wooden",
-    finish: "Polished, Natural",
-    usage: "Sustainable Fashion, Resort Wear",
-    image: shellCoconutButtons,
-  },
-  {
-    id: 6,
-    name: "Snap Buttons - Industrial",
-    material: "Stainless Steel, Brass",
-    sizes: "8mm - 17mm",
-    colors: "Silver, Black, Gold",
-    moq: "15,000 pieces",
-    category: "Metal",
-    finish: "Nickle-free, Anti-rust",
-    usage: "Jeans, Jackets, Workwear",
-    image: snapButtons,
-  },
-  {
-    id: 7,
-    name: "Pearl & Decorative Buttons",
-    material: "Pearl, Crystal, Resin",
-    sizes: "10mm - 30mm",
-    colors: "Pearl White, Cream, Gold Accent",
-    moq: "6,000 pieces",
-    category: "Custom",
-    finish: "Pearl Finish, Crystal Embellished",
-    usage: "Bridal Wear, Evening Gowns",
-    image: pearlButtons,
-  },
-  {
-    id: 8,
-    name: "Vintage Decorative Buttons",
-    material: "Aged Brass, Copper, Zinc",
-    sizes: "15mm - 35mm",
-    colors: "Antique Gold, Copper, Silver",
-    moq: "7,000 pieces",
-    category: "Custom",
-    finish: "Antique Finish, Ornate Patterns",
-    usage: "Vintage Fashion, Heritage Collections",
-    image: vintageCollection,
-  },
-  {
-    id: 9,
-    name: "Jeans Buttons - Heavy Duty",
-    material: "Copper, Zinc Alloy",
-    sizes: "14mm - 20mm",
-    colors: "Antique brass, Black nickel",
-    moq: "12,000 pieces",
-    category: "Metal",
-    finish: "Oxidized, Polished",
-    usage: "Denim, Heavy fabric garments",
-    image: snapButtons,
-  },
-  {
-    id: 10,
-    name: "Custom Logo Buttons",
-    material: "Metal, Plastic (as per requirement)",
-    sizes: "Custom sizes",
-    colors: "Custom colors",
-    moq: "20,000 pieces",
-    category: "Custom",
-    finish: "Laser engraving, Embossing",
-    usage: "Brand garments, Uniforms",
-    image: metalButtons,
-  },
-];
-
-const categories = ["All", "Plastic", "Metal", "Wooden", "Custom"];
-const materials = ["All Materials", "Plastic", "Metal", "Wood", "Brass", "Copper"];
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from '@/integrations/supabase/products';
 
 const Products = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedMaterial, setSelectedMaterial] = useState("All Materials");
+  const [activeCategory, setActiveCategory] = useState("All");
 
-  const filteredProducts = products.filter((product) => {
-    const categoryMatch = selectedCategory === "All" || product.category === selectedCategory;
-    const materialMatch =
-      selectedMaterial === "All Materials" || product.material.includes(selectedMaterial);
-    return categoryMatch && materialMatch;
+  const { data: products = [], isLoading, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+    select: (data) => {
+      // Optional: Transform data here if needed, e.g. map image paths if they are different
+      return data.map(p => ({
+        ...p,
+        image: p.image_url || '/placeholder.svg' // Fallback image
+      }));
+    }
   });
 
+  // Calculate categories dynamically from the products
+  const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
+
+  const displayedProducts = activeCategory === "All"
+    ? products
+    : products.filter(p => p.category === activeCategory);
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background font-body">
       <Header />
-      <main className="flex-1 py-20 bg-secondary/30">
-        <div className="container mx-auto px-4">
-          {/* Page Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Our <span className="text-accent">Products</span>
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Browse our complete range of buttons and garment accessories
-            </p>
-          </div>
 
-          {/* Filters */}
-          <div className="mb-12 space-y-6">
-            <div>
-              <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Filter by Category</h3>
-              <div className="flex flex-wrap gap-3">
-                {categories.map((category) => (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category ? "premium" : "outline"}
-                    onClick={() => setSelectedCategory(category)}
+      {/* Modern Minimal Header */}
+      <div className="pt-32 pb-12 bg-gradient-hero border-b border-border">
+        <div className="container mx-auto px-4 text-center">
+          <span className="inline-block px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent font-semibold font-display text-sm uppercase mb-4">B2B Wholesale Catalog</span>
+          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-6">
+            Premium Garment Accessories
+          </h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-xl leading-relaxed">
+            Explore our curated collection of buttons, zippers, and hardware.
+            Designed for global fashion brands with uncompromising quality.
+          </p>
+        </div>
+      </div>
+
+      <main className="flex-1 container mx-auto px-4 py-12">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Sidebar Filters */}
+          <aside className="lg:w-64 flex-shrink-0">
+            <div className="sticky top-24 space-y-8">
+              <div>
+                <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                  <Filter className="w-5 h-5" /> Categories
+                </h3>
+                <div className="flex flex-col gap-2">
+                  <button
+                    onClick={() => setActiveCategory("All")}
+                    className={`text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 border ${activeCategory === "All"
+                      ? "bg-gradient-accent text-white border-transparent shadow-md"
+                      : "bg-card border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
                   >
-                    {category}
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Filter by Material</h3>
-              <div className="flex flex-wrap gap-3">
-                {materials.map((material) => (
-                  <Button
-                    key={material}
-                    variant={selectedMaterial === material ? "premium" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedMaterial(material)}
-                  >
-                    {material}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((product) => (
-              <Card key={product.id} className="group hover:shadow-xl transition-all duration-300">
-                <div className="relative overflow-hidden aspect-square">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                    All Products
+                  </button>
+                  {categories.filter(c => c !== "All").map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={`text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 border ${activeCategory === cat
+                        ? "bg-gradient-accent text-white border-transparent shadow-md"
+                        : "bg-card border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+                        }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
-                <CardContent className="p-6 space-y-4">
-                  <div>
-                    <span className="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">
-                      {product.category}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold">{product.name}</h3>
-                  
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Material:</span>
-                      <span className="font-medium">{product.material}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Sizes:</span>
-                      <span className="font-medium">{product.sizes}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Finish:</span>
-                      <span className="font-medium">{product.finish}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">MOQ:</span>
-                      <span className="font-semibold text-accent">{product.moq}</span>
-                    </div>
-                  </div>
+              </div>
 
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-sm text-muted-foreground mb-4">
-                      <span className="font-semibold">Best for:</span> {product.usage}
-                    </p>
-                    <div className="flex gap-2">
-                      <Button variant="premium" className="flex-1" asChild>
-                        <Link to="/contact">Request Quote</Link>
+              {/* Additional Sidebar Widgets (Optional placeholders for now) */}
+              <div className="p-6 rounded-2xl bg-muted/30 border border-border">
+                <h4 className="font-semibold text-foreground mb-2">Need a Custom Order?</h4>
+                <p className="text-sm text-muted-foreground mb-4">We specialize in bulk custom manufacturing for brands.</p>
+                <Button variant="outline" className="w-full bg-background" asChild>
+                  <Link to="/contact">Contact Sales</Link>
+                </Button>
+              </div>
+            </div>
+          </aside>
+
+          {/* Product Grid Area */}
+          <div className="flex-1">
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-foreground">{activeCategory === "All" ? "All Products" : activeCategory}</h2>
+              <span className="text-muted-foreground text-sm">{displayedProducts.length} Results</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayedProducts.map((product) => (
+                <div key={product.id} className="group relative">
+                  {/* Image Container */}
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-card border border-border/50 mb-5 group-hover:border-accent/30 transition-all">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+
+                    {/* Overlay Actions */}
+                    <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2 justify-center items-end bg-gradient-to-t from-black/50 to-transparent pt-12">
+                      <Button size="icon" className="h-10 w-10 rounded-full bg-white text-slate-900 hover:bg-blue-600 hover:text-white shadow-xl border-0" asChild>
+                        <Link to={`/product/${product.id}`}>
+                          <Eye className="w-5 h-5" />
+                        </Link>
                       </Button>
-                      <Button variant="whatsapp" size="icon" asChild>
-                        <a href={getWhatsAppUrl(`I'm interested in ${product.name}`)} target="_blank" rel="noopener noreferrer">
-                          <MessageCircle className="h-4 w-4" />
+                      <Button size="icon" className="h-10 w-10 rounded-full bg-[#22c55e] text-white hover:bg-[#16a34a] shadow-xl border-0" asChild>
+                        <a href={getWhatsAppUrl(`Inquiry: ${product.name}`)} target="_blank" rel="noopener noreferrer">
+                          <MessageCircle className="w-5 h-5" />
                         </a>
                       </Button>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
 
-          {filteredProducts.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-xl text-muted-foreground">
-                No products found matching your filters. Try adjusting your selection.
-              </p>
+                    {/* Badges */}
+                    <div className="absolute top-3 left-3">
+                      <span className="bg-white/95 backdrop-blur text-[10px] font-bold px-3 py-1.5 rounded-full text-slate-900 uppercase tracking-widest shadow-sm">
+                        {product.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="text-center space-y-2">
+                    <Link to={`/product/${product.id}`} className="block">
+                      <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                        {product.name}
+                      </h3>
+                    </Link>
+
+                    <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
+                      <span>MOQ: 500 Pcs</span>
+                      <span className="w-1 h-1 rounded-full bg-slate-300" />
+                      <span className="text-green-600 font-medium">In Stock</span>
+                    </div>
+
+                    <Link
+                      to={`/product/${product.id}`}
+                      className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors mt-2"
+                    >
+                      View Specifications <ArrowRight className="w-4 h-4 ml-1" />
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
+
+            {/* Empty State */}
+            {displayedProducts.length === 0 && (
+              <div className="text-center py-20 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                <ShoppingBag className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                <h3 className="text-lg font-bold text-slate-900 mb-2">No Products Found</h3>
+                <p className="text-slate-500 mb-6">We couldn't find any products in this category.</p>
+                <Button variant="outline" onClick={() => setActiveCategory("All")}>
+                  Clear Filters
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </main>
       <Footer />
