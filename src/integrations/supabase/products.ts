@@ -1,6 +1,11 @@
 
 import { supabase } from "./client";
 
+export interface ProductSpec {
+    label: string;
+    value: string;
+}
+
 export interface Product {
     id: string; // UUID
     sku?: string | null;
@@ -8,7 +13,7 @@ export interface Product {
     category: string;
     image_url: string | null;
     description: string | null;
-    specs: any; // JSONB
+    specs: ProductSpec[]; // JSONB
     min_order_quantity: number | null;
     in_stock: boolean | null;
 }
