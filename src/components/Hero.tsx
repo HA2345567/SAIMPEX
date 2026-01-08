@@ -108,7 +108,7 @@ const Hero = () => {
               {/* Shimmer Effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               <Award className="w-4 h-4 text-accent relative z-10" />
-              <span className="text-sm font-semibold font-display tracking-wide text-accent relative z-10">Premier B2B Exporter Since 2013</span>
+              <span className="text-sm font-semibold font-display tracking-wide text-accent relative z-10">Premier B2B Exporter Since 2023</span>
             </div>
 
             {/* Main Headline with Gradient Animation */}
