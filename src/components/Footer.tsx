@@ -1,46 +1,76 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, ShoppingBag, ArrowRight } from "lucide-react";
-import { COMPANY_INFO } from "@/lib/constants";
+import { Facebook, Instagram, Linkedin, Twitter, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-primary text-primary-foreground border-t border-primary/20">
-      <div className="container mx-auto px-4 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+    <footer className="bg-foreground text-background border-t border-border/10 relative overflow-hidden">
+
+      <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
 
           {/* Brand Column */}
-          <div className="lg:col-span-2 space-y-6">
-            <Link to="/" className="inline-block">
+          <div className="lg:col-span-4 space-y-8">
+            <Link to="/" className="flex items-center gap-6 group ml-2">
               <img
-                src="/images/logo.png"
+                src="/images/logo-new.png"
                 alt="Saimpex Logo"
-                className="h-16 w-auto object-contain bg-white/10 rounded-lg p-2 backdrop-blur-sm"
+                className="h-20 w-auto object-contain transition-transform group-hover:scale-110"
               />
+              <span className="text-3xl font-brand font-bold tracking-widest text-white group-hover:text-accent transition-colors">
+                SAIMPEX
+              </span>
             </Link>
-            <p className="text-primary-foreground/70 leading-relaxed max-w-sm font-body">
-              Premium garment accessories manufacturer and exporter. We deliver quality buttons, zippers, and trims to brands worldwide with unmatchable reliability.
+            <p className="text-white/60 leading-relaxed max-w-sm font-body text-sm md:text-base">
+              Elevating fashion with premium garment accessories. We combine craftsmanship with innovation to deliver global excellence.
             </p>
 
-            {/* Social Media */}
-            <div className="flex gap-4 pt-4">
-              {[Facebook, Instagram, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="h-10 w-10 flex items-center justify-center rounded-xl bg-primary-foreground/10 text-primary-foreground/70 hover:bg-accent hover:text-white transition-all duration-300 hover:shadow-glow">
-                  <Icon className="h-5 w-5" />
+            {/* Social List */}
+            <div className="flex gap-4 pt-2">
+              {[
+                { icon: Facebook, href: "#" },
+                { icon: Instagram, href: "#" },
+                { icon: Linkedin, href: "#" },
+                { icon: Twitter, href: "#" }
+              ].map((social, i) => (
+                <a
+                  key={i}
+                  href={social.href}
+                  className="h-10 w-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-accent hover:text-white text-white/70 transition-all duration-300 backdrop-blur-sm"
+                  aria-label="Social Link"
+                >
+                  <social.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="lg:col-span-1">
-            <h4 className="text-white font-bold font-display mb-6">Company</h4>
+          {/* Links Column 1 */}
+          <div className="lg:col-span-2 lg:col-start-6">
+            <h4 className="font-bold font-display text-white mb-6">Explore</h4>
             <ul className="space-y-4">
-              {['Home', 'Products', 'Catalog', 'Gallery', 'Contact'].map((item) => (
+              {['Home', 'Collections', 'About Us', 'Contact'].map((item) => (
                 <li key={item}>
-                  <Link to={`/${item.toLowerCase() === 'home' ? '' : item.toLowerCase()}`} className="text-primary-foreground/70 hover:text-white transition-colors flex items-center gap-2 group font-body">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/30 group-hover:bg-accent transition-colors" />
+                  <Link to="/" className="text-white/60 hover:text-accent transition-colors text-sm font-medium inline-flex items-center group">
+                    {item}
+                    <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Links Column 2 */}
+          <div className="lg:col-span-2">
+            <h4 className="font-bold font-display text-white mb-6">Products</h4>
+            <ul className="space-y-4">
+              {['Metal Buttons', 'Polyester', 'Zippers', 'Buckles'].map((item) => (
+                <li key={item}>
+                  <Link to="/products" className="text-white/60 hover:text-accent transition-colors text-sm font-medium">
                     {item}
                   </Link>
                 </li>
@@ -48,47 +78,31 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Categories */}
-          <div className="lg:col-span-1">
-            <h4 className="text-white font-bold font-display mb-6">Collections</h4>
-            <ul className="space-y-4">
-              {['Metal Buttons', 'Zippers', 'Buckles', 'Hooks & Eyes', 'Ring Adjustors', 'Custom Orders'].map((item) => (
-                <li key={item}>
-                  <Link to="/products" className="text-primary-foreground/70 hover:text-white transition-colors flex items-center gap-2 group font-body">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/30 group-hover:bg-accent transition-colors" />
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div className="lg:col-span-1">
-            <h4 className="text-white font-bold mb-6">Stay Updated</h4>
-            <p className="text-sm text-slate-400 mb-4">Latest arrivals & B2B offers directly to your inbox.</p>
-            <div className="space-y-3">
+          {/* Newsletter Column */}
+          <div className="lg:col-span-3">
+            <h4 className="font-bold font-display text-white mb-6">Newsletter</h4>
+            <p className="text-sm text-white/60 mb-6 leading-relaxed">
+              Subscribe to get latest product updates and B2B offers.
+            </p>
+            <div className="flex gap-2">
               <Input
-                type="email"
-                placeholder="Business Email"
-                className="bg-slate-900 border-slate-800 text-slate-200 placeholder:text-slate-600 focus-visible:ring-blue-600 h-10"
+                placeholder="Email address"
+                className="bg-white/5 border-white/10 focus-visible:ring-accent h-11 text-sm text-white placeholder:text-white/40"
               />
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium h-10">
-                Subscribe
+              <Button size="sm" className="bg-white text-foreground hover:bg-white/90 h-11 px-6 font-semibold">
+                Join
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-slate-500 text-sm">
-            &copy; {new Date().getFullYear()} SAIMPEX. All rights reserved.
-          </p>
-          <div className="flex flex-wrap justify-center gap-8 text-sm text-slate-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Sitemap</a>
+        <Separator className="bg-white/10 mb-8" />
+
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/40 font-medium">
+          <p>&copy; {currentYear} Saimpex. All rights reserved.</p>
+          <div className="flex gap-8">
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

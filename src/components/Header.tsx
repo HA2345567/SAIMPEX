@@ -27,32 +27,32 @@ const Header = () => {
 
           {/* 1. Logo Section (Left) */}
           {/* 1. Logo Section (Left) */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center gap-8 group ml-2">
             <img
-              src="/images/logo.png"
+              src="/images/logo-new.png"
               alt="Saimpex Logo"
-              className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
+              className="h-16 w-auto object-contain scale-[1.5] origin-left transition-transform group-hover:scale-[1.6]"
             />
-            <span className="text-xl font-bold font-display tracking-tight text-foreground group-hover:text-accent transition-colors">
+            <span className="text-3xl font-brand font-bold tracking-widest text-foreground group-hover:text-accent transition-colors">
               SAIMPEX
             </span>
           </Link>
 
           {/* 2. Navigation Section (Centered) */}
           <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-            <Link to="/" className="text-sm font-semibold font-display text-muted-foreground hover:text-accent transition-colors">
+            <Link to="/" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
               Home
             </Link>
 
-            <Link to="/products" className="text-sm font-semibold font-display text-muted-foreground hover:text-accent transition-colors">
+            <Link to="/products" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
               Products
             </Link>
 
-            <Link to="/catalog" className="text-sm font-semibold font-display text-muted-foreground hover:text-accent transition-colors">
+            <Link to="/catalog" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
               Catalog
             </Link>
 
-            <Link to="/contact" className="text-sm font-semibold font-display text-muted-foreground hover:text-accent transition-colors">
+            <Link to="/contact" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
               Contact
             </Link>
           </nav>
@@ -129,3 +129,4 @@ const Header = () => {
 };
 
 export default Header;
+// https://www.louloubuttons.com/

@@ -1,67 +1,66 @@
-import { Badge, Shield, Truck, Zap, Target, Globe, Award } from "lucide-react";
+import { BadgeCheck, ShieldCheck, Truck, Clock, Gem, Globe2, Award, Zap } from "lucide-react";
 
 const features = [
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: "Quality Assured",
-    description: "ISO certified manufacturing with strict quality control at every stage of production",
+    description: "ISO certified manufacturing with strict quality control at every stage.",
   },
   {
     icon: Truck,
-    title: "Fast Delivery",
-    description: "7-14 days turnaround with express shipping options for urgent orders",
+    title: "Global Logistics",
+    description: "Expedited shipping to over 50 countries with real-time tracking.",
   },
   {
-    icon: Badge,
+    icon: Gem,
     title: "Premium Materials",
-    description: "High-grade materials sourced from trusted suppliers with quality certifications",
+    description: "Sourced from the finest suppliers for unmatched durability and finish.",
   },
   {
-    icon: Zap,
-    title: "Quick Response",
-    description: "Average 2-hour response time for all inquiries and quote requests",
+    icon: Clock,
+    title: "Rapid Turnaround",
+    description: "From prototype to production in record time, meeting your deadlines.",
   },
 ];
 
 const Features = () => {
   return (
-    <section className="section-padding bg-background relative overflow-hidden">
-      {/* Background Mesh */}
-      <div className="absolute inset-0 bg-gradient-mesh opacity-30 pointer-events-none" />
+    <section className="py-24 bg-background relative overflow-hidden">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent mb-2">
-            <Target className="h-4 w-4" />
-            <span className="text-sm font-semibold font-display tracking-wide uppercase">Why Choose Us</span>
-          </div>
-          <h2 className="font-display">
-            The Saimpex <span className="bg-gradient-accent bg-clip-text text-transparent" style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>Advantage</span>
+        <div className="text-center mb-20 space-y-4">
+          <span className="inline-flex items-center justify-center px-3 py-1 text-xs font-medium rounded-full bg-accent/5 text-accent border border-accent/10 mb-4 tracking-wider uppercase font-display">
+            Why Partner With Us
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight text-foreground">
+            The Saimpex <span className="text-accent relative">Advantage</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-body">
-            Industry-leading service and quality that makes us the preferred partner for manufacturers worldwide.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed font-body">
+            Setting the standard for excellence in garment accessory manufacturing.
           </p>
         </div>
 
-        {/* Features Grid - Clean 4-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Features Grid - Refined */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div
                 key={index}
-                className="group p-8 rounded-3xl glass border border-border/50 hover:border-accent/30 hover-lift"
+                className="group p-8 rounded-2xl bg-card border border-border/40 hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-accent flex items-center justify-center text-white mb-6 shadow-glow group-hover:scale-110 transition-transform">
-                  <Icon className="h-7 w-7" />
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Icon className="h-6 w-6" />
                 </div>
 
-                <h3 className="text-xl font-bold font-display text-foreground mb-3">
+                <h3 className="text-lg font-bold font-display text-foreground mb-3">
                   {feature.title}
                 </h3>
 
-                <p className="text-muted-foreground leading-relaxed font-body">
+                <p className="text-muted-foreground text-sm leading-relaxed font-body">
                   {feature.description}
                 </p>
               </div>
@@ -69,17 +68,17 @@ const Features = () => {
           })}
         </div>
 
-        {/* Bottom Stats - Simplified Clean Look */}
-        <div className="mt-20 pt-10 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-8">
+        {/* Bottom Stats - Minimal & Premium */}
+        <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-border/40">
           {[
-            { val: "500+", label: "Happy Clients" },
-            { val: "50M+", label: "Buttons Produced" },
-            { val: "20+", label: "Years Experience" },
-            { val: "24/7", label: "Priority Support" }
+            { val: "500+", label: "Global Partners" },
+            { val: "50M+", label: "Buttons Shipped" },
+            { val: "20+", label: "Years Excellence" },
+            { val: "2hr", label: "Response Time" }
           ].map((stat, i) => (
-            <div key={i} className="text-center group cursor-default">
-              <div className="text-4xl md:text-5xl font-bold font-display text-accent mb-2">{stat.val}</div>
-              <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider font-body">{stat.label}</div>
+            <div key={i} className="text-center px-4">
+              <div className="text-4xl font-bold font-display text-foreground mb-1 tracking-tight">{stat.val}</div>
+              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-widest font-body">{stat.label}</div>
             </div>
           ))}
         </div>
