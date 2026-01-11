@@ -34,7 +34,7 @@ const Header = () => {
               className="h-16 w-auto object-contain scale-[1.5] origin-left transition-transform group-hover:scale-[1.6]"
             />
             <span className="text-3xl font-brand font-bold tracking-widest text-foreground group-hover:text-accent transition-colors">
-              SAIMPEX
+              S. A. IMPEX
             </span>
           </Link>
 
