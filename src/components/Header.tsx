@@ -23,13 +23,13 @@ const Header = () => {
         }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-14">
+        <div className="flex items-center justify-between h-24">
 
           {/* Left: Logo & Nav */}
           <div className="flex items-center gap-12">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3">
-              <img src="/images/logo-new.png" alt="S. A. IMPEX Logo" className="h-16 w-auto" />
+              <img src="/images/logo-new.png" alt="S. A. IMPEX Logo" className="h-24 w-auto" />
               <span className="text-3xl font-serif font-bold tracking-tight text-primary">
                 S. A. IMPEX<span className="text-accent">.</span>
               </span>

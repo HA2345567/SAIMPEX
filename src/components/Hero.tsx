@@ -23,7 +23,7 @@ const Hero = () => {
 
           {/* Subtext */}
           <p className="text-lg md:text-xl text-muted-foreground/80 font-sans max-w-md leading-relaxed">
-            S. A. IMPEX is the world's largest supplier of premium buttons and accessories. Kickstart your next fashion line with everything you need to design and develop—fast.
+            S. A. IMPEX delivers world-class garment accessories, including premium buttons, zippers, buckles, hooks, rings, and adjusters for global fashion brands.
           </p>
 
           {/* Social Proof */}
