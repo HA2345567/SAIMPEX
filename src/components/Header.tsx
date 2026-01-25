@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Search } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 const Header = () => {
@@ -17,74 +17,80 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "glass border-b border-border/50 shadow-md py-3"
-        : "bg-transparent py-4"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled
+        ? "bg-background/95 border-primary/5 shadow-sm py-4"
+        : "bg-transparent border-transparent py-6"
         }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
 
-          {/* 1. Logo Section (Left) */}
-          {/* 1. Logo Section (Left) */}
-          <Link to="/" className="flex items-center gap-8 group ml-2">
-            <img
-              src="/images/logo-new.png"
-              alt="Saimpex Logo"
-              className="h-16 w-auto object-contain scale-[1.5] origin-left transition-transform group-hover:scale-[1.6]"
-            />
-            <span className="text-3xl font-brand font-bold tracking-widest text-foreground group-hover:text-accent transition-colors">
-              S. A. IMPEX
-            </span>
-          </Link>
-
-          {/* 2. Navigation Section (Centered) */}
-          <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-            <Link to="/" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
-              Home
+          {/* Left: Logo & Nav */}
+          <div className="flex items-center gap-12">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3">
+              <img src="/images/logo-new.png" alt="S. A. IMPEX Logo" className="h-16 w-auto" />
+              <span className="text-3xl font-serif font-bold tracking-tight text-primary">
+                S. A. IMPEX<span className="text-accent">.</span>
+              </span>
             </Link>
 
-            <Link to="/products" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
-              Products
-            </Link>
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-8">
+              <Link
+                to="/products"
+                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors flex items-center gap-1"
+              >
+                Products
+              </Link>
+              <Link
+                to="/catalog"
+                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors"
+              >
+                Catalog
+              </Link>
+              <Link
+                to="/about"
+                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                to="/contact"
+                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors"
+              >
+                Contact
+              </Link>
+            </nav>
+          </div>
 
-            <Link to="/catalog" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
-              Catalog
-            </Link>
+          {/* Right: Actions */}
+          <div className="hidden md:flex items-center gap-6">
+            <button className="text-primary hover:text-primary transition-colors">
+              <Search className="w-5 h-5" />
+            </button>
+            <div className="h-4 w-px bg-border/60" />
 
-            <Link to="/contact" className="text-xs font-bold font-display uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-all hover:tracking-[0.25em]">
-              Contact
-            </Link>
-          </nav>
-
-          {/* 3. Actions Section (Right) */}
-          <div className="hidden md:flex items-center gap-4">
             <SignedOut>
               <SignInButton mode="modal">
-                <Button variant="ghost" className="font-semibold font-display text-muted-foreground hover:text-foreground">
-                  Sign In
-                </Button>
+                <button className="text-sm font-bold text-primary hover:text-accent transition-colors">
+                  Log In
+                </button>
               </SignInButton>
-              <Button className="bg-gradient-accent text-white font-semibold font-display rounded-xl px-6 h-10 shadow-lg shadow-accent/20 hover:shadow-glow hover:-translate-y-0.5 transition-all" asChild>
-                <Link to="/contact">Contact Us</Link>
+              <Button className="rounded-none bg-primary text-white hover:bg-primary/90 font-medium px-6 py-5">
+                <Link to="/contact">Get Quote</Link>
               </Button>
             </SignedOut>
 
             <SignedIn>
-              <UserButton
-                appearance={{
-                  elements: {
-                    avatarBox: "w-9 h-9 border-2 border-border hover:border-accent transition-colors"
-                  }
-                }}
-              />
+              <UserButton />
             </SignedIn>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors"
+            className="md:hidden p-2 text-primary hover:bg-secondary/50 rounded-md transition-colors"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -93,34 +99,16 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 glass border-b border-border/50 p-4 shadow-xl animate-in slide-in-from-top-2">
-          <nav className="flex flex-col gap-2">
-            <Link to="/" className="p-3 rounded-xl hover:bg-muted text-foreground font-semibold font-display">Home</Link>
-            <Link to="/products" className="p-3 rounded-xl hover:bg-muted text-foreground font-semibold font-display">
-              Products
-            </Link>
-            <Link to="/catalog" className="p-3 rounded-xl hover:bg-muted text-foreground font-semibold font-display">
-              Catalog
-            </Link>
-            <Link to="/contact" className="p-3 rounded-xl hover:bg-muted text-foreground font-semibold font-display">Contact</Link>
-
-            <div className="h-px bg-border my-2" />
-
-            <SignedOut>
-              <SignInButton mode="modal">
-                <Button variant="ghost" className="w-full justify-start px-3 mb-2 font-semibold font-display">
-                  Sign In
-                </Button>
-              </SignInButton>
-              <Button className="w-full bg-gradient-accent text-white font-semibold font-display" asChild>
-                <Link to="/contact">Contact Us</Link>
-              </Button>
-            </SignedOut>
-            <SignedIn>
-              <div className="flex justify-start px-3">
-                <UserButton showName />
-              </div>
-            </SignedIn>
+        <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border/40 p-6 shadow-xl animate-in slide-in-from-top-2">
+          <nav className="flex flex-col gap-4">
+            <Link to="/products" className="text-lg font-serif font-medium text-primary">Products</Link>
+            <Link to="/catalog" className="text-lg font-serif font-medium text-primary">Catalog</Link>
+            <Link to="/about" className="text-lg font-serif font-medium text-primary">About</Link>
+            <Link to="/contact" className="text-lg font-serif font-medium text-primary">Contact</Link>
+            <div className="h-px bg-border/60 my-2" />
+            <Button className="w-full rounded-none bg-primary text-white py-6 text-lg font-serif">
+              Inquire Now
+            </Button>
           </nav>
         </div>
       )}
@@ -129,4 +117,3 @@ const Header = () => {
 };
 
 export default Header;
-// https://www.louloubuttons.com/

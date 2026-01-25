@@ -10,7 +10,7 @@ import { LogOut, Mail, Phone, MessageCircle, Calendar, Building, Package, Hash, 
 import { formatDistanceToNow } from "date-fns";
 
 interface Inquiry {
-  id: string;
+  id: string ;
   name: string;
   company: string | null;
   email: string;

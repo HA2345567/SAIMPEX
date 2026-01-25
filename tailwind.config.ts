@@ -14,9 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Source Sans 3', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
-        body: ['Source Sans 3', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+        serif: ['Playfair Display', 'serif'],
+        body: ['DM Sans', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
