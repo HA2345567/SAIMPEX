@@ -69,12 +69,15 @@ const CategoryShowcase = () => {
                 </div>
 
                 {/* Stylish Blocks Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                     {categories.map((cat, index) => (
                         <Link
                             key={cat.id}
                             to="/products"
-                            className={`${cat.size} group relative block overflow-hidden rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 bg-gray-100 min-h-[350px]`}
+                            className={`${cat.id === 'buttons'
+                                    ? 'col-span-1 md:col-span-2 lg:col-span-2 row-span-2'
+                                    : 'col-span-1 md:col-span-1 lg:col-span-1 row-span-1'
+                                } group relative block overflow-hidden rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 bg-gray-100 min-h-[250px] md:min-h-[350px]`}
                         >
                             {/* Number Detail */}
                             <div className="absolute top-6 left-6 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -93,9 +96,9 @@ const CategoryShowcase = () => {
                             </div>
 
                             {/* Content Layer */}
-                            <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
+                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
                                 <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                    <h3 className="text-3xl font-serif text-white mb-2 leading-none">
+                                    <h3 className="text-2xl md:text-3xl font-serif text-white mb-2 leading-none">
                                         {cat.name}
                                     </h3>
                                     <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500">
@@ -112,7 +115,7 @@ const CategoryShowcase = () => {
                     ))}
 
                     {/* CTA Block - Premium Dark Style to Contrast */}
-                    <div className="col-span-1 md:col-span-4 row-span-1 bg-primary rounded-2xl p-12 flex flex-col md:flex-row justify-between items-center text-center md:text-left group overflow-hidden relative shadow-lg min-h-[250px]">
+                    <div className="col-span-1 md:col-span-2 lg:col-span-4 row-span-1 bg-primary rounded-2xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-center text-center md:text-left group overflow-hidden relative shadow-lg min-h-[250px]">
                         {/* Abstract Decor */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
                         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2"></div>

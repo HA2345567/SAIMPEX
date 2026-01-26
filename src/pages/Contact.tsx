@@ -171,7 +171,8 @@ const Contact = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* Contact Info Cards */}
-            <div className="space-y-6">
+            {/* Contact Info Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
               <Card className="hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">

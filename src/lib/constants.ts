@@ -6,10 +6,10 @@ export const COMPANY_INFO = {
   whatsappDisplay: "+91 83830 37041", // For display purposes
   email: "saimpex2023@gmail.com",
   address: {
-    line1: "276, 3rd floor, LHS",
+    line1: "276/4, 3rd floor, LHS",
     line2: "Govindpuri, New Delhi",
     country: "India",
-    postal: "110044",
+    postal: "110019",
   },
 } as const;
 

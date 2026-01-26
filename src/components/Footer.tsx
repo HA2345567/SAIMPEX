@@ -110,9 +110,9 @@ const Footer = () => {
               <li className="flex gap-4 items-start">
                 <MapPin className="w-5 h-5 text-accent shrink-0 mt-1" />
                 <span className="text-stone-400 leading-relaxed">
-                  276, 3rd floor, LHS,<br />
+                  276/4, 3rd floor, LHS,<br />
                   Govindpuri, New Delhi,<br />
-                  India 110044
+                  India 110019
                 </span>
               </li>
               <li className="flex gap-4 items-center">
