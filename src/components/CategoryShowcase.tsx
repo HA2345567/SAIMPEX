@@ -5,8 +5,8 @@ import { ArrowUpRight } from "lucide-react";
 import buttonsImg from "@/assets/buttons-new.png";
 import zippersImg from "@/assets/zippers-new.png";
 import bucklesImg from "@/assets/buckles-new.png";
-import hooksImg from "@/assets/hooks-decor-mixed.png"; // Premium mixed hardware pile
-import ringsImg from "@/assets/rings-category.png"; // Existing good adjusters image
+import hooksImg from "@/assets/hooks-category-luxury.png"; // New Luxury Hooks
+import ringsImg from "@/assets/rings-category-luxury.png"; // New Luxury Rings
 
 const categories = [
     {

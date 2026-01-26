@@ -1,97 +1,85 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone, Mail, ArrowRight, Sparkles } from "lucide-react";
+import { MessageCircle, Phone, Mail, ArrowRight, ShieldCheck, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { COMPANY_INFO, getWhatsAppUrl } from "@/lib/constants";
 
 const CTASection = () => {
   return (
-    <section className="section-padding bg-gradient-hero relative overflow-hidden">
-      {/* Background Mesh */}
-      <div className="absolute inset-0 bg-gradient-mesh opacity-50 pointer-events-none" />
+    <section className="bg-stone-950 px-4 py-24 relative overflow-hidden flex items-center justify-center min-h-[80vh]">
+      {/* Background Texture - Luxury Noise/Gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-stone-900 to-stone-950" />
+      <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
+      {/* Decorative Gold Glows */}
+      <div className="absolute top-0 center w-full max-w-3xl h-64 bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
 
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent mb-8 animate-fade-in">
-            <Sparkles className="h-4 w-4" />
-            <span className="text-sm font-semibold font-display">Special B2B Pricing Available</span>
-          </div>
+      <div className="container relative z-10 max-w-5xl">
 
-          {/* Headline - Clean & Readable */}
-          <div className="mb-10 text-center">
-            <h2 className="font-bold font-display tracking-tight">
-              <span className="block text-3xl md:text-5xl lg:text-6xl text-foreground mb-2">
-                Ready to Place Your
+        {/* The "Invitation" Card */}
+        <div className="relative border border-accent/30 bg-stone-950/50 backdrop-blur-sm p-2 md:p-3 shadow-2xl shadow-black/50">
+          {/* Inner Gold Border */}
+          <div className="border border-accent/20 px-8 py-20 md:px-24 md:py-24 flex flex-col items-center text-center space-y-10 relative overflow-hidden">
+
+            {/* Corner Accents */}
+            <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-accent/60" />
+            <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-accent/60" />
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-accent/60" />
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-accent/60" />
+
+            {/* Exclusive Badge */}
+            <div className="inline-flex flex-col items-center gap-2">
+              <Crown className="w-8 h-8 text-accent animate-pulse" strokeWidth={1} />
+              <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-accent/80">
+                Trade Only • Wholesale
               </span>
-              <span
-                className="block text-4xl md:text-6xl lg:text-7xl bg-gradient-accent bg-clip-text text-transparent"
-                style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}
-              >
-                Bulk Order?
-              </span>
-            </h2>
-          </div>
-
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12 font-body">
-            Get competitive wholesale pricing, custom manufacturing options, and fast delivery. Contact our B2B team today for exclusive rates and samples.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mb-16">
-            <Button size="lg" className="h-14 px-10 text-base font-semibold font-display rounded-xl bg-gradient-accent text-white shadow-lg shadow-accent/20 hover:shadow-glow hover:-translate-y-0.5 transition-all min-w-[200px]" asChild>
-              <Link to="/contact">
-                Request Quote
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="h-14 px-10 text-base font-semibold font-display rounded-xl border-2 hover:bg-muted min-w-[200px]" asChild>
-              <a href={getWhatsAppUrl("I'd like to inquire about bulk orders")} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                <MessageCircle className="h-5 w-5" />
-                WhatsApp Now
-              </a>
-            </Button>
-          </div>
-
-          {/* Contact Cards */}
-          <div className="grid md:grid-cols-2 gap-6 w-full max-w-4xl">
-            {/* Call Card */}
-            <div className="p-8 rounded-2xl glass border border-border/50 flex items-center gap-5 hover-lift cursor-default">
-              <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center text-white shrink-0 shadow-glow">
-                <Phone className="h-7 w-7" />
-              </div>
-              <div className="text-left">
-                <p className="text-xs text-muted-foreground font-bold font-display uppercase tracking-wider mb-1">CALL US DIRECTLY</p>
-                <a href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`} className="text-xl font-bold font-display text-foreground hover:text-accent transition-colors">
-                  {COMPANY_INFO.phone}
-                </a>
-              </div>
             </div>
 
-            {/* Email Card */}
-            <div className="p-8 rounded-2xl glass border border-border/50 flex items-center gap-5 hover-lift cursor-default">
-              <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center text-white shrink-0 shadow-glow">
-                <Mail className="h-7 w-7" />
-              </div>
-              <div className="text-left">
-                <p className="text-xs text-muted-foreground font-bold font-display uppercase tracking-wider mb-1">EMAIL US</p>
-                <a href={`mailto:${COMPANY_INFO.email}`} className="text-xl font-bold font-display text-foreground hover:text-accent transition-colors">
-                  {COMPANY_INFO.email}
-                </a>
-              </div>
+            {/* Main Typography */}
+            <div className="space-y-6 max-w-2xl">
+              <h2 className="text-5xl md:text-7xl font-serif text-white leading-[1.1]">
+                An Invitation to <br />
+                <span className="text-accent italic">Excellence.</span>
+              </h2>
+              <p className="text-lg md:text-xl text-stone-400 font-light leading-relaxed">
+                Join the elite circle of global fashion houses who trust S.A. Impex.
+                Secure priority manufacturing slots for your upcoming collections.
+              </p>
             </div>
-          </div>
 
-          {/* Footer Trust Strip */}
-          <div className="mt-20 flex flex-wrap justify-center gap-8 md:gap-12 text-muted-foreground text-sm font-medium font-body">
-            {['Free Samples Available', 'Custom Manufacturing', 'Quick Turnaround', 'Global Shipping'].map((item) => (
-              <div key={item} className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
+            {/* Actions */}
+            <div className="flex flex-col md:flex-row gap-6 w-full justify-center pt-8">
+              <Button size="lg" className="h-16 px-12 bg-accent text-white hover:bg-accent/80 text-lg tracking-wide shadow-[0_0_30px_-5px_hsl(35,45%,55%,0.3)] transition-all duration-500 rounded-sm font-serif min-w-[220px]" asChild>
+                <Link to="/contact">
+                  Initiate Partnership
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="h-16 px-12 border-stone-800 text-stone-400 hover:text-white hover:border-accent/40 bg-transparent text-lg tracking-wide transition-all duration-500 rounded-sm font-serif min-w-[220px]" asChild>
+                <a href={getWhatsAppUrl("Premium Inquiry")} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-4 h-4 mr-3" /> Concierge Support
+                </a>
+              </Button>
+            </div>
 
+            {/* Footer Trust Indicators */}
+            <div className="pt-12 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 text-center w-full max-w-3xl opacity-60">
+              {[
+                { icon: ShieldCheck, label: "NDA Protected" },
+                { icon: Crown, label: "Priority Production" },
+                { icon: ArrowRight, label: "Global Shipping" },
+              ].map((item, i) => (
+                <div key={i} className="flex flex-col items-center gap-2 group cursor-default">
+                  <item.icon className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" strokeWidth={1} />
+                  <span className="text-xs uppercase tracking-[0.2em] text-stone-300">{item.label}</span>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Signature */}
+        <div className="text-center mt-12 opacity-30">
+          <p className="font-serif italic text-white text-sm">Est. 2020 • Delhi, India</p>
         </div>
       </div>
     </section>

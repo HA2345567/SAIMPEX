@@ -1,14 +1,16 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Download, FileText, Image, Circle, Shield, CircleDot, Link, RefreshCw, AlignJustify, Activity, Eye } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  FileText, Download, ArrowRight, Shield,
+  CircleDot, Link as LinkIcon, RefreshCw, AlignJustify,
+  Activity, Eye, Crown, Layers, Lock, Grid3X3, FileType,
+  Hexagon, TreeDeciduous, Anchor
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 interface CatalogItem {
   id: number;
@@ -19,88 +21,100 @@ interface CatalogItem {
   type: string;
   icon: any;
   featured?: boolean;
-  previewImages?: string[];
-  downloadUrl?: string;
+  downloadUrl?: string; // If present, item is available
+  category: string;
 }
 
+// Mapped Data from public/pdf directory
 const catalogs: CatalogItem[] = [
   {
     id: 0,
-    title: "Complete Product Catalog 2025",
-    description: "The definitive collection. Access our entire range of buttons, fasteners, and accessories in one comprehensive document. tailored for industry professionals.",
-    pages: "200+ pages",
-    size: "45 MB",
-    type: "PDF",
-    icon: FileText,
+    title: "Master Collection 2026",
+    description: "The complete anthology. Access our entire range of buttons, fasteners, and accessories in one comprehensive document.",
+    pages: "248 Pages",
+    size: "45.2 MB",
+    type: "Digital Folio",
+    icon: Crown,
     featured: true,
+    category: "Full Collection",
+    downloadUrl: "/pdf/AllButtons.pdf",
   },
   {
     id: 1,
-    title: "Polyester Buttons",
-    description: "Premium polyester buttons in various sizes, colors and finishes. Perfect for shirts, blouses and fashion apparel.",
-    pages: "Coming Soon",
-    size: "TBD",
-    type: "PDF",
-    icon: Circle,
+    title: "Polyester Series",
+    description: "Versatile durability meets curated aesthetics. Essential buttons for high-volume ready-to-wear lines.",
+    pages: "Digital Catalog",
+    size: "1.2 MB",
+    type: "Lookbook",
+    icon: CircleDot,
+    category: "Essentials",
+    downloadUrl: "/pdf/Polyster-Buttons.pdf",
   },
   {
     id: 2,
-    title: "Metal Buttons",
-    description: "Durable and stylish metal buttons including zinc alloy, brass and copper options with custom plating.",
-    pages: "2 pages",
-    size: "1.2 MB",
-    type: "PDF",
+    title: "Metal & Alloys",
+    description: "Zinc, Brass, and Copper masterpieces. Defined by weight, finish, and intricate casting details.",
+    pages: "Digital Catalog",
+    size: "3.2 MB",
+    type: "Technical Sheet",
     icon: Shield,
-    previewImages: [
-      "/images/catalog/metal/page-1.jpg",
-      "/images/catalog/metal/page-2.jpg"
-    ],
-    downloadUrl: "/pdf/Metal-Buttons.pdf"
+    category: "Premium Metal",
+    downloadUrl: "/pdf/Metal-Buttons (5).pdf",
   },
   {
     id: 3,
-    title: "Snap Buttons",
-    description: "High-quality snap buttons, prong snaps and spring snaps for outerwear and leather goods.",
-    pages: "Coming Soon",
-    size: "TBD",
-    type: "PDF",
-    icon: CircleDot,
+    title: "Buckles & Hardware",
+    description: "Statement hardware for outerwear and belts. Classic and modern finishes.",
+    pages: "Digital Catalog",
+    size: "1.0 MB",
+    type: "Tech Specs",
+    icon: Hexagon,
+    category: "Hardware",
+    downloadUrl: "/pdf/Buckles.pdf",
   },
   {
     id: 4,
-    title: "Hooks",
-    description: "Strong and reliable pant hooks, skirt hooks and bra hooks for intimate apparel and trousers.",
-    pages: "Coming Soon",
-    size: "TBD",
-    type: "PDF",
-    icon: Link,
+    title: "Ring Adjusters",
+    description: "Functional sliders and rings that elevate utility into a design statement.",
+    pages: "Digital Catalog",
+    size: "1.0 MB",
+    type: "Lookbook",
+    icon: RefreshCw,
+    category: "Accessories",
+    downloadUrl: "/pdf/Ring-Adjustor.pdf",
   },
   {
     id: 5,
-    title: "Ring Adjusters",
-    description: "Metal and plastic sliders, rings and adjusters for straps, belts and lingerie accessories.",
-    pages: "Coming Soon",
-    size: "TBD",
-    type: "PDF",
-    icon: RefreshCw,
+    title: "Wooden Collection",
+    description: "Natural sustainability. Ethically sourced wooden buttons with unique grain patterns.",
+    pages: "Digital Catalog",
+    size: "0.5 MB",
+    type: "Lookbook",
+    icon: TreeDeciduous,
+    category: "Natural Series",
+    downloadUrl: "/pdf/Wooden-Buttons.pdf",
   },
   {
     id: 6,
-    title: "Zippers",
-    description: "Smooth and durable zippers including nylon coil, metal, and plastic molded options.",
-    pages: "Coming Soon",
-    size: "TBD",
-    type: "PDF",
-    icon: AlignJustify,
+    title: "Stoppers & Cords",
+    description: "Essential functional trims for sportswear and outerwear functionality.",
+    pages: "Digital Catalog",
+    size: "1.3 MB",
+    type: "Tech Specs",
+    icon: Anchor,
+    category: "Trims",
+    downloadUrl: "/pdf/stopper (1).pdf",
   },
   {
     id: 7,
-    title: "Elastics",
-    description: "High-stretch woven and knitted elastics for waistbands, cuffs and sportswear.",
+    title: "Zippers & Tapes",
+    description: "High-performance zipper technologies and elastic tapes.",
     pages: "Coming Soon",
     size: "TBD",
-    type: "PDF",
-    icon: Activity,
+    type: "Tech Specs",
+    icon: AlignJustify,
+    category: "Zippers",
+    // No PDF yet
   },
 ];
 
@@ -112,213 +126,259 @@ const Catalog = () => {
       toast({
         title: "Download Started",
         description: `Downloading ${catalog.title}...`,
+        className: "bg-primary text-white border-accent"
       });
 
       const link = document.createElement('a');
-      link.href = catalog.downloadUrl;
+      link.href = catalog.downloadUrl; // No need to replace chars if formatted correctly in variable, but safe to raw URL
       link.download = `${catalog.title.replace(/\s+/g, '-')}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
     } else {
       toast({
-        title: "Coming Soon",
-        description: `The ${catalog.title} catalog is not yet available for download.`,
+        title: "Restricted Access",
+        description: `The ${catalog.title} folio is currently being curated.`,
+        variant: "destructive",
       });
     }
   };
 
   const featuredCatalog = catalogs[0];
-  const FeaturedIcon = featuredCatalog.icon;
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-background font-sans selection:bg-accent selection:text-white">
       <Header />
-      <main className="flex-1 py-20 relative overflow-hidden">
-        {/* Ambient Background Effects - Light Mode */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-100/50 rounded-full blur-[128px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-100/50 rounded-full blur-[128px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 relative z-10">
-          {/* Page Header */}
-          <div className="text-center mb-16 space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-4">
-              Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700">Catalogs</span>
+      <main className="flex-1 pt-32 pb-24 relative">
+
+        {/* Background Atmosphere */}
+        <div className="absolute top-0 inset-x-0 h-[80vh] bg-gradient-to-b from-[#f0eee6] to-transparent pointer-events-none -z-10" />
+
+        <div className="container mx-auto px-6 relative z-10">
+
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="mb-20 text-center max-w-4xl mx-auto space-y-8"
+          >
+
+            <h1 className="text-6xl md:text-8xl font-serif text-slate-900 tracking-tight leading-[0.9]">
+              The <span className="italic text-accent">Catalog's</span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-light">
-              Explore our comprehensive collections. Download specific categories or get the complete Saimpex experience in one file.
-            </p>
-          </div>
 
-          {/* Featured Download - Premium Card (Light) */}
-          <div className="mb-20">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-amber-200 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
-              <Card className="relative bg-white border-white/50 text-slate-900 overflow-hidden rounded-xl shadow-xl backdrop-blur-xl">
-                <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
-                  <FileText className="w-64 h-64 text-amber-900" />
+            <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto leading-relaxed border-t border-stone-200 pt-8 mt-8">
+              Access the complete range of Saimpex technical documents. <br className="hidden md:block" />
+              Download catalogs, specification sheets, and lookbooks.
+            </p>
+          </motion.div>
+
+          {/* Master Collection Feature */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="mb-24"
+          >
+            <div className="relative group overflow-hidden bg-slate-900 text-white rounded-[2px] shadow-2xl ring-1 ring-white/10">
+              <div className="flex flex-col md:flex-row min-h-[400px]">
+
+                {/* Visual Side (Left) */}
+                <div className="md:w-1/2 relative min-h-[300px] md:min-h-full overflow-hidden">
+                  <div className="absolute inset-0 bg-accent/10 z-10 mix-blend-overlay" />
+                  <div className="absolute inset-0 bg-[url('/images/hero-luxury-composition.png')] bg-cover bg-center opacity-80 transition-transform duration-1000 group-hover:scale-105" />
+
+                  {/* Gradient Fade */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900 md:bg-gradient-to-r" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent md:hidden" />
                 </div>
 
-                <CardContent className="p-8 md:p-12 relative z-10">
-                  <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-6">
-                      <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-sm font-medium">
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                        </span>
-                        <span>Master Collection</span>
-                      </div>
+                {/* Content Side (Right) */}
+                <div className="md:w-1/2 p-12 md:p-16 flex flex-col justify-center relative z-20 bg-[#0C0C0C]">
+                  {/* Subtle Grain Texture Overlay */}
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none" />
 
-                      <div className="space-y-4">
-                        <h2 className="text-3xl md:text-5xl font-bold text-slate-900 leading-tight">
-                          {featuredCatalog.title}
-                        </h2>
-                        <p className="text-slate-600 text-lg leading-relaxed max-w-lg">
-                          {featuredCatalog.description}
-                        </p>
-                      </div>
+                  <div className="space-y-8 relative z-10">
+                    <div className="flex items-center gap-4 text-accent mb-2">
+                      <Crown className="w-5 h-5" strokeWidth={1} />
+                      <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">Crown Jewel Edition</span>
+                    </div>
 
-                      <div className="flex flex-wrap gap-4 text-sm text-slate-600">
-                        <div className="flex items-center bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2" />
-                          {featuredCatalog.pages}
-                        </div>
-                        <div className="flex items-center bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
-                          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2" />
-                          {featuredCatalog.size}
-                        </div>
-                        <div className="flex items-center bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
-                          <span className="w-1.5 h-1.5 rounded-full bg-red-500 mr-2" />
-                          {featuredCatalog.type}
-                        </div>
-                      </div>
+                    <h2 className="text-4xl md:text-6xl font-serif leading-[1.1] text-white tracking-wide">
+                      {featuredCatalog.title}
+                    </h2>
 
-                      <div className="pt-4">
-                        <Button
-                          className="bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                          onClick={() => handleDownload(featuredCatalog)}
-                        >
-                          <Download className="mr-2 h-6 w-6" />
-                          Download Complete Catalog
-                        </Button>
+                    <p className="text-stone-400 text-lg leading-relaxed max-w-md font-light border-l border-accent/20 pl-6">
+                      {featuredCatalog.description}
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-y-4 gap-x-12 text-xs text-stone-500 font-mono py-6 border-y border-white/5 tracking-wider uppercase">
+                      <div className="flex justify-between items-center group cursor-help">
+                        <span>Format</span>
+                        <span className="text-stone-300 group-hover:text-white transition-colors">PDF High Res</span>
+                      </div>
+                      <div className="flex justify-between items-center group cursor-help">
+                        <span>Access</span>
+                        <span className="text-emerald-500 flex items-center gap-2 group-hover:text-emerald-400 transition-colors"><Shield className="w-3 h-3" /> Public</span>
                       </div>
                     </div>
 
-                    <div className="flex justify-center items-center relative">
-                      {/* Abstract Visual Representation */}
-                      <div className="relative w-64 h-80 bg-white rounded-lg shadow-2xl border border-slate-100 rotate-3 transition-transform duration-500 group-hover:rotate-0 flex flex-col items-center justify-center p-8 text-center group-hover:scale-105">
-                        <div className="absolute inset-0 bg-grid-slate-900/[0.02] bg-[length:16px_16px]" />
-                        <div className="w-20 h-20 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 ring-1 ring-amber-100">
-                          <FeaturedIcon className="h-10 w-10 text-amber-600" />
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-2">2025 Edition</h3>
-                        <p className="text-xs text-slate-400 uppercase tracking-widest">Confidential</p>
-                        <div className="mt-8 w-full h-1 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="w-2/3 h-full bg-amber-500" />
-                        </div>
-                      </div>
-                      {/* Decorative elements behind */}
-                      <div className="absolute -z-10 w-64 h-80 bg-slate-200 rounded-lg shadow-xl -rotate-6 top-4 -left-4 border border-slate-100" />
+                    <div className="pt-2 flex flex-col sm:flex-row gap-5">
+                      {/* Preview Button - Outline Luxury */}
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button size="lg" variant="outline" className="flex-1 border-white/20 bg-transparent text-white hover:bg-white hover:text-black rounded-none h-14 uppercase tracking-[0.2em] font-medium text-xs transition-all duration-500">
+                            <Eye className="mr-3 w-4 h-4" /> Preview
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-6xl h-[90vh] bg-[#0C0C0C] p-0 border-white/10 overflow-hidden shadow-2xl">
+                          <div className="w-full h-full flex flex-col">
+                            <div className="h-16 bg-[#0C0C0C] border-b border-white/10 flex items-center justify-between px-8 pr-16 text-white">
+                              <span className="font-serif italic text-lg text-stone-200">{featuredCatalog.title}</span>
+                              <Button size="sm" className="bg-accent text-white hover:bg-white hover:text-black rounded-none transition-colors" onClick={() => handleDownload(featuredCatalog)}>
+                                Download PDF
+                              </Button>
+                            </div>
+                            <div className="flex-1 bg-stone-900/50 relative backdrop-blur-3xl">
+                              <iframe
+                                src={`${featuredCatalog.downloadUrl}#toolbar=0`}
+                                className="w-full h-full rounded-none mix-blend-normal"
+                                title="Catalog Preview"
+                              />
+                            </div>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+
+                      {/* Download Button - Solid Accent */}
+                      <Button
+                        size="lg"
+                        onClick={() => handleDownload(featuredCatalog)}
+                        className="flex-1 bg-accent/90 text-white hover:bg-accent rounded-none h-14 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 shadow-[0_0_20px_-5px_hsl(35,45%,55%,0.3)] hover:shadow-[0_0_30px_-5px_hsl(35,45%,55%,0.5)]"
+                      >
+                        Download <Download className="ml-3 w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+
+              </div>
             </div>
+          </motion.div>
+
+          {/* Catalog Grid */}
+          <div className="flex items-center justify-between mb-8 border-b border-stone-200 pb-4 mt-20">
+            <h3 className="text-2xl font-serif text-slate-900">Sector Collections</h3>
+            <span className="text-sm font-mono text-stone-400">{catalogs.length - 1} Defined Series</span>
           </div>
 
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-2xl font-bold text-slate-900">Specific Categories</h3>
-            <div className="h-[1px] flex-1 bg-slate-200 ml-8" />
-          </div>
-
-          {/* Other Catalogs Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {catalogs.slice(1).map((catalog) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+            {catalogs.slice(1).map((catalog, idx) => {
               const Icon = catalog.icon;
-              const hasPreview = catalog.previewImages && catalog.previewImages.length > 0;
+              const isAvailable = Boolean(catalog.downloadUrl);
 
               return (
-                <Card key={catalog.id} className="group bg-white border-slate-200 hover:border-amber-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <CardContent className="p-6 space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  key={catalog.id}
+                  className="group relative bg-white flex flex-col justify-between border border-stone-100 hover:border-stone-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-700 min-h-[380px] p-10 overflow-hidden"
+                >
+                  {/* Hover Accent Top Line */}
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+
+                  {/* Decorative Watermark Number */}
+                  <span className="absolute top-4 right-6 font-serif text-6xl text-stone-50 group-hover:text-stone-100 transition-colors select-none -z-0">
+                    0{idx + 1}
+                  </span>
+
+                  {/* Top Section */}
+                  <div className="space-y-8 relative z-10">
                     <div className="flex justify-between items-start">
-                      <div className="p-3 bg-slate-50 rounded-lg group-hover:bg-amber-50 group-hover:text-amber-600 transition-colors text-slate-500">
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <span className="text-xs font-medium px-2 py-1 bg-slate-100 rounded text-slate-500 border border-slate-200">
-                        {catalog.type}
-                      </span>
+                      {/* Icon - Large, Thin, Gold */}
+                      <Icon className="w-10 h-10 text-accent/80 group-hover:text-accent transition-colors duration-500" strokeWidth={0.8} />
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-amber-600 transition-colors">{catalog.title}</h3>
-                      <p className="text-slate-500 text-sm line-clamp-2">{catalog.description}</p>
+                      <span className="text-[10px] font-bold tracking-[0.3em] text-stone-400 uppercase block mb-3 pl-1 border-l-2 border-transparent group-hover:border-accent transition-all duration-500">
+                        {catalog.category}
+                      </span>
+                      <h3 className="text-3xl font-serif text-slate-900 leading-tight mb-4 group-hover:translate-x-1 transition-transform duration-500">
+                        {catalog.title}
+                      </h3>
+                      <p className="text-sm text-stone-500 leading-relaxed font-light line-clamp-3">
+                        {catalog.description}
+                      </p>
                     </div>
+                  </div>
 
-                    <div className="pt-4 flex items-center justify-between border-t border-slate-100">
-                      <div className="text-xs text-slate-400">
-                        {catalog.pages === "Coming Soon" ? "Update Pending" : catalog.pages}
-                      </div>
+                  {/* Middle Meta Info - Minimal Divider */}
+                  <div className="w-8 h-px bg-stone-200 my-6 group-hover:w-full group-hover:bg-accent/30 transition-all duration-700" />
 
-                      <div className="flex gap-2">
-                        {hasPreview && (
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 p-0 px-2 h-8 font-medium"
-                              >
-                                <Eye className="mr-1 h-3 w-3" />
-                                Preview
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-full">
-                              <div className="space-y-4 pt-4">
-                                <h2 className="text-2xl font-bold mb-4">{catalog.title} Preview</h2>
-                                <div className="grid grid-cols-1 gap-4">
-                                  {catalog.previewImages?.map((img, idx) => (
-                                    <div key={idx} className="border rounded-lg overflow-hidden shadow-sm">
-                                      <img
-                                        src={img}
-                                        alt={`${catalog.title} Page ${idx + 1}`}
-                                        className="w-full h-auto object-contain"
-                                      />
-                                    </div>
-                                  ))}
-                                </div>
+                  {/* Bottom Actions */}
+                  <div className="flex gap-4 mt-auto relative z-10">
+                    {isAvailable ? (
+                      <>
+                        {/* Preview - Sharp Outline */}
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" className="flex-1 border-stone-200 text-stone-900 hover:border-slate-900 hover:bg-transparent rounded-none h-12 text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300">
+                              Preview
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-6xl h-[90vh] bg-stone-100 p-0 overflow-hidden">
+                            <div className="w-full h-full flex flex-col">
+                              <div className="h-12 bg-white border-b flex items-center justify-between px-6 pr-14">
+                                <span className="font-bold text-sm font-serif">{catalog.title}</span>
+                                <Button size="sm" onClick={() => handleDownload(catalog)}>Download Original</Button>
                               </div>
-                            </DialogContent>
-                          </Dialog>
-                        )}
+                              <div className="flex-1 bg-gray-200 relative">
+                                <iframe
+                                  src={`${catalog.downloadUrl}#toolbar=0`}
+                                  className="w-full h-full border-0"
+                                  title={`Preview of ${catalog.title}`}
+                                ></iframe>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+
+                        {/* Download - Solid Black */}
                         <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 p-0 px-2 h-8 font-medium"
+                          className="flex-1 bg-slate-900 text-white hover:bg-accent hover:text-white rounded-none h-12 text-[10px] uppercase tracking-[0.2em] font-bold shadow-sm transition-all duration-500 group-hover:shadow-lg"
                           onClick={() => handleDownload(catalog)}
                         >
-                          Download <Download className="ml-2 h-3 w-3" />
+                          <Download className="w-3 h-3 mr-2" /> PDF
                         </Button>
+                      </>
+                    ) : (
+                      <div className="w-full py-3 bg-stone-50 border border-dashed border-stone-200 text-center text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] flex items-center justify-center gap-2">
+                        <Lock className="w-3 h-3" /> Catalog Locked
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    )}
+                  </div>
+
+                </motion.div>
               );
             })}
           </div>
 
-          {/* Help Section */}
-          <Card className="mt-12 bg-white border-slate-200 shadow-sm">
-            <CardContent className="p-8 text-center">
-              <h3 className="text-2xl font-bold mb-4 text-slate-900">Need Custom Information?</h3>
-              <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
-                Looking for specific product details, custom manufacturing options, or bulk pricing? Contact our B2B team for personalized catalogs and quotations.
-              </p>
-              <Button variant="premium" size="lg">
-                Contact Us
-              </Button>
-            </CardContent>
-          </Card>
+          {/* Footer Area */}
+          <div className="mt-24 border-t border-stone-200 pt-16 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="text-center md:text-left">
+              <h4 className="font-serif text-2xl text-slate-900 mb-2">Need a Hard Copy?</h4>
+              <p className="text-stone-500">We send physical specification books to our registered enterprise partners.</p>
+            </div>
+            <Button variant="outline" size="lg" className="border-slate-900 text-slate-900 rounded-none h-14 px-8 hover:bg-slate-900 hover:text-white transition-all">
+              Request Physical Catalog <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
+
         </div>
       </main>
       <Footer />

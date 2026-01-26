@@ -50,12 +50,6 @@ const Header = () => {
                 Catalog
               </Link>
               <Link
-                to="/about"
-                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors"
-              >
-                About
-              </Link>
-              <Link
                 to="/contact"
                 className="text-sm font-medium text-primary/80 hover:text-accent transition-colors"
               >
@@ -103,7 +97,6 @@ const Header = () => {
           <nav className="flex flex-col gap-4">
             <Link to="/products" className="text-lg font-serif font-medium text-primary">Products</Link>
             <Link to="/catalog" className="text-lg font-serif font-medium text-primary">Catalog</Link>
-            <Link to="/about" className="text-lg font-serif font-medium text-primary">About</Link>
             <Link to="/contact" className="text-lg font-serif font-medium text-primary">Contact</Link>
             <div className="h-px bg-border/60 my-2" />
             <Button className="w-full rounded-none bg-primary text-white py-6 text-lg font-serif">
