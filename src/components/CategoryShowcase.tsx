@@ -32,14 +32,14 @@ const categories = [
     },
     {
         id: "hooks",
-        name: "Hooks & Decor",
+        name: "Hooks",
         desc: "Precision Fasteners",
         image: hooksImg,
         size: "col-span-1 md:col-span-1 lg:col-span-1 row-span-1",
     },
     {
         id: "rings",
-        name: "Hardware Rings",
+        name: "Rings",
         desc: "Functional & Decorative",
         image: ringsImg,
         size: "col-span-1 md:col-span-1 lg:col-span-1 row-span-1",
