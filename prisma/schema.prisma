@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String
+  category           String
+  description        String?
+  image_url          String?
+  sku                String?  @unique
+  specs              Json     @default("[]")
+  min_order_quantity Int?     @default(500)
+  in_stock           Boolean? @default(true)
+  created_at         DateTime @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([category], map: "idx_products_category")
+  @@map("products")
+}
+
+model Inquiry {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  company        String?
+  email          String
+  whatsapp       String?
+  product        String?
+  quantity       String?
+  sample_request Boolean? @default(false)
+  message        String
+  status         String?  @default("new")
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([created_at(sort: Desc)], map: "idx_inquiries_created_at")
+  @@index([status], map: "idx_inquiries_status")
+  @@map("inquiries")
+}
