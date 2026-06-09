@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +9,7 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 0);
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -18,19 +17,25 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled
-        ? "bg-background/95 border-primary/5 shadow-sm py-4"
-        : "bg-transparent border-transparent py-6"
+        ? "bg-background/95 backdrop-blur-md border-border/80 shadow-md py-2"
+        : "bg-transparent border-transparent py-4"
         }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-16">
 
           {/* Left: Logo & Nav */}
-          <div className="flex items-center gap-12">
+          <div className="flex items-center gap-10">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3">
-              <img src="/images/logo-new.png" alt="S. A. IMPEX Logo" className="h-24 w-auto" />
-              <span className="text-3xl font-serif font-bold tracking-tight text-primary">
+            <Link to="/" className="flex items-center gap-2">
+              <img 
+                src="/images/logo-new.png" 
+                alt="S. A. IMPEX Logo" 
+                className={`w-auto transition-all duration-500 ${
+                  isScrolled ? "h-12" : "h-16"
+                }`} 
+              />
+              <span className="text-2xl font-serif font-bold tracking-tight text-primary">
                 S. A. IMPEX<span className="text-accent">.</span>
               </span>
             </Link>
@@ -60,25 +65,14 @@ const Header = () => {
 
           {/* Right: Actions */}
           <div className="hidden md:flex items-center gap-6">
-            <button className="text-primary hover:text-primary transition-colors">
+            <button className="text-primary hover:text-accent transition-colors">
               <Search className="w-5 h-5" />
             </button>
             <div className="h-4 w-px bg-border/60" />
 
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="text-sm font-bold text-primary hover:text-accent transition-colors">
-                  Log In
-                </button>
-              </SignInButton>
-              <Button className="rounded-none bg-primary text-white hover:bg-primary/90 font-medium px-6 py-5">
-                <Link to="/contact">Get Quote</Link>
-              </Button>
-            </SignedOut>
-
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
+            <Button className="rounded-none bg-primary text-white hover:bg-primary/90 font-medium px-6 py-5">
+              <Link to="/contact">Get Quote</Link>
+            </Button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -109,4 +103,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header;

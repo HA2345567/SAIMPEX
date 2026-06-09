@@ -100,75 +100,34 @@ const Products = () => {
               <span className="text-muted-foreground text-sm">{displayedProducts.length} Results</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {displayedProducts.map((product) => (
-                <div key={product.id} className="group relative">
-                  {/* Image Container */}
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-card border border-border/50 mb-5 group-hover:border-accent/30 transition-all">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-
-                    {/* Overlay Actions */}
-                    <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2 justify-center items-end bg-gradient-to-t from-black/50 to-transparent pt-12">
-                      <Button size="icon" className="h-10 w-10 rounded-full bg-white text-slate-900 hover:bg-blue-600 hover:text-white shadow-xl border-0" asChild>
-                        <Link to={`/product/${product.id}`}>
-                          <Eye className="w-5 h-5" />
-                        </Link>
-                      </Button>
-                      <Button size="icon" className="h-10 w-10 rounded-full bg-[#22c55e] text-white hover:bg-[#16a34a] shadow-xl border-0" asChild>
-                        <a href={getWhatsAppUrl(`Inquiry: ${product.name}`)} target="_blank" rel="noopener noreferrer">
-                          <MessageCircle className="w-5 h-5" />
-                        </a>
-                      </Button>
-                    </div>
-
-                    {/* Badges */}
-                    <div className="absolute top-3 left-3">
-                      <span className="bg-white/95 backdrop-blur text-[10px] font-bold px-3 py-1.5 rounded-full text-slate-900 uppercase tracking-widest shadow-sm">
-                        {product.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="text-center space-y-2">
-                    <Link to={`/product/${product.id}`} className="block">
-                      <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
-                        {product.name}
-                      </h3>
-                    </Link>
-
-                    <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
-                      <span>MOQ: 500 Pcs</span>
-                      <span className="w-1 h-1 rounded-full bg-slate-300" />
-                      <span className="text-green-600 font-medium">In Stock</span>
-                    </div>
-
-                    <Link
-                      to={`/product/${product.id}`}
-                      className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors mt-2"
-                    >
-                      View Specifications <ArrowRight className="w-4 h-4 ml-1" />
-                    </Link>
-                  </div>
+            <div className="flex flex-col items-center justify-center min-h-[450px] bg-gradient-to-br from-slate-50 via-white to-slate-100 rounded-3xl border border-slate-200/60 p-12 text-center shadow-lg relative overflow-hidden group">
+              {/* Decorative backgrounds */}
+              <div className="absolute -right-12 -top-12 w-40 h-40 bg-blue-500/5 rounded-full blur-2xl" />
+              <div className="absolute -left-12 -bottom-12 w-40 h-40 bg-indigo-500/5 rounded-full blur-2xl" />
+              
+              <div className="space-y-6 max-w-md relative z-10">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-50/80 text-blue-600 shadow-inner mb-2">
+                  <ShoppingBag className="w-10 h-10 animate-pulse" />
                 </div>
-              ))}
-            </div>
-
-            {/* Empty State */}
-            {displayedProducts.length === 0 && (
-              <div className="text-center py-20 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                <ShoppingBag className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <h3 className="text-lg font-bold text-slate-900 mb-2">No Products Found</h3>
-                <p className="text-slate-500 mb-6">We couldn't find any products in this category.</p>
-                <Button variant="outline" onClick={() => setActiveCategory("All")}>
-                  Clear Filters
-                </Button>
+                <div>
+                  <h3 className="text-3xl font-extrabold text-slate-900 font-display tracking-tight mb-3">Coming Soon</h3>
+                  <p className="text-slate-500 leading-relaxed text-base">
+                    We are currently updating our wholesale product range. Our premium accessory catalog will be back online very soon.
+                  </p>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+                  <Button asChild className="bg-blue-600 hover:bg-blue-700 h-12 px-6 rounded-xl font-semibold shadow-md shadow-blue-500/10">
+                    <Link to="/contact">Contact Sales</Link>
+                  </Button>
+                  <Button variant="outline" asChild className="h-12 px-6 rounded-xl font-semibold border-slate-200 hover:bg-slate-50">
+                    <a href={getWhatsAppUrl("Hello, I would like to inquire about your product catalog.")} target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="w-4 h-4 mr-2 text-green-500" /> WhatsApp Sales
+                    </a>
+                  </Button>
+                </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </main>

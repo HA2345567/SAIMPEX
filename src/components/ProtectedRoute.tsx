@@ -74,36 +74,36 @@ const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps)
     return <Navigate to="/auth" replace />;
   }
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/auth";
+  };
+
   if (requireAdmin && !isAdmin) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="text-center max-w-md space-y-4">
-          <h1 className="text-2xl font-bold text-destructive">Access Denied</h1>
-          <p className="text-muted-foreground">
-            You are logged in as <span className="font-mono text-foreground font-bold">{userEmail}</span>,
-            but this account does not have admin privileges.
-          </p>
-
-          {dbError && (
-            <div className="bg-destructive/10 border border-destructive/20 p-3 rounded-lg text-sm text-destructive text-left">
-              <span className="font-bold">Database Error:</span> {dbError}
-              <p className="mt-1 text-xs opacity-80">The user_roles table might be missing or RLS is blocking access.</p>
-            </div>
-          )}
-
-          <div className="bg-muted p-4 rounded-lg text-left text-xs font-mono overflow-auto border border-border">
-            <p className="text-muted-foreground mb-2">To grant admin access, run this SQL in your Supabase Dashboard:</p>
-            <code className="block text-primary select-all">
-              INSERT INTO public.user_roles (user_id, role)<br />
-              SELECT id, 'admin'::public.app_role<br />
-              FROM auth.users<br />
-              WHERE email = '{userEmail}';
-            </code>
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-slate-50">
+        <div className="text-center max-w-md space-y-6 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl">
+          <div className="mx-auto w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-red-600 mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+            </svg>
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-slate-900">Access Denied</h1>
+            <p className="text-slate-500 text-sm leading-relaxed">
+              You are logged in as <span className="font-semibold text-slate-800">{userEmail}</span>.
+              This account does not have administrator privileges to access the admin dashboard.
+            </p>
           </div>
 
-          <Button variant="outline" onClick={() => window.location.reload()}>
-            I've run the SQL, try again
-          </Button>
+          <div className="flex flex-col gap-2 pt-2">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 h-11 rounded-xl font-semibold text-white" onClick={handleSignOut}>
+              Sign Out & Login as Admin
+            </Button>
+            <Button variant="outline" className="w-full h-11 rounded-xl border-slate-200 hover:bg-slate-50 font-semibold" onClick={() => window.location.href = "/"}>
+              Back to Homepage
+            </Button>
+          </div>
         </div>
       </div>
     );

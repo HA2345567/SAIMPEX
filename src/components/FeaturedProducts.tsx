@@ -4,60 +4,46 @@ import { Link } from "react-router-dom";
 
 const bestSellers = [
   {
-    id: "bs-1",
+    id: "btn-met-001",
     name: "Royal Crest Blazer Button",
-    category: "Metal Collection",
+    category: "Metal & Alloys",
     price: "Inquire",
     image: "/images/products/royal_crest.png"
   },
   {
-    id: "bs-2",
-    name: "Obsidian Shell Toggle",
-    category: "Natural Series",
+    id: "btn-wdn-001",
+    name: "Sustainably Sourced Wooden Button",
+    category: "Wooden Collection",
     price: "Inquire",
-    image: "/images/products/obsidian_toggle.png"
+    image: "/images/products/wooden_collection_hero.png"
   },
   {
-    id: "bs-3",
-    name: "Bespoke Trouser Hooks",
-    category: "Tailoring",
-    price: "Inquire",
-    image: "/images/products/silver_hooks.png"
-  },
-  {
-    id: "bs-4",
-    name: "Rose Gold Detail Slider",
-    category: "Lingerie / Swim",
-    price: "Inquire",
-    image: "/images/products/gold_slider.png"
-  },
-  {
-    id: "bs-5",
-    name: "Gold Zipper Pull",
-    category: "Zippers",
-    price: "Inquire",
-    image: "/images/products/gold_zipper.png"
-  },
-  {
-    id: "bs-6",
+    id: "hdw-bkl-001",
     name: "Vintage Brass Buckle",
-    category: "Hardware",
+    category: "Buckles & Hardware",
     price: "Inquire",
     image: "/images/products/brass_buckle.png"
   },
   {
-    id: "bs-7",
-    name: "Signature Metal Shank",
-    category: "Denim Series",
+    id: "hdw-rng-001",
+    name: "Rose Gold Detail Slider",
+    category: "Ring Adjusters",
     price: "Inquire",
-    image: "/images/products/royal_crest.png" // Placeholder recurrence
+    image: "/images/products/gold_slider.png"
   },
   {
-    id: "bs-8",
-    name: "Architectural Toggle",
-    category: "Outerwear",
+    id: "zip-zip-001",
+    name: "Premium Gold Zipper Pull",
+    category: "Zippers & Tapes",
     price: "Inquire",
-    image: "/images/products/obsidian_toggle.png" // Placeholder recurrence
+    image: "/images/products/gold_zipper.png"
+  },
+  {
+    id: "trm-stp-001",
+    name: "Sportswear Stoppers & Cords",
+    category: "Stoppers & Cords",
+    price: "Inquire",
+    image: "/images/products/stoppers_cords_hero.png"
   }
 ];
 
@@ -91,19 +77,19 @@ const FeaturedProducts = () => {
         </div>
       </div>
 
-      {/* Product Grid - 4x2 Layout */}
+      {/* Product Grid - 3x2 Layout */}
       <div className="container mx-auto px-0 border-t border-[#D6D3CD]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-b border-[#D6D3CD]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-b border-[#D6D3CD]">
           {bestSellers.map((product, idx) => (
             <Link
-              to="/products"
+              to={`/product/${product.id}`}
               key={product.id}
               className={`
                     group block relative bg-[#F2F0EB] hover:bg-white transition-colors duration-500
                     border-r border-[#D6D3CD]
-                    ${(idx + 1) % 4 === 0 ? 'lg:border-r-0' : ''}
+                    ${(idx + 1) % 3 === 0 ? 'lg:border-r-0' : ''}
                     border-b border-[#D6D3CD]
-                    ${idx >= 4 ? 'lg:border-b-0' : ''}
+                    ${idx >= 3 ? 'lg:border-b-0' : ''}
                 `}
             >
               <div className="aspect-[4/5] overflow-hidden relative p-8">
@@ -135,7 +121,7 @@ const FeaturedProducts = () => {
 
                 {/* B2B Specs */}
                 <div className="pt-2 flex justify-center gap-4 text-[10px] uppercase font-bold text-stone-500 border-t border-stone-200 mt-4">
-                  <span>MOQ: 500Gr</span>
+                  <span>MOQ: 500 Pcs</span>
                   <span>•</span>
                   <span>Ready Stock</span>
                 </div>
@@ -149,7 +135,7 @@ const FeaturedProducts = () => {
       <div className="mt-24 text-center">
         <Link to="/products">
           <Button size="lg" className="h-16 px-16 rounded-none bg-accent text-white text-lg font-serif hover:bg-accent/90 transition-all shadow-2xl hover:shadow-accent/20">
-            Explore The Full Wardrobe
+            Explore The Full Catalog
           </Button>
         </Link>
       </div>

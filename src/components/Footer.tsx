@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Twitter, ArrowUpRight, MapPin, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { COMPANY_INFO } from "@/lib/constants";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -117,7 +118,7 @@ const Footer = () => {
               </li>
               <li className="flex gap-4 items-center">
                 <Phone className="w-5 h-5 text-accent shrink-0" />
-                <span className="text-stone-400">+91 83830 37041</span>
+                <span className="text-stone-400">{COMPANY_INFO.phone}</span>
               </li>
               <li className="flex gap-4 items-center">
                 <Mail className="w-5 h-5 text-accent shrink-0" />
