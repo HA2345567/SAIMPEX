@@ -44,6 +44,7 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          hover: "hsl(var(--accent-hover))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -55,11 +56,11 @@ export default {
         },
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, hsl(215 28% 17%) 0%, hsl(215 28% 25%) 100%)',
-        'gradient-accent': 'linear-gradient(135deg, hsl(30 61% 50%) 0%, hsl(35 70% 45%) 100%)',
-        'gradient-hero': 'linear-gradient(135deg, hsl(220 13% 98%) 0%, hsl(220 13% 100%) 100%)',
-        'gradient-card': 'linear-gradient(to bottom, hsl(0 0% 100%), hsl(220 13% 99%))',
-        'gradient-mesh': 'radial-gradient(at 40% 20%, hsl(215 28% 17% / 0.03) 0px, transparent 50%), radial-gradient(at 80% 0%, hsl(30 61% 50% / 0.05) 0px, transparent 50%), radial-gradient(at 0% 50%, hsl(220 13% 95%) 0px, transparent 50%)',
+        'gradient-primary': 'var(--gradient-primary)',
+        'gradient-accent': 'var(--gradient-accent)',
+        'gradient-hero': 'var(--gradient-hero)',
+        'gradient-card': 'var(--gradient-card)',
+        'gradient-mesh': 'radial-gradient(at 40% 20%, hsl(var(--primary) / 0.03) 0px, transparent 50%), radial-gradient(at 80% 0%, hsl(var(--accent) / 0.05) 0px, transparent 50%), radial-gradient(at 0% 50%, hsl(var(--secondary) / 0.5) 0px, transparent 50%)',
       },
       boxShadow: {
         'sm': 'var(--shadow-sm)',

@@ -18,6 +18,8 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
 
   useEffect(() => {
+    document.title = "Admin Portal | SAIMPEX";
+
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {

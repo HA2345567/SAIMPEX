@@ -79,7 +79,7 @@ const CTASection = () => {
 
         {/* Bottom Signature */}
         <div className="text-center mt-12 opacity-30">
-          <p className="font-serif italic text-white text-sm">Est. 2020 • Delhi, India</p>
+          <p className="font-serif italic text-white text-sm">Est. 2005 • Delhi, India</p>
         </div>
       </div>
     </section>

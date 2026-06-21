@@ -1,11 +1,39 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Twitter, ArrowUpRight, MapPin, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { COMPANY_INFO } from "@/lib/constants";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !email.includes("@")) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid business email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({
+      title: "✓ Private Briefing Activated",
+      description: "You've successfully subscribed to our quarterly trend reports.",
+    });
+    setEmail("");
+  };
+
+  const socials = [
+    { Icon: Facebook, url: "https://facebook.com/saimpex" },
+    { Icon: Instagram, url: "https://instagram.com/saimpex" },
+    { Icon: Linkedin, url: "https://linkedin.com/company/saimpex" },
+    { Icon: Twitter, url: "https://twitter.com/saimpex" },
+  ];
 
   return (
     <footer className="bg-stone-950 text-stone-200 border-t border-accent/10 font-sans-body relative overflow-hidden">
@@ -29,9 +57,9 @@ const Footer = () => {
               The quiet architects of fashion's finest details. Manufacturing premium accessories for the world's most demanding ateliers since 2005.
             </p>
             <div className="flex gap-4">
-              {[Facebook, Instagram, Linkedin, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="h-10 w-10 flex items-center justify-center rounded-sm border border-stone-800 text-stone-400 hover:border-accent hover:text-accent transition-all duration-300">
-                  <Icon className="w-4 h-4" />
+              {socials.map((social, i) => (
+                <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-sm border border-stone-800 text-stone-400 hover:border-accent hover:text-accent transition-all duration-300">
+                  <social.Icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -41,12 +69,16 @@ const Footer = () => {
           <div className="w-full lg:w-1/2 bg-stone-900/50 p-10 border border-stone-800 backdrop-blur-sm">
             <h3 className="text-2xl font-serif text-white mb-2">Private Briefing</h3>
             <p className="text-stone-400 mb-8">Receive quarterly trend reports and priority inventory alerts.</p>
-            <form className="flex flex-col sm:flex-row gap-4">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4">
               <Input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Business Email Address"
-                className="bg-stone-950 border-stone-800 focus:border-accent text-white h-12 rounded-none placeholder:text-stone-600"
+                className="bg-stone-950 border-stone-800 focus:border-accent text-white h-12 rounded-full placeholder:text-stone-600 px-6"
               />
-              <Button className="h-12 px-8 bg-accent text-white hover:bg-accent/80 rounded-none font-serif tracking-wide">
+              <Button type="submit" className="h-12 px-8 bg-accent text-white hover:bg-accent/80 rounded-full font-serif tracking-wide">
                 Subscribe
               </Button>
             </form>

@@ -27,74 +27,119 @@ const Header = () => {
           {/* Left: Logo & Nav */}
           <div className="flex items-center gap-10">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-1 sm:gap-2 shrink-0">
               <img 
                 src="/images/logo-new.png" 
                 alt="S. A. IMPEX Logo" 
                 className={`w-auto transition-all duration-500 ${
-                  isScrolled ? "h-12" : "h-16"
+                  isScrolled ? "h-10 sm:h-12" : "h-12 sm:h-16"
                 }`} 
               />
-              <span className="text-2xl font-serif font-bold tracking-tight text-primary">
+              <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-primary whitespace-nowrap">
                 S. A. IMPEX<span className="text-accent">.</span>
               </span>
             </Link>
-
+ 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
               <Link
                 to="/products"
-                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors flex items-center gap-1"
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                  location.pathname === "/products" || location.pathname.startsWith("/product/")
+                    ? "text-accent"
+                    : "text-primary/80 hover:text-accent"
+                }`}
               >
                 Products
               </Link>
               <Link
                 to="/catalog"
-                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors"
+                className={`text-sm font-medium transition-colors ${
+                  location.pathname === "/catalog"
+                    ? "text-accent"
+                    : "text-primary/80 hover:text-accent"
+                }`}
               >
                 Catalog
               </Link>
               <Link
                 to="/contact"
-                className="text-sm font-medium text-primary/80 hover:text-accent transition-colors"
+                className={`text-sm font-medium transition-colors ${
+                  location.pathname === "/contact"
+                    ? "text-accent"
+                    : "text-primary/80 hover:text-accent"
+                }`}
               >
                 Contact
               </Link>
             </nav>
           </div>
-
+ 
           {/* Right: Actions */}
           <div className="hidden md:flex items-center gap-6">
-            <button className="text-primary hover:text-accent transition-colors">
+            <button className="text-primary hover:text-accent transition-colors" aria-label="Search">
               <Search className="w-5 h-5" />
             </button>
             <div className="h-4 w-px bg-border/60" />
-
-            <Button className="rounded-none bg-primary text-white hover:bg-primary/90 font-medium px-6 py-5">
+ 
+            <Button asChild className="bg-primary text-white hover:bg-primary/90 font-medium px-6 py-5">
               <Link to="/contact">Get Quote</Link>
             </Button>
           </div>
-
+ 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle Navigation Menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav-menu"
             className="md:hidden p-2 text-primary hover:bg-secondary/50 rounded-md transition-colors"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
-
+ 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border/40 p-6 shadow-xl animate-in slide-in-from-top-2">
+        <div id="mobile-nav-menu" className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border/40 p-6 shadow-xl animate-in slide-in-from-top-2">
           <nav className="flex flex-col gap-4">
-            <Link to="/products" className="text-lg font-serif font-medium text-primary">Products</Link>
-            <Link to="/catalog" className="text-lg font-serif font-medium text-primary">Catalog</Link>
-            <Link to="/contact" className="text-lg font-serif font-medium text-primary">Contact</Link>
+            <Link 
+              to="/products" 
+              onClick={() => setIsMenuOpen(false)}
+              className={`text-lg font-serif font-medium transition-colors ${
+                location.pathname === "/products" || location.pathname.startsWith("/product/")
+                  ? "text-accent"
+                  : "text-primary"
+              }`}
+            >
+              Products
+            </Link>
+            <Link 
+              to="/catalog" 
+              onClick={() => setIsMenuOpen(false)}
+              className={`text-lg font-serif font-medium transition-colors ${
+                location.pathname === "/catalog"
+                  ? "text-accent"
+                  : "text-primary"
+              }`}
+            >
+              Catalog
+            </Link>
+            <Link 
+              to="/contact" 
+              onClick={() => setIsMenuOpen(false)}
+              className={`text-lg font-serif font-medium transition-colors ${
+                location.pathname === "/contact"
+                  ? "text-accent"
+                  : "text-primary"
+              }`}
+            >
+              Contact
+            </Link>
             <div className="h-px bg-border/60 my-2" />
-            <Button className="w-full rounded-none bg-primary text-white py-6 text-lg font-serif">
-              Inquire Now
+            <Button asChild className="w-full bg-primary text-white py-6 text-lg font-serif">
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Inquire Now</Link>
             </Button>
           </nav>
         </div>

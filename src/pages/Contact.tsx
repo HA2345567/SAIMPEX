@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,12 @@ const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
   company: z.string().trim().max(100, "Company name is too long").optional(),
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email is too long"),
-  whatsapp: z.string().trim().max(20, "Phone number is too long").optional(),
+  whatsapp: z.string().trim()
+    .max(20, "Phone number is too long")
+    .refine((val) => val === "" || /^\+?[0-9\s\-()]+$/.test(val), {
+      message: "Please enter a valid phone number (digits, spaces, hyphens only)",
+    })
+    .optional(),
   product: z.string().trim().max(100, "Product name is too long").optional(),
   quantity: z.string().trim().max(50, "Quantity is too long").optional(),
   sampleRequest: z.boolean(),
@@ -40,6 +45,10 @@ const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    document.title = "Contact Us | SAIMPEX - Premium Button Wholesale";
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -295,7 +304,7 @@ const Contact = () => {
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="test@gmail.com"
+                        placeholder="buyer@company.com"
                         value={formData.email}
                         onChange={handleChange}
                         required

@@ -101,7 +101,7 @@ const CategoryShowcase = () => {
                   <h3 className="text-2xl md:text-3xl font-serif text-white mb-2 leading-none">
                     {cat.name}
                   </h3>
-                  <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500">
+                  <div className="max-h-0 group-hover:max-h-40 overflow-hidden transition-all duration-700 ease-in-out">
                     <p className="text-white/80 text-sm font-light tracking-wide mt-2 mb-4">
                       {cat.desc}
                     </p>

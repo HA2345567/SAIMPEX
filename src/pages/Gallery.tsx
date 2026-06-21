@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -95,6 +95,10 @@ const categories = ["All", "Plastic Buttons", "Metal Buttons", "Wooden Buttons",
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  useEffect(() => {
+    document.title = "Product Gallery | SAIMPEX";
+  }, []);
 
   const filteredImages =
     selectedCategory === "All"

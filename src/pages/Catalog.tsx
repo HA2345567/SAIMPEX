@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -121,6 +121,10 @@ const catalogs: CatalogItem[] = [
 const Catalog = () => {
   const { toast } = useToast();
 
+  useEffect(() => {
+    document.title = "Catalog & Spec Sheets | SAIMPEX";
+  }, []);
+
   const handleDownload = (catalog: CatalogItem) => {
     if (catalog.downloadUrl) {
       toast({
@@ -230,7 +234,7 @@ const Catalog = () => {
                       {/* Preview Button - Outline Luxury */}
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button size="lg" variant="outline" className="flex-1 border-white/20 bg-transparent text-white hover:bg-white hover:text-black rounded-none h-14 uppercase tracking-[0.2em] font-medium text-xs transition-all duration-500">
+                          <Button size="lg" variant="outline" className="flex-1 border-white/20 bg-transparent text-white hover:bg-white hover:text-black h-14 uppercase tracking-[0.2em] font-medium text-xs transition-all duration-500">
                             <Eye className="mr-3 w-4 h-4" /> Preview
                           </Button>
                         </DialogTrigger>
@@ -238,7 +242,7 @@ const Catalog = () => {
                           <div className="w-full h-full flex flex-col">
                             <div className="h-16 bg-[#0C0C0C] border-b border-white/10 flex items-center justify-between px-8 pr-16 text-white">
                               <span className="font-serif italic text-lg text-stone-200">{featuredCatalog.title}</span>
-                              <Button size="sm" className="bg-accent text-white hover:bg-white hover:text-black rounded-none transition-colors" onClick={() => handleDownload(featuredCatalog)}>
+                              <Button size="sm" className="bg-accent text-white hover:bg-white hover:text-black transition-colors" onClick={() => handleDownload(featuredCatalog)}>
                                 Download PDF
                               </Button>
                             </div>
@@ -257,7 +261,7 @@ const Catalog = () => {
                       <Button
                         size="lg"
                         onClick={() => handleDownload(featuredCatalog)}
-                        className="flex-1 bg-accent/90 text-white hover:bg-accent rounded-none h-14 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 shadow-[0_0_20px_-5px_hsl(35,45%,55%,0.3)] hover:shadow-[0_0_30px_-5px_hsl(35,45%,55%,0.5)]"
+                        className="flex-1 bg-accent/90 text-white hover:bg-accent h-14 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 shadow-[0_0_20px_-5px_hsl(35,45%,55%,0.3)] hover:shadow-[0_0_30px_-5px_hsl(35,45%,55%,0.5)]"
                       >
                         Download <Download className="ml-3 w-4 h-4" />
                       </Button>
@@ -327,7 +331,7 @@ const Catalog = () => {
                         {/* Preview - Sharp Outline */}
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button variant="outline" className="flex-1 border-stone-200 text-stone-900 hover:border-slate-900 hover:bg-transparent rounded-none h-12 text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300">
+                            <Button variant="outline" className="flex-1 border-stone-200 text-stone-900 hover:border-slate-900 hover:bg-transparent h-12 text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300">
                               Preview
                             </Button>
                           </DialogTrigger>
@@ -350,7 +354,7 @@ const Catalog = () => {
 
                         {/* Download - Solid Black */}
                         <Button
-                          className="flex-1 bg-slate-900 text-white hover:bg-accent hover:text-white rounded-none h-12 text-[10px] uppercase tracking-[0.2em] font-bold shadow-sm transition-all duration-500 group-hover:shadow-lg"
+                          className="flex-1 bg-slate-900 text-white hover:bg-accent hover:text-white h-12 text-[10px] uppercase tracking-[0.2em] font-bold shadow-sm transition-all duration-500 group-hover:shadow-lg"
                           onClick={() => handleDownload(catalog)}
                         >
                           <Download className="w-3 h-3 mr-2" /> PDF
@@ -374,7 +378,7 @@ const Catalog = () => {
               <h4 className="font-serif text-2xl text-slate-900 mb-2">Need a Hard Copy?</h4>
               <p className="text-stone-500">We send physical specification books to our registered enterprise partners.</p>
             </div>
-            <Button variant="outline" size="lg" className="border-slate-900 text-slate-900 rounded-none h-14 px-8 hover:bg-slate-900 hover:text-white transition-all">
+            <Button variant="outline" size="lg" className="border-slate-900 text-slate-900 h-14 px-8 hover:bg-slate-900 hover:text-white transition-all">
               Request Physical Catalog <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </div>

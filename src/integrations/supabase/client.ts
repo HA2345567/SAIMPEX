@@ -630,8 +630,11 @@ const createMockSupabaseClient = () => {
       if (table === 'user_roles') {
         const activeSession = localStorage.getItem("saimpex_admin_session");
         const session = activeSession ? JSON.parse(activeSession) : null;
-        if (session && session.user && session.user.email === "curiousharsh03@gmail.com") {
-          return { data: { role: 'admin' }, error: null };
+        if (session && session.user && session.user.email) {
+          const email = session.user.email.toLowerCase();
+          if (email.endsWith("@saimpex.com") || email.endsWith("@saimpex.co.in")) {
+            return { data: { role: 'admin' }, error: null };
+          }
         }
         return { data: null, error: null };
       }
@@ -722,10 +725,11 @@ const createMockSupabaseClient = () => {
       },
       signInWithPassword: async (credentials: any) => {
         const { email, password } = credentials;
-        if (email.trim() === "curiousharsh03@gmail.com" && password === "ha@03RSHAJ") {
+        const normalizedEmail = email.trim().toLowerCase();
+        if ((normalizedEmail.endsWith("@saimpex.com") || normalizedEmail.endsWith("@saimpex.co.in")) && password.length >= 6) {
           const session = {
-            user: { id: "admin-uid-curiousharsh03", email: "curiousharsh03@gmail.com" },
-            access_token: "mock-token-curiousharsh03"
+            user: { id: "admin-uid-" + Math.random().toString(36).substring(2, 9), email: normalizedEmail },
+            access_token: "mock-token-" + Math.random().toString(36).substring(2, 9)
           };
           localStorage.setItem("saimpex_admin_session", JSON.stringify(session));
           return { data: { session, user: session.user }, error: null };

@@ -134,7 +134,7 @@ const FeaturedProducts = () => {
       {/* Global View All Bottom CTA */}
       <div className="mt-24 text-center">
         <Link to="/products">
-          <Button size="lg" className="h-16 px-16 rounded-none bg-accent text-white text-lg font-serif hover:bg-accent/90 transition-all shadow-2xl hover:shadow-accent/20">
+          <Button size="lg" className="h-16 px-16 bg-accent text-white text-lg font-serif hover:bg-accent/90 transition-all shadow-2xl hover:shadow-accent/20">
             Explore The Full Catalog
           </Button>
         </Link>
