@@ -632,7 +632,7 @@ const createMockSupabaseClient = () => {
         const session = activeSession ? JSON.parse(activeSession) : null;
         if (session && session.user && session.user.email) {
           const email = session.user.email.toLowerCase();
-          if (email.endsWith("@saimpex.com") || email.endsWith("@saimpex.co.in")) {
+          if (email.endsWith("@saimpex.com") || email.endsWith("@saimpex.co.in") || email === "saimpex2023@gmail.com") {
             return { data: { role: 'admin' }, error: null };
           }
         }
@@ -726,7 +726,7 @@ const createMockSupabaseClient = () => {
       signInWithPassword: async (credentials: any) => {
         const { email, password } = credentials;
         const normalizedEmail = email.trim().toLowerCase();
-        if ((normalizedEmail.endsWith("@saimpex.com") || normalizedEmail.endsWith("@saimpex.co.in")) && password.length >= 6) {
+        if ((normalizedEmail.endsWith("@saimpex.com") || normalizedEmail.endsWith("@saimpex.co.in") || normalizedEmail === "saimpex2023@gmail.com") && password.length >= 6) {
           const session = {
             user: { id: "admin-uid-" + Math.random().toString(36).substring(2, 9), email: normalizedEmail },
             access_token: "mock-token-" + Math.random().toString(36).substring(2, 9)

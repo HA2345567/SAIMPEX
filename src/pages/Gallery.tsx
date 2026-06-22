@@ -106,7 +106,7 @@ const Gallery = () => {
       : galleryImages.filter((img) => img.category === selectedCategory);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background font-body">
       <Header />
       <main className="flex-1 py-20 bg-secondary/30">
         <div className="container mx-auto px-4">

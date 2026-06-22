@@ -76,6 +76,7 @@ const Auth = () => {
           title: "Success",
           description: "Logged in successfully!",
         });
+        navigate("/admin");
       }
     } catch (error: any) {
       toast({

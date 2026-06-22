@@ -105,22 +105,25 @@ const Contact = () => {
       console.log("Inquiry saved:", inquiryData);
 
       // Send email notification
-      const { error: emailError } = await supabase.functions.invoke('send-inquiry-email', {
-        body: {
-          name: formData.name,
-          company: formData.company,
-          email: formData.email,
-          whatsapp: formData.whatsapp,
-          product: formData.product,
-          quantity: formData.quantity,
-          sampleRequest: formData.sampleRequest,
-          message: formData.message,
-        }
-      });
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-inquiry-email', {
+          body: {
+            name: formData.name,
+            company: formData.company,
+            email: formData.email,
+            whatsapp: formData.whatsapp,
+            product: formData.product,
+            quantity: formData.quantity,
+            sampleRequest: formData.sampleRequest,
+            message: formData.message,
+          }
+        });
 
-      if (emailError) {
-        console.error("Email error:", emailError);
-        // Don't throw error - inquiry is saved, email is secondary
+        if (emailError) {
+          console.error("Email error:", emailError);
+        }
+      } catch (err) {
+        console.error("Failed to invoke send-inquiry-email function:", err);
       }
 
       toast({
@@ -164,7 +167,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background font-body">
       <Header />
       <main className="flex-1 py-20 bg-background">
         <div className="container mx-auto px-4">

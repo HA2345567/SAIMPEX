@@ -35,20 +35,29 @@ const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps)
       setDbError(null); // Clear previous errors on new check
 
       if (session && requireAdmin) {
-        // Check if user has admin role
-        const { data: roles, error } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', session.user.id)
-          .eq('role', 'admin')
-          .maybeSingle();
+        const email = session.user.email?.toLowerCase() || "";
+        const isSaimpexEmail = email.endsWith("@saimpex.com") || 
+                              email.endsWith("@saimpex.co.in") || 
+                              email === "saimpex2023@gmail.com";
 
-        if (error) {
-          console.error("Error checking role:", error);
-          setDbError(error.message);
+        if (isSaimpexEmail) {
+          setIsAdmin(true);
+        } else {
+          // Check if user has admin role
+          const { data: roles, error } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', session.user.id)
+            .eq('role', 'admin')
+            .maybeSingle();
+
+          if (error) {
+            console.error("Error checking role:", error);
+            setDbError(error.message);
+          }
+
+          setIsAdmin(!!roles);
         }
-
-        setIsAdmin(!!roles);
       } else if (session) {
         setIsAdmin(true);
       }

@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Twitter, ArrowUpRight, MapPin, Mail, Phone } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, ArrowUpRight, MapPin, Mail, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { COMPANY_INFO } from "@/lib/constants";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes("@")) {
       toast({
@@ -21,22 +22,44 @@ const Footer = () => {
       });
       return;
     }
-    toast({
-      title: "✓ Private Briefing Activated",
-      description: "You've successfully subscribed to our quarterly trend reports.",
-    });
-    setEmail("");
+
+    try {
+      const { error } = await supabase
+        .from('inquiries')
+        .insert([
+          {
+            name: "Newsletter Subscriber",
+            email: email.trim(),
+            message: "Subscribed to Private Briefing (Newsletter)",
+            product: "Newsletter Subscription",
+            status: "new"
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "✓ Private Briefing Activated",
+        description: "You've successfully subscribed to our quarterly trend reports.",
+      });
+      setEmail("");
+    } catch (err: any) {
+      console.error("Subscription error:", err);
+      toast({
+        title: "Subscription Failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const socials = [
-    { Icon: Facebook, url: "https://facebook.com/saimpex" },
-    { Icon: Instagram, url: "https://instagram.com/saimpex" },
-    { Icon: Linkedin, url: "https://linkedin.com/company/saimpex" },
-    { Icon: Twitter, url: "https://twitter.com/saimpex" },
+    { Icon: Mail, url: `mailto:${COMPANY_INFO.email}` },
+    { Icon: Twitter, url: "https://x.com/saimpex2023" },
   ];
 
   return (
-    <footer className="bg-stone-950 text-stone-200 border-t border-accent/10 font-sans-body relative overflow-hidden">
+    <footer className="bg-stone-950 text-stone-200 border-t border-accent/10 font-body relative overflow-hidden">
 
       {/* Background Decor */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
@@ -50,11 +73,11 @@ const Footer = () => {
           <div className="space-y-8 max-w-sm">
             <Link to="/" className="block">
               <span className="text-4xl md:text-5xl font-serif text-white tracking-tight">
-                Saimpex<span className="text-accent">.</span>
+                S.A. IMPEX<span className="text-accent">.</span>
               </span>
             </Link>
             <p className="text-stone-400 text-lg leading-relaxed font-light">
-              The quiet architects of fashion's finest details. Manufacturing premium accessories for the world's most demanding ateliers since 2005.
+              Delivering world-class garment accessories, including premium buttons, zippers, buckles, hooks, rings, and adjusters for global fashion brands since 2005.
             </p>
             <div className="flex gap-4">
               {socials.map((social, i) => (

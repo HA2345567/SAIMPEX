@@ -46,7 +46,7 @@ const ProductDetail = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-white font-sans">
+        <div className="min-h-screen flex flex-col bg-background font-body">
             <Header />
 
             {/* Breadcrumb */}

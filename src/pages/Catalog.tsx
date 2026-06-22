@@ -152,7 +152,7 @@ const Catalog = () => {
   const featuredCatalog = catalogs[0];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans selection:bg-accent selection:text-white">
+    <div className="min-h-screen flex flex-col bg-background font-body selection:bg-accent selection:text-white">
       <Header />
 
       <main className="flex-1 pt-32 pb-24 relative">

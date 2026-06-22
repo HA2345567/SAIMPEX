@@ -27,7 +27,7 @@ const Hero = () => {
 
             {/* Description Subtext */}
             <p className="text-base md:text-lg text-stone-600 font-sans max-w-lg leading-relaxed font-light">
-              S. A. IMPEX delivers world-class, custom-molded zinc-alloy buttons, bespoke metal hardware, and precision fasteners engineered for global fashion ateliers.
+              S. A. IMPEX delivers world-class garment accessories, including premium buttons, zippers, buckles, hooks, rings, and adjusters for global fashion brands.
             </p>
           </motion.div>
 
