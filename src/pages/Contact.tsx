@@ -79,29 +79,30 @@ const Contact = () => {
 
     try {
       // Save inquiry to database
-      const { data: inquiryData, error: dbError } = await supabase
-        .from('inquiries')
-        .insert([
-          {
-            name: formData.name.trim(),
-            company: formData.company.trim() || null,
-            email: formData.email.trim(),
-            whatsapp: formData.whatsapp.trim() || null,
-            product: formData.product.trim() || null,
-            quantity: formData.quantity.trim() || null,
-            sample_request: formData.sampleRequest,
-            message: formData.message.trim(),
-            status: 'new'
-          }
-        ])
-        .select()
-        .single();
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          company: formData.company,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          product: formData.product,
+          quantity: formData.quantity,
+          sample_request: formData.sampleRequest,
+          message: formData.message,
+          status: 'new'
+        }),
+      });
 
-      if (dbError) {
-        console.error("Database error:", dbError);
-        throw new Error("Failed to save inquiry");
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || 'Failed to save inquiry');
       }
 
+      const inquiryData = await response.json();
       console.log("Inquiry saved:", inquiryData);
 
       // Send email notification
@@ -144,11 +145,11 @@ const Contact = () => {
       });
       setErrors({});
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("Submission error:", error);
       toast({
         title: "Error",
-        description: "Failed to submit inquiry. Please try again or contact us directly.",
+        description: error.message || "Failed to submit inquiry. Please try again or contact us directly.",
         variant: "destructive",
       });
     } finally {

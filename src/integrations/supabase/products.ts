@@ -19,32 +19,28 @@ export interface Product {
 }
 
 export const fetchProducts = async (): Promise<Product[]> => {
-    const { data, error } = await supabase
-        .from('products')
-        .select('*');
-
-    if (error) {
+    try {
+        const response = await fetch('/api/products');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch products: ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
         console.error('Error fetching products:', error);
         throw error;
     }
-
-    // Map image_url (if relative path from seed) to be used directly
-    // If we kept image_url as '/images/products/...' it works fine.
-
-    return data || [];
 };
 
 export const fetchProductById = async (id: string): Promise<Product | null> => {
-    const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-    if (error) {
+    try {
+        const response = await fetch(`/api/products?id=${encodeURIComponent(id)}`);
+        if (!response.ok) {
+            if (response.status === 404) return null;
+            throw new Error(`Failed to fetch product: ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
         console.error('Error fetching product:', error);
         return null;
     }
-
-    return data;
 };

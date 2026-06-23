@@ -35,41 +35,36 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchInquiries();
 
-    // Set up realtime subscription
-    const channel = supabase
-      .channel('inquiries-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'inquiries'
-        },
-        () => {
-          fetchInquiries();
-        }
-      )
-      .subscribe();
+    // Poll for changes every 30 seconds since realtime isn't running on the serverless Neon setup
+    const interval = setInterval(fetchInquiries, 30000);
 
     return () => {
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, []);
 
   const fetchInquiries = async () => {
     try {
-      const { data, error } = await supabase
-        .from('inquiries')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token || '';
 
-      if (error) throw error;
+      const response = await fetch('/api/inquiries', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Failed to load inquiries: ${response.statusText}`);
+      }
+
+      const data = await response.json();
       setInquiries(data || []);
     } catch (error: any) {
       toast({
         title: "Error",
-        description: "Failed to load inquiries: " + error.message,
+        description: error.message || "Failed to load inquiries",
         variant: "destructive",
       });
     } finally {
@@ -81,12 +76,25 @@ const AdminDashboard = () => {
     setUpdatingStatus(inquiryId);
 
     try {
-      const { error } = await supabase
-        .from('inquiries')
-        .update({ status: newStatus })
-        .eq('id', inquiryId);
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token || '';
 
-      if (error) throw error;
+      const response = await fetch('/api/inquiries', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          id: inquiryId,
+          status: newStatus
+        })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Failed to update status: ${response.statusText}`);
+      }
 
       toast({
         title: "Success",
@@ -97,7 +105,7 @@ const AdminDashboard = () => {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: "Failed to update status: " + error.message,
+        description: error.message || "Failed to update status",
         variant: "destructive",
       });
     } finally {

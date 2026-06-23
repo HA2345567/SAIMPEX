@@ -729,7 +729,7 @@ const createMockSupabaseClient = () => {
         if ((normalizedEmail.endsWith("@saimpex.com") || normalizedEmail.endsWith("@saimpex.co.in") || normalizedEmail === "saimpex2023@gmail.com") && password.length >= 6) {
           const session = {
             user: { id: "admin-uid-" + Math.random().toString(36).substring(2, 9), email: normalizedEmail },
-            access_token: "mock-token-" + Math.random().toString(36).substring(2, 9)
+            access_token: password
           };
           localStorage.setItem("saimpex_admin_session", JSON.stringify(session));
           return { data: { session, user: session.user }, error: null };
@@ -772,12 +772,4 @@ const createMockSupabaseClient = () => {
   return mockClient as any;
 };
 
-export const supabase = (SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY)
-  ? createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-      auth: {
-        storage: localStorage,
-        persistSession: true,
-        autoRefreshToken: true,
-      }
-    })
-  : createMockSupabaseClient();
+export const supabase = createMockSupabaseClient();
