@@ -1,7 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/((?!api|assets|src|node_modules|@vite|@react-refresh|favicon.png).*)",
       "destination": "/index.html"
     }
   ]
