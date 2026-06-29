@@ -31,7 +31,7 @@ const catalogs: CatalogItem[] = [
     id: 0,
     title: "Master Collection 2026",
     description: "The complete anthology. Access our entire range of buttons, fasteners, and accessories in one comprehensive document.",
-    pages: "248 Pages",
+    pages: "31 Pages",
     size: "3.3 MB",
     type: "Digital Folio",
     icon: Crown,
@@ -41,6 +41,17 @@ const catalogs: CatalogItem[] = [
   },
   {
     id: 1,
+    title: "New Collections",
+    description: "Explore our latest seasonal arrivals, featuring cutting-edge designs, innovative materials, and next-generation closures.",
+    pages: "Digital Lookbook",
+    size: "0.2 MB",
+    type: "Lookbook",
+    icon: Crown,
+    category: "New Collections",
+    downloadUrl: "/pdf/new_collections.pdf",
+  },
+  {
+    id: 2,
     title: "Polyester Series",
     description: "Versatile durability meets curated aesthetics. Essential buttons for high-volume ready-to-wear lines.",
     pages: "Digital Catalog",
@@ -51,7 +62,7 @@ const catalogs: CatalogItem[] = [
     downloadUrl: "/pdf/Polyster_buttons.pdf",
   },
   {
-    id: 2,
+    id: 3,
     title: "Metal & Alloys",
     description: "Zinc, Brass, and Copper masterpieces. Defined by weight, finish, and intricate casting details.",
     pages: "Digital Catalog",
@@ -62,7 +73,7 @@ const catalogs: CatalogItem[] = [
     downloadUrl: "/pdf/Metal buttons.pdf",
   },
   {
-    id: 3,
+    id: 4,
     title: "Buckles & Hardware",
     description: "Statement hardware for outerwear and belts. Classic and modern finishes.",
     pages: "Digital Catalog",
@@ -73,7 +84,7 @@ const catalogs: CatalogItem[] = [
     downloadUrl: "/pdf/buckles_cords.pdf",
   },
   {
-    id: 4,
+    id: 5,
     title: "Ring Adjusters",
     description: "Functional sliders and rings that elevate utility into a design statement.",
     pages: "Digital Catalog",
@@ -84,7 +95,7 @@ const catalogs: CatalogItem[] = [
     downloadUrl: "/pdf/Ring adusters.pdf",
   },
   {
-    id: 5,
+    id: 6,
     title: "Wooden Collection",
     description: "Natural sustainability. Ethically sourced wooden buttons with unique grain patterns.",
     pages: "Digital Catalog",
@@ -95,7 +106,7 @@ const catalogs: CatalogItem[] = [
     downloadUrl: "/pdf/Wooden.pdf",
   },
   {
-    id: 6,
+    id: 7,
     title: "Stoppers & Cords",
     description: "Essential functional trims for sportswear and outerwear functionality.",
     pages: "Digital Catalog",
@@ -106,7 +117,7 @@ const catalogs: CatalogItem[] = [
     downloadUrl: "/pdf/stopper.pdf",
   },
   {
-    id: 7,
+    id: 8,
     title: "Zippers & Tapes",
     description: "High-performance zipper technologies and elastic tapes.",
     pages: "Coming Soon",
@@ -116,6 +127,7 @@ const catalogs: CatalogItem[] = [
     category: "Zippers",
     // No PDF yet
   },
+
 ];
 
 const Catalog = () => {
