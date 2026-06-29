@@ -5,7 +5,7 @@
       "destination": "/api/:path*"
     },
     {
-      "source": "/((?!api|assets|src|node_modules|@vite|@react-refresh|favicon.png).*)",
+      "source": "/((?!api|assets|src|node_modules|@vite|@react-refresh|images|pdf|favicon\\.ico|favicon\\.png|robots\\.txt|placeholder\\.svg|hero-accessories\\.png).*)",
       "destination": "/index.html"
     }
   ]
