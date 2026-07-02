@@ -174,7 +174,7 @@ const MOCK_PRODUCTS = [
   {
     id: "hdw-bkl-001",
     name: "Vintage Brass Buckle",
-    category: "Buckles & Hardware",
+    category: "Buckles",
     description: "Rugged and heavily detailed brass buckle for trench coats, belts, and luxury bags. Designed with a timeless vintage patina.",
     sku: "HDW-BKL-001",
     specs: [
@@ -772,4 +772,4 @@ const createMockSupabaseClient = () => {
   return mockClient as any;
 };
 
-export const supabase = createMockSupabaseClient();
+export const supabase = createMockSupabaseClient();

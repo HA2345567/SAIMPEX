@@ -20,7 +20,7 @@ const bestSellers = [
   {
     id: "hdw-bkl-001",
     name: "Vintage Brass Buckle",
-    category: "Buckles & Hardware",
+    category: "Buckles",
     price: "Inquire",
     image: "/images/products/brass_buckle.png"
   },
@@ -49,7 +49,7 @@ const bestSellers = [
 
 const FeaturedProducts = () => {
   return (
-    <section className="bg-[#F2F0EB] pt-24 pb-32 border-t border-[#D6D3CD] relative overflow-hidden">
+    <section className="bg-background pt-24 pb-32 border-t border-border relative overflow-hidden">
 
       {/* Editorial Header */}
       <div className="container mx-auto px-0 mb-20">
@@ -77,19 +77,19 @@ const FeaturedProducts = () => {
         </div>
       </div>
 
-      {/* Product Grid - 3x2 Layout */}
-      <div className="container mx-auto px-0 border-t border-[#D6D3CD]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-b border-[#D6D3CD]">
+      <div className="container mx-auto px-0 border-t border-border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-b border-border">
           {bestSellers.map((product, idx) => (
             <Link
               to={`/product/${product.id}`}
               key={product.id}
               className={`
-                    group block relative bg-[#F2F0EB] hover:bg-white transition-colors duration-500
-                    border-r border-[#D6D3CD]
+                    group block relative bg-background hover:bg-card/65 transition-all duration-500
+                    border-r border-border
                     ${(idx + 1) % 3 === 0 ? 'lg:border-r-0' : ''}
-                    border-b border-[#D6D3CD]
+                    border-b border-border
                     ${idx >= 3 ? 'lg:border-b-0' : ''}
+                    hover:shadow-2xl hover:z-10
                 `}
             >
               <div className="aspect-[4/5] overflow-hidden relative p-8">
@@ -98,29 +98,29 @@ const FeaturedProducts = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 drop-shadow-md"
+                    className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-[800ms] ease-out drop-shadow-md mix-blend-multiply"
                     loading="lazy"
                   />
                 </div>
 
                 {/* Hover Action */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                  <span className="bg-slate-900 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div className="absolute inset-0 bg-[#7A4E2D]/5 backdrop-blur-[1px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                  <span className="bg-[#7A4E2D] hover:bg-[#633e24] text-white px-6 py-3 text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 rounded-xl">
                     View Product
                   </span>
                 </div>
               </div>
 
               <div className="px-8 pb-8 pt-4 space-y-2 text-center">
-                <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-stone-400 group-hover:text-accent transition-colors">
+                <div className="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400 group-hover:text-accent transition-colors">
                   {product.category}
                 </div>
-                <h4 className="font-serif text-xl text-slate-900 group-hover:text-slate-900 transition-colors line-clamp-1">
+                <h4 className="font-serif text-xl text-primary group-hover:text-accent transition-colors duration-300 line-clamp-1">
                   {product.name}
                 </h4>
 
                 {/* B2B Specs */}
-                <div className="pt-2 flex justify-center gap-4 text-[10px] uppercase font-bold text-stone-500 border-t border-stone-200 mt-4">
+                <div className="pt-2 flex justify-center gap-4 text-[10px] uppercase font-bold text-stone-500 border-t border-border/25 mt-4">
                   <span>MOQ: 500 Pcs</span>
                   <span>•</span>
                   <span>Ready Stock</span>

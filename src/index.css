@@ -8,40 +8,40 @@
   :root {
     /* Premium Luxury Industrial Color System */
 
-    /* Backgrounds: Warm, sophisticated beige/off-whites (#F8F5EF) */
-    --background: 40 39% 95.5%;
-    --foreground: 0 0% 23%;
+    /* Backgrounds: Sophisticated Sand Alabaster */
+    --background: 36 15% 85%;
+    --foreground: 22 20% 15%; /* Espresso Brown */
 
-    /* Surface Cards (#FFFFFF) */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 23%;
+    /* Surface Cards: Soft Warm Cream */
+    --card: 36 18% 91%;
+    --card-foreground: 22 20% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 23%;
+    --popover: 36 18% 91%;
+    --popover-foreground: 22 20% 15%;
 
-    /* Primary Heading Text (#1A1A1A) */
-    --primary: 0 0% 10%;
-    --primary-foreground: 40 39% 95.5%;
+    /* Primary Heading Text */
+    --primary: 22 20% 15%;
+    --primary-foreground: 36 15% 85%;
 
     /* Accent: Primary Brown (#7A4E2D) and Hover Brown (#5D3A1A) */
     --accent: 26 46% 33%;
     --accent-hover: 29 56% 23%;
     --accent-foreground: 0 0% 100%;
 
-    /* Secondary: Warm Greys */
-    --secondary: 40 10% 94%;
-    --secondary-foreground: 0 0% 10%;
+    /* Secondary: Muted Camel */
+    --secondary: 36 14% 78%;
+    --secondary-foreground: 22 20% 15%;
 
-    /* Muted Text (#6B7280) */
-    --muted: 40 10% 90%;
-    --muted-foreground: 220 9% 46%;
+    /* Muted Text */
+    --muted: 36 14% 78%;
+    --muted-foreground: 22 8% 40%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    /* Borders (#E5DED3) */
-    --border: 37 26% 86.2%;
-    --input: 37 26% 86.2%;
+    /* Borders: Soft, subtle sand border */
+    --border: 36 12% 78%;
+    --input: 36 12% 78%;
     --ring: 26 46% 33%;
 
     --radius: 0.3rem;

@@ -59,7 +59,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-stone-950 text-stone-200 border-t border-accent/10 font-body relative overflow-hidden">
+    <footer className="bg-[#0a0a0a] text-stone-200 border-t border-accent/10 font-body relative overflow-hidden">
 
       {/* Background Decor */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
@@ -77,11 +77,11 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-stone-400 text-lg leading-relaxed font-light">
-              Delivering world-class garment accessories, including premium buttons, zippers, buckles, hooks, rings, and adjusters for global fashion brands since 2005.
+              Delivering world-class garment accessories, including premium buttons, zippers, buckles, hooks, rings, and adjusters for global fashion brands.
             </p>
             <div className="flex gap-4">
               {socials.map((social, i) => (
-                <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-sm border border-stone-800 text-stone-400 hover:border-accent hover:text-accent transition-all duration-300">
+                <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-sm border border-[#1e1e1e] text-stone-400 hover:border-accent hover:text-accent transition-all duration-300">
                   <social.Icon className="w-4 h-4" />
                 </a>
               ))}
@@ -89,7 +89,7 @@ const Footer = () => {
           </div>
 
           {/* Newsletter - Architectural Layout */}
-          <div className="w-full lg:w-1/2 bg-stone-900/50 p-10 border border-stone-800 backdrop-blur-sm">
+          <div className="w-full lg:w-1/2 bg-[#121212]/50 p-10 border border-[#1e1e1e] backdrop-blur-sm">
             <h3 className="text-2xl font-serif text-white mb-2">Private Briefing</h3>
             <p className="text-stone-400 mb-8">Receive quarterly trend reports and priority inventory alerts.</p>
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4">
@@ -99,7 +99,7 @@ const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Business Email Address"
-                className="bg-stone-950 border-stone-800 focus:border-accent text-white h-12 rounded-full placeholder:text-stone-600 px-6"
+                className="bg-[#0a0a0a] border-[#1e1e1e] focus:border-accent text-white h-12 rounded-full placeholder:text-stone-600 px-6"
               />
               <Button type="submit" className="h-12 px-8 bg-accent text-white hover:bg-accent/80 rounded-full font-serif tracking-wide">
                 Subscribe
@@ -109,7 +109,7 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="h-px w-full bg-stone-900 mb-16"></div>
+        <div className="h-px w-full bg-[#121212] mb-16"></div>
 
         {/* Middle Tier: Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
@@ -184,13 +184,13 @@ const Footer = () => {
         </div>
 
         {/* Bottom Tier: Legal & Signature */}
-        <div className="border-t border-stone-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-stone-600">
+        <div className="border-t border-[#121212] pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-stone-400">
           <p>&copy; {currentYear} Saimpex Accessories. All rights reserved.</p>
           <div className="flex gap-8">
-            <Link to="/legal" className="hover:text-stone-400 transition-colors">Privacy & Cookies</Link>
-            <Link to="/legal" className="hover:text-stone-400 transition-colors">Terms of Trade</Link>
+            <Link to="/legal" className="hover:text-white transition-colors">Privacy & Cookies</Link>
+            <Link to="/legal" className="hover:text-white transition-colors">Terms of Trade</Link>
             <span className="hidden md:inline text-stone-800">|</span>
-            <span className="text-stone-700">Crafted for Excellence</span>
+            <span className="text-stone-500">Crafted for Excellence</span>
           </div>
         </div>
 

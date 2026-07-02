@@ -100,29 +100,29 @@ const Products = () => {
               <span className="text-muted-foreground text-sm">{displayedProducts.length} Results</span>
             </div>
 
-            <div className="flex flex-col items-center justify-center min-h-[450px] bg-gradient-to-br from-slate-50 via-white to-slate-100 rounded-3xl border border-slate-200/60 p-12 text-center shadow-lg relative overflow-hidden group">
+            <div className="flex flex-col items-center justify-center min-h-[450px] bg-card rounded-3xl border border-border p-12 text-center shadow-lg relative overflow-hidden group">
               {/* Decorative backgrounds */}
-              <div className="absolute -right-12 -top-12 w-40 h-40 bg-blue-500/5 rounded-full blur-2xl" />
-              <div className="absolute -left-12 -bottom-12 w-40 h-40 bg-indigo-500/5 rounded-full blur-2xl" />
+              <div className="absolute -right-12 -top-12 w-40 h-40 bg-accent/5 rounded-full blur-2xl" />
+              <div className="absolute -left-12 -bottom-12 w-40 h-40 bg-accent/5 rounded-full blur-2xl" />
               
               <div className="space-y-6 max-w-md relative z-10">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-50/80 text-blue-600 shadow-inner mb-2">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-accent/10 text-accent shadow-inner mb-2">
                   <ShoppingBag className="w-10 h-10 animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-extrabold text-slate-900 font-display tracking-tight mb-3">Coming Soon</h3>
-                  <p className="text-slate-500 leading-relaxed text-base">
+                  <h3 className="text-3xl font-extrabold text-primary font-display tracking-tight mb-3">Coming Soon</h3>
+                  <p className="text-muted-foreground leading-relaxed text-base">
                     We are currently updating our wholesale product range. Our premium accessory catalog will be back online very soon.
                   </p>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-                  <Button asChild className="bg-blue-600 hover:bg-blue-700 h-12 px-6 rounded-xl font-semibold shadow-md shadow-blue-500/10">
+                  <Button asChild className="bg-accent hover:bg-accent-hover h-12 px-6 rounded-xl font-semibold shadow-md shadow-accent/10 text-white">
                     <Link to="/contact">Contact Sales</Link>
                   </Button>
-                  <Button variant="outline" asChild className="h-12 px-6 rounded-xl font-semibold border-slate-200 hover:bg-slate-50">
+                  <Button variant="outline" asChild className="h-12 px-6 rounded-xl font-semibold border-border hover:bg-muted bg-background">
                     <a href={getWhatsAppUrl("Hello, I would like to inquire about your product catalog.")} target="_blank" rel="noopener noreferrer">
-                      <MessageCircle className="w-4 h-4 mr-2 text-green-500" /> WhatsApp Sales
+                      <MessageCircle className="w-4 h-4 mr-2 text-green-600" /> WhatsApp Sales
                     </a>
                   </Button>
                 </div>

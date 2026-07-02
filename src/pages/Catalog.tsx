@@ -23,9 +23,10 @@ interface CatalogItem {
   featured?: boolean;
   downloadUrl?: string; // If present, item is available
   category: string;
+  imageUrl: string;
 }
 
-// Mapped Data from public/pdf directory
+// Mapped Data from public/pdf directory with editorial images
 const catalogs: CatalogItem[] = [
   {
     id: 0,
@@ -38,6 +39,7 @@ const catalogs: CatalogItem[] = [
     featured: true,
     category: "Full Collection",
     downloadUrl: "/pdf/All_buttons.pdf",
+    imageUrl: "/images/products/royal_crest.png",
   },
   {
     id: 1,
@@ -49,6 +51,7 @@ const catalogs: CatalogItem[] = [
     icon: Crown,
     category: "New Collections",
     downloadUrl: "/pdf/new_collections.pdf",
+    imageUrl: "/images/products/royal_crest.png",
   },
   {
     id: 2,
@@ -60,6 +63,7 @@ const catalogs: CatalogItem[] = [
     icon: CircleDot,
     category: "Essentials",
     downloadUrl: "/pdf/Polyster_buttons.pdf",
+    imageUrl: "/images/products/wooden_collection_hero.png",
   },
   {
     id: 3,
@@ -71,10 +75,11 @@ const catalogs: CatalogItem[] = [
     icon: Shield,
     category: "Premium Metal",
     downloadUrl: "/pdf/Metal buttons.pdf",
+    imageUrl: "/images/products/antique_brass_button.png",
   },
   {
     id: 4,
-    title: "Buckles & Hardware",
+    title: "Buckles",
     description: "Statement hardware for outerwear and belts. Classic and modern finishes.",
     pages: "Digital Catalog",
     size: "0.2 MB",
@@ -82,6 +87,7 @@ const catalogs: CatalogItem[] = [
     icon: Hexagon,
     category: "Hardware",
     downloadUrl: "/pdf/buckles_cords.pdf",
+    imageUrl: "/images/products/brass_buckle.png",
   },
   {
     id: 5,
@@ -93,6 +99,7 @@ const catalogs: CatalogItem[] = [
     icon: RefreshCw,
     category: "Accessories",
     downloadUrl: "/pdf/Ring adusters.pdf",
+    imageUrl: "/images/products/gold_slider.png",
   },
   {
     id: 6,
@@ -104,6 +111,7 @@ const catalogs: CatalogItem[] = [
     icon: TreeDeciduous,
     category: "Natural Series",
     downloadUrl: "/pdf/Wooden.pdf",
+    imageUrl: "/images/products/wooden_collection_hero.png",
   },
   {
     id: 7,
@@ -115,6 +123,7 @@ const catalogs: CatalogItem[] = [
     icon: Anchor,
     category: "Trims",
     downloadUrl: "/pdf/stopper.pdf",
+    imageUrl: "/images/products/stoppers_cords_hero.png",
   },
   {
     id: 8,
@@ -125,9 +134,8 @@ const catalogs: CatalogItem[] = [
     type: "Tech Specs",
     icon: AlignJustify,
     category: "Zippers",
-    // No PDF yet
+    imageUrl: "/images/products/gold_zipper.png",
   },
-
 ];
 
 const Catalog = () => {
@@ -186,7 +194,7 @@ const Catalog = () => {
               The <span className="italic text-accent">Catalog's</span>
             </h1>
 
-            <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto leading-relaxed border-t border-stone-200 pt-8 mt-8">
+            <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto leading-relaxed border-t border-border/25 pt-8 mt-8">
               Access the complete range of Saimpex technical documents. <br className="hidden md:block" />
               Download catalogs, specification sheets, and lookbooks.
             </p>
@@ -194,74 +202,100 @@ const Catalog = () => {
 
           {/* Master Collection Feature */}
           <motion.div
-            initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
             className="mb-24"
           >
-            <div className="relative group overflow-hidden bg-slate-900 text-white rounded-[2px] shadow-2xl ring-1 ring-white/10">
-              <div className="flex flex-col md:flex-row min-h-[400px]">
+            <div className="relative group overflow-hidden bg-[#060606] text-white rounded-3xl shadow-2xl border border-stone-900/60 hover:border-accent/30 transition-all duration-700">
+              {/* Decorative Glow */}
+              <div className="absolute -right-24 -bottom-24 w-80 h-80 bg-accent/5 rounded-full blur-[80px] pointer-events-none group-hover:bg-accent/10 transition-all duration-700" />
+              
+              <div className="flex flex-col lg:flex-row min-h-[500px]">
 
                 {/* Visual Side (Left) */}
-                <div className="md:w-1/2 relative min-h-[300px] md:min-h-full overflow-hidden">
-                  <div className="absolute inset-0 bg-accent/10 z-10 mix-blend-overlay" />
-                  <div className="absolute inset-0 bg-[url('/images/hero-luxury-composition.png')] bg-cover bg-center opacity-80 transition-transform duration-1000 group-hover:scale-105" />
-
-                  {/* Gradient Fade */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900 md:bg-gradient-to-r" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent md:hidden" />
+                <div className="lg:w-1/2 relative min-h-[350px] lg:min-h-full overflow-hidden">
+                  <div className="absolute inset-0 bg-[url('/images/catalog-feature-bg.jpg')] bg-cover bg-center transition-transform duration-1000 ease-out group-hover:scale-[1.03]" />
                 </div>
 
                 {/* Content Side (Right) */}
-                <div className="md:w-1/2 p-12 md:p-16 flex flex-col justify-center relative z-20 bg-[#0C0C0C]">
+                <div className="lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col justify-between relative z-20 bg-[#060606]">
                   {/* Subtle Grain Texture Overlay */}
-                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.02] pointer-events-none" />
 
-                  <div className="space-y-8 relative z-10">
-                    <div className="flex items-center gap-4 text-accent mb-2">
-                      <Crown className="w-5 h-5" strokeWidth={1} />
-                      <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">Crown Jewel Edition</span>
+                  <div className="space-y-8 relative z-10 flex-1 flex flex-col justify-center">
+                    {/* Badge */}
+                    <div className="flex items-center gap-2.5 text-accent">
+                      <Crown className="w-4 h-4" strokeWidth={1.5} />
+                      <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-accent/90">Crown Jewel Edition</span>
                     </div>
 
-                    <h2 className="text-4xl md:text-6xl font-serif leading-[1.1] text-white tracking-wide">
-                      {featuredCatalog.title}
-                    </h2>
+                    {/* Title */}
+                    <div className="space-y-4">
+                      <h2 className="text-3xl sm:text-5xl font-serif text-white tracking-wide leading-tight">
+                        {featuredCatalog.title}
+                      </h2>
+                      <div className="h-[1px] w-12 bg-accent/60" />
+                    </div>
 
-                    <p className="text-stone-400 text-lg leading-relaxed max-w-md font-light border-l border-accent/20 pl-6">
+                    {/* Description */}
+                    <p className="text-stone-400 text-[15px] sm:text-[16px] leading-relaxed max-w-lg font-light tracking-wide">
                       {featuredCatalog.description}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-12 text-xs text-stone-500 font-mono py-6 border-y border-white/5 tracking-wider uppercase">
-                      <div className="flex justify-between items-center group cursor-help">
-                        <span>Format</span>
-                        <span className="text-stone-300 group-hover:text-white transition-colors">PDF High Res</span>
+                    {/* Premium Spec Pills Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-6 border-y border-stone-900/50">
+                      <div className="space-y-1">
+                        <span className="text-[9px] font-mono uppercase text-stone-500 tracking-widest block">Format</span>
+                        <div className="text-[12px] text-stone-200 font-medium flex items-center gap-2">
+                          <FileType className="w-3.5 h-3.5 text-accent/80" />
+                          <span>PDF High Res</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center group cursor-help">
-                        <span>Access</span>
-                        <span className="text-emerald-500 flex items-center gap-2 group-hover:text-emerald-400 transition-colors"><Shield className="w-3 h-3" /> Public</span>
+                      <div className="space-y-1">
+                        <span className="text-[9px] font-mono uppercase text-stone-500 tracking-widest block">Length</span>
+                        <div className="text-[12px] text-stone-200 font-medium flex items-center gap-2">
+                          <Layers className="w-3.5 h-3.5 text-accent/80" />
+                          <span>{featuredCatalog.pages}</span>
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[9px] font-mono uppercase text-stone-500 tracking-widest block">File Size</span>
+                        <div className="text-[12px] text-stone-200 font-medium flex items-center gap-2">
+                          <FileText className="w-3.5 h-3.5 text-accent/80" />
+                          <span>{featuredCatalog.size}</span>
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[9px] font-mono uppercase text-stone-500 tracking-widest block">Access</span>
+                        <div className="text-[12px] text-emerald-500 font-medium flex items-center gap-2">
+                          <Shield className="w-3.5 h-3.5 text-emerald-500" />
+                          <span>Public</span>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="pt-2 flex flex-col sm:flex-row gap-5">
-                      {/* Preview Button - Outline Luxury */}
+                    {/* Actions */}
+                    <div className="pt-2 flex flex-col sm:flex-row gap-4">
+                      {/* Preview Button */}
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button size="lg" variant="outline" className="flex-1 border-white/20 bg-transparent text-white hover:bg-white hover:text-black h-14 uppercase tracking-[0.2em] font-medium text-xs transition-all duration-500">
-                            <Eye className="mr-3 w-4 h-4" /> Preview
+                          <Button size="lg" variant="outline" className="flex-1 border-stone-800 bg-transparent text-stone-200 hover:bg-white hover:text-black hover:border-white h-14 uppercase tracking-[0.2em] font-bold text-[10px] rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 group">
+                            <Eye className="w-4 h-4 opacity-80 group-hover:opacity-100 transition-opacity" /> Preview Catalog
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-6xl h-[90vh] bg-[#0C0C0C] p-0 border-white/10 overflow-hidden shadow-2xl">
+                        <DialogContent className="max-w-6xl h-[90vh] bg-[#060606] p-0 border-white/5 overflow-hidden shadow-2xl rounded-2xl">
                           <div className="w-full h-full flex flex-col">
-                            <div className="h-16 bg-[#0C0C0C] border-b border-white/10 flex items-center justify-between px-8 pr-16 text-white">
+                            <div className="h-16 bg-[#060606] border-b border-white/5 flex items-center justify-between px-8 pr-16 text-white">
                               <span className="font-serif italic text-lg text-stone-200">{featuredCatalog.title}</span>
                               <Button size="sm" className="bg-accent text-white hover:bg-white hover:text-black transition-colors" onClick={() => handleDownload(featuredCatalog)}>
                                 Download PDF
                               </Button>
                             </div>
-                            <div className="flex-1 bg-stone-900/50 relative backdrop-blur-3xl">
+                            <div className="flex-1 bg-[#060606] relative">
                               <iframe
                                 src={`${featuredCatalog.downloadUrl}#toolbar=0`}
-                                className="w-full h-full rounded-none mix-blend-normal"
+                                className="w-full h-full rounded-none"
                                 title="Catalog Preview"
                               />
                             </div>
@@ -269,13 +303,13 @@ const Catalog = () => {
                         </DialogContent>
                       </Dialog>
 
-                      {/* Download Button - Solid Accent */}
+                      {/* Download Button */}
                       <Button
                         size="lg"
                         onClick={() => handleDownload(featuredCatalog)}
-                        className="flex-1 bg-accent/90 text-white hover:bg-accent h-14 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 shadow-[0_0_20px_-5px_hsl(35,45%,55%,0.3)] hover:shadow-[0_0_30px_-5px_hsl(35,45%,55%,0.5)]"
+                        className="flex-1 bg-[#7A4E2D] hover:bg-[#633e24] text-white h-14 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl transition-all duration-300 shadow-[0_4px_20px_-2px_rgba(122,78,45,0.25)] hover:shadow-[0_8px_30px_rgba(122,78,45,0.4)] flex items-center justify-center gap-2.5 hover:-translate-y-0.5"
                       >
-                        Download <Download className="ml-3 w-4 h-4" />
+                        Download PDF <Download className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
@@ -286,106 +320,114 @@ const Catalog = () => {
           </motion.div>
 
           {/* Catalog Grid */}
-          <div className="flex items-center justify-between mb-8 border-b border-stone-200 pb-4 mt-20">
+          <div className="flex items-center justify-between mb-8 border-b border-border/25 pb-4 mt-20">
             <h3 className="text-2xl font-serif text-slate-900">Sector Collections</h3>
             <span className="text-sm font-mono text-stone-400">{catalogs.length - 1} Defined Series</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {catalogs.slice(1).map((catalog, idx) => {
               const Icon = catalog.icon;
               const isAvailable = Boolean(catalog.downloadUrl);
 
               return (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  transition={{ delay: idx * 0.05, duration: 0.6 }}
                   key={catalog.id}
-                  className="group relative bg-white flex flex-col justify-between border border-stone-100 hover:border-stone-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-700 min-h-[380px] p-10 overflow-hidden"
+                  className="group relative bg-card flex flex-col justify-between border border-border/80 hover:border-accent/40 shadow-sm hover:shadow-2xl transition-all duration-500 rounded-xl p-8 min-h-[380px] overflow-hidden"
                 >
                   {/* Hover Accent Top Line */}
-                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                  <div className="absolute top-0 left-0 w-full h-[3px] bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-30" />
 
-                  {/* Decorative Watermark Number */}
-                  <span className="absolute top-4 right-6 font-serif text-6xl text-stone-50 group-hover:text-stone-100 transition-colors select-none -z-0">
+                  {/* Watermark Number */}
+                  <span className="absolute top-6 right-8 font-serif text-6xl font-semibold text-accent/5 group-hover:text-accent/10 transition-colors select-none -z-0">
                     0{idx + 1}
                   </span>
 
-                  {/* Top Section */}
-                  <div className="space-y-8 relative z-10">
-                    <div className="flex justify-between items-start">
-                      {/* Icon - Large, Thin, Gold */}
-                      <Icon className="w-10 h-10 text-accent/80 group-hover:text-accent transition-colors duration-500" strokeWidth={0.8} />
-                    </div>
-
-                    <div>
-                      <span className="text-[10px] font-bold tracking-[0.3em] text-stone-400 uppercase block mb-3 pl-1 border-l-2 border-transparent group-hover:border-accent transition-all duration-500">
-                        {catalog.category}
-                      </span>
-                      <h3 className="text-3xl font-serif text-slate-900 leading-tight mb-4 group-hover:translate-x-1 transition-transform duration-500">
-                        {catalog.title}
-                      </h3>
-                      <p className="text-sm text-stone-500 leading-relaxed font-light line-clamp-3">
-                        {catalog.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Middle Meta Info - Minimal Divider */}
-                  <div className="w-8 h-px bg-stone-200 my-6 group-hover:w-full group-hover:bg-accent/30 transition-all duration-700" />
-
-                  {/* Bottom Actions */}
-                  <div className="flex gap-4 mt-auto relative z-10">
-                    {isAvailable ? (
-                      <>
-                        {/* Preview - Sharp Outline */}
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant="outline" className="flex-1 border-stone-200 text-stone-900 hover:border-slate-900 hover:bg-transparent h-12 text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300">
-                              Preview
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-6xl h-[90vh] bg-stone-100 p-0 overflow-hidden">
-                            <div className="w-full h-full flex flex-col">
-                              <div className="h-12 bg-white border-b flex items-center justify-between px-6 pr-14">
-                                <span className="font-bold text-sm font-serif">{catalog.title}</span>
-                                <Button size="sm" onClick={() => handleDownload(catalog)}>Download Original</Button>
-                              </div>
-                              <div className="flex-1 bg-gray-200 relative">
-                                <iframe
-                                  src={`${catalog.downloadUrl}#toolbar=0`}
-                                  className="w-full h-full border-0"
-                                  title={`Preview of ${catalog.title}`}
-                                ></iframe>
-                              </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-
-                        {/* Download - Solid Black */}
-                        <Button
-                          className="flex-1 bg-slate-900 text-white hover:bg-accent hover:text-white h-12 text-[10px] uppercase tracking-[0.2em] font-bold shadow-sm transition-all duration-500 group-hover:shadow-lg"
-                          onClick={() => handleDownload(catalog)}
-                        >
-                          <Download className="w-3 h-3 mr-2" /> PDF
-                        </Button>
-                      </>
-                    ) : (
-                      <div className="w-full py-3 bg-stone-50 border border-dashed border-stone-200 text-center text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] flex items-center justify-center gap-2">
-                        <Lock className="w-3 h-3" /> Catalog Locked
+                  {/* Content Area */}
+                  <div className="space-y-6 flex-1 flex flex-col justify-between">
+                    <div className="space-y-4">
+                      {/* Icon Container */}
+                      <div className="h-12 w-12 flex items-center justify-center rounded-full bg-accent/10 border border-accent/20 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500">
+                        <Icon className="w-5 h-5" strokeWidth={1.2} />
                       </div>
-                    )}
-                  </div>
 
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[9px] font-bold tracking-[0.25em] text-accent uppercase pl-1 border-l border-accent/40 leading-none">
+                            {catalog.category}
+                          </span>
+                          <span className="text-[10px] font-mono text-stone-400">
+                            {catalog.size}
+                          </span>
+                        </div>
+                        
+                        <h3 className="text-2xl font-serif text-primary leading-snug group-hover:text-accent transition-colors duration-300">
+                          {catalog.title}
+                        </h3>
+                        
+                        <p className="text-xs text-muted-foreground leading-relaxed font-light line-clamp-3">
+                          {catalog.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px bg-border/60 w-full" />
+
+                    {/* Bottom Actions */}
+                    <div className="flex gap-3 pt-2">
+                      {isAvailable ? (
+                        <>
+                          {/* Preview Button */}
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="outline" className="flex-1 h-11 border-border text-primary hover:border-primary hover:bg-transparent text-[10px] uppercase tracking-[0.15em] font-medium transition-all duration-300 rounded-lg">
+                                Preview
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-6xl h-[90vh] bg-stone-100 p-0 overflow-hidden">
+                              <div className="w-full h-full flex flex-col">
+                                <div className="h-12 bg-card border-b border-border flex items-center justify-between px-6 pr-14">
+                                  <span className="font-bold text-sm font-serif">{catalog.title}</span>
+                                  <Button size="sm" onClick={() => handleDownload(catalog)}>Download Original</Button>
+                                </div>
+                                <div className="flex-1 bg-gray-200 relative">
+                                  <iframe
+                                    src={`${catalog.downloadUrl}#toolbar=0`}
+                                    className="w-full h-full border-0"
+                                    title={`Preview of ${catalog.title}`}
+                                  ></iframe>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+
+                          {/* Download Button */}
+                          <Button
+                            onClick={() => handleDownload(catalog)}
+                            className="flex-1 bg-primary text-white hover:bg-accent hover:text-white h-11 text-[10px] uppercase tracking-[0.15em] font-bold shadow-sm transition-all duration-300 rounded-lg"
+                          >
+                            <Download className="w-3.5 h-3.5 mr-2" /> PDF
+                          </Button>
+                        </>
+                      ) : (
+                        <div className="w-full py-3 bg-muted/40 border border-dashed border-border text-center text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em] flex items-center justify-center gap-2 rounded-lg">
+                          <Lock className="w-3 h-3 text-stone-400" /> Catalog Locked
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </motion.div>
               );
             })}
           </div>
 
           {/* Footer Area */}
-          <div className="mt-24 border-t border-stone-200 pt-16 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="mt-24 border-t border-border/25 pt-16 flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h4 className="font-serif text-2xl text-slate-900 mb-2">Need a Hard Copy?</h4>
               <p className="text-stone-500">We send physical specification books to our registered enterprise partners.</p>
