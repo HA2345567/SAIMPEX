@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, Search } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,137 +9,124 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled
-        ? "bg-background/95 backdrop-blur-md border-border/80 shadow-md py-2"
-        : "bg-transparent border-transparent py-4"
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm py-3"
+          : "bg-transparent border-transparent py-5"
+      }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-12">
 
-          {/* Left: Logo & Nav */}
-          <div className="flex items-center gap-10">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-1 sm:gap-2 shrink-0">
-              <img 
-                src="/images/logo-new.png" 
-                alt="S. A. IMPEX Logo" 
-                className={`w-auto transition-all duration-500 ${
-                  isScrolled ? "h-10 sm:h-12" : "h-12 sm:h-16"
-                }`} 
-              />
-              <span className="text-lg sm:text-2xl font-luxury font-bold tracking-tight text-primary whitespace-nowrap">
-                S. A. IMPEX<span className="text-accent">.</span>
-              </span>
-            </Link>
- 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              <Link
-                to="/products"
-                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
-                  location.pathname === "/products" || location.pathname.startsWith("/product/")
-                    ? "text-accent"
-                    : "text-primary/80 hover:text-accent"
-                }`}
-              >
-                Products
-              </Link>
-              <Link
-                to="/catalog"
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === "/catalog"
-                    ? "text-accent"
-                    : "text-primary/80 hover:text-accent"
-                }`}
-              >
-                Catalog
-              </Link>
-              <Link
-                to="/contact"
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === "/contact"
-                    ? "text-accent"
-                    : "text-primary/80 hover:text-accent"
-                }`}
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
- 
-          {/* Right: Actions */}
-          <div className="hidden md:flex items-center gap-6">
-            <button className="text-primary hover:text-accent transition-colors" aria-label="Search">
-              <Search className="w-5 h-5" />
-            </button>
-            <div className="h-4 w-px bg-border/60" />
- 
-              <Button asChild className="bg-accent text-primary hover:bg-accent-hover font-medium px-6 py-5 transition-colors duration-500">
-              <Link to="/contact">Get Quote</Link>
-            </Button>
-          </div>
- 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle Navigation Menu"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav-menu"
-            className="md:hidden p-2 text-primary hover:bg-secondary/50 rounded-md transition-colors"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
- 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div id="mobile-nav-menu" className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border/40 p-6 shadow-xl animate-in slide-in-from-top-2">
-          <nav className="flex flex-col gap-4">
-            <Link 
-              to="/products" 
-              onClick={() => setIsMenuOpen(false)}
-              className={`text-lg font-serif font-medium transition-colors ${
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 shrink-0">
+            <img
+              src="/images/logo-new.png"
+              alt="S. A. IMPEX Logo"
+              className={`w-auto transition-all duration-300 ${
+                isScrolled ? "h-8" : "h-10"
+              }`}
+            />
+            <span className="text-xl font-luxury font-medium tracking-tight text-primary">
+              S. A. IMPEX
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-10">
+            <Link
+              to="/products"
+              className={`text-sm font-medium transition-colors ${
                 location.pathname === "/products" || location.pathname.startsWith("/product/")
-                  ? "text-accent"
-                  : "text-primary"
+                  ? "text-primary"
+                  : "text-primary/60 hover:text-primary"
               }`}
             >
               Products
             </Link>
-            <Link 
-              to="/catalog" 
-              onClick={() => setIsMenuOpen(false)}
-              className={`text-lg font-serif font-medium transition-colors ${
+            <Link
+              to="/catalog"
+              className={`text-sm font-medium transition-colors ${
                 location.pathname === "/catalog"
-                  ? "text-accent"
-                  : "text-primary"
+                  ? "text-primary"
+                  : "text-primary/60 hover:text-primary"
               }`}
             >
               Catalog
             </Link>
-            <Link 
-              to="/contact" 
-              onClick={() => setIsMenuOpen(false)}
-              className={`text-lg font-serif font-medium transition-colors ${
+            <Link
+              to="/contact"
+              className={`text-sm font-medium transition-colors ${
                 location.pathname === "/contact"
-                  ? "text-accent"
-                  : "text-primary"
+                  ? "text-primary"
+                  : "text-primary/60 hover:text-primary"
               }`}
             >
               Contact
             </Link>
-            <div className="h-px bg-border/60 my-2" />
-            <Button asChild className="w-full bg-accent text-primary py-6 text-base font-luxury font-bold uppercase tracking-wider">
-              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Inquire Now</Link>
+          </nav>
+
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            <Button
+              asChild
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium px-5 py-2.5 h-10 transition-colors"
+            >
+              <Link to="/contact">Get Quote</Link>
+            </Button>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle Navigation Menu"
+            className="md:hidden p-2 text-primary hover:bg-secondary rounded-md transition-colors"
+          >
+            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border p-6 shadow-lg">
+          <nav className="flex flex-col gap-4">
+            <Link
+              to="/products"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-lg font-medium text-primary/80 hover:text-primary transition-colors"
+            >
+              Products
+            </Link>
+            <Link
+              to="/catalog"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-lg font-medium text-primary/80 hover:text-primary transition-colors"
+            >
+              Catalog
+            </Link>
+            <Link
+              to="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-lg font-medium text-primary/80 hover:text-primary transition-colors"
+            >
+              Contact
+            </Link>
+            <div className="h-px bg-border my-2" />
+            <Button
+              asChild
+              className="w-full bg-primary text-primary-foreground py-6 text-sm font-medium"
+            >
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                Get Quote
+              </Link>
             </Button>
           </nav>
         </div>
@@ -148,4 +135,5 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header;
+
