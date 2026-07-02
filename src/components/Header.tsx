@@ -35,7 +35,7 @@ const Header = () => {
                   isScrolled ? "h-10 sm:h-12" : "h-12 sm:h-16"
                 }`} 
               />
-              <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-primary whitespace-nowrap">
+              <span className="text-lg sm:text-2xl font-luxury font-bold tracking-tight text-primary whitespace-nowrap">
                 S. A. IMPEX<span className="text-accent">.</span>
               </span>
             </Link>
@@ -82,7 +82,7 @@ const Header = () => {
             </button>
             <div className="h-4 w-px bg-border/60" />
  
-            <Button asChild className="bg-primary text-white hover:bg-primary/90 font-medium px-6 py-5">
+              <Button asChild className="bg-accent text-primary hover:bg-accent-hover font-medium px-6 py-5 transition-colors duration-500">
               <Link to="/contact">Get Quote</Link>
             </Button>
           </div>
@@ -138,7 +138,7 @@ const Header = () => {
               Contact
             </Link>
             <div className="h-px bg-border/60 my-2" />
-            <Button asChild className="w-full bg-primary text-white py-6 text-lg font-serif">
+            <Button asChild className="w-full bg-accent text-primary py-6 text-base font-luxury font-bold uppercase tracking-wider">
               <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Inquire Now</Link>
             </Button>
           </nav>

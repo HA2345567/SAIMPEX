@@ -13,14 +13,23 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-body">
+    <div className="min-h-screen flex flex-col bg-background font-sans-elegant">
       <Header />
       <main className="flex-1 w-full overflow-x-hidden">
+        {/* Hero - Full viewport editorial intro */}
         <Hero />
+
+        {/* Category Showcase - Editorial product Grid */}
         <CategoryShowcase />
+
+        {/* Featured Products - Best Sellers with Hover Interactions */}
         <FeaturedProducts />
-        {/* <Features /> */}
-        {/* <CTASection /> */}
+
+        {/* Features - Trust Indicators and Value Props */}
+        <Features />
+
+        {/* CTA - Premium Invitation Section */}
+        <CTASection />
       </main>
       <Footer />
     </div>

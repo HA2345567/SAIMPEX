@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Award, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const bestSellers = [
   {
@@ -47,99 +48,173 @@ const bestSellers = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
 const FeaturedProducts = () => {
   return (
-    <section className="bg-[#F2F0EB] pt-24 pb-32 border-t border-[#D6D3CD] relative overflow-hidden">
+    <section className="relative bg-secondary/30 pt-24 pb-32 lg:pt-32 lg:pb-44 overflow-hidden">
+      {/* ═════ Decorative Background ═════ */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      {/* Editorial Header */}
-      <div className="container mx-auto px-0 mb-20">
-        <div className="flex flex-col md:flex-row items-end justify-between px-6 sm:px-12 gap-8">
-          <div className="space-y-6 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-stone-400 text-stone-600 text-xs font-bold tracking-[0.2em] uppercase">
-              <Sparkles className="w-3 h-3" />
-              <span>Curated Selection</span>
+      {/* Gold Accent Blobs */}
+      <div className="absolute top-1/4 -right-48 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-48 w-80 h-80 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+        {/* ═════ Editorial Header ═════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="flex flex-col lg:flex-row items-end justify-between gap-8 lg:gap-12 mb-16 lg:mb-24"
+        >
+          <div className="space-y-6 lg:space-y-8 max-w-2xl">
+            {/* Award Badge */}
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-card border border-border/50 shadow-sm">
+              <Award className="w-4 h-4 text-accent" strokeWidth={1.5} />
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground">
+                Curated Selection
+              </span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-serif text-slate-900 leading-[1.1] tracking-tight">
-              Best <span className="italic text-accent">Sellers</span>
+
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-luxury text-primary leading-[1.05]">
+              Best <span className="italic text-accent">Sellers</span><span className="hidden lg:inline">.</span>
             </h2>
-            <p className="text-lg text-stone-600 font-light leading-relaxed max-w-xl">
+
+            <p className="text-muted-foreground text-base sm:text-lg font-light leading-relaxed max-w-xl">
               The defining pieces of the season. Chosen by leading designers for their exceptional craftsmanship and timeless appeal.
             </p>
           </div>
 
-          <div className="hidden md:block">
-            <Button variant="link" className="text-slate-900 text-lg decoration-stone-400 hover:text-accent transition-colors font-serif" asChild>
-              <Link to="/products">
-                View All Collections <ArrowRight className="ml-2 w-5 h-5" />
+          <div className="hidden lg:block">
+            <Button
+              variant="link"
+              className="text-primary text-base font-medium decoration-border hover:text-accent hover:decoration-accent transition-colors font-serif"
+              asChild
+            >
+              <Link to="/products" className="group">
+                View All Collections
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
           </div>
-        </div>
-      </div>
+        </motion.div>
 
-      {/* Product Grid - 3x2 Layout */}
-      <div className="container mx-auto px-0 border-t border-[#D6D3CD]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-b border-[#D6D3CD]">
+        {/* ═════ Product Grid - Editorial Layout ═════ */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border"
+        >
           {bestSellers.map((product, idx) => (
-            <Link
-              to={`/product/${product.id}`}
+            <motion.div
               key={product.id}
+              variants={itemVariants}
               className={`
-                    group block relative bg-[#F2F0EB] hover:bg-white transition-colors duration-500
-                    border-r border-[#D6D3CD]
-                    ${(idx + 1) % 3 === 0 ? 'lg:border-r-0' : ''}
-                    border-b border-[#D6D3CD]
-                    ${idx >= 3 ? 'lg:border-b-0' : ''}
-                `}
+                group relative bg-background hover:bg-card transition-colors duration-500
+                ${idx < 3 ? 'border-b border-border' : ''}
+              `}
             >
-              <div className="aspect-[4/5] overflow-hidden relative p-8">
-                {/* Product Image Container */}
-                <div className="w-full h-full relative">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 drop-shadow-md"
-                    loading="lazy"
-                  />
+              <Link to={`/product/${product.id}`} className="block">
+                {/* Product Image */}
+                <div className="aspect-square overflow-hidden relative p-8 lg:p-12 bg-secondary/20">
+                  {/* Collection Number Badge */}
+                  <div className="absolute top-6 left-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span className="text-3xl font-luxury font-bold text-accent/20">
+                      {(idx + 1).toString().padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Image Container */}
+                  <div className="w-full h-full relative">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-700 drop-shadow-lg"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* View Button (appears on hover) */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                    <div className="bg-primary text-primary-foreground px-6 py-3 text-xs font-bold uppercase tracking-widest shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      View Details
+                    </div>
+                  </div>
+
+                  {/* Gold Corner Accents (hover) */}
+                  <div className="absolute top-0 left-0 w-5 h-5 border-t border-l border-accent/0 group-hover:border-accent/50 transition-all duration-500" />
+                  <div className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-accent/0 group-hover:border-accent/50 transition-all duration-500" />
                 </div>
 
-                {/* Hover Action */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                  <span className="bg-slate-900 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    View Product
-                  </span>
-                </div>
-              </div>
+                {/* Product Info */}
+                <div className="p-6 lg:p-8 space-y-3 text-center relative">
+                  {/* Category */}
+                  <div className="text-[10px] font-bold tracking-[0.25em] uppercase text-muted-foreground group-hover:text-accent transition-colors duration-300">
+                    {product.category}
+                  </div>
 
-              <div className="px-8 pb-8 pt-4 space-y-2 text-center">
-                <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-stone-400 group-hover:text-accent transition-colors">
-                  {product.category}
-                </div>
-                <h4 className="font-serif text-xl text-slate-900 group-hover:text-slate-900 transition-colors line-clamp-1">
-                  {product.name}
-                </h4>
+                  {/* Name */}
+                  <h3 className="font-luxury text-lg lg:text-xl text-primary group-hover:text-accent transition-colors duration-300 line-clamp-1">
+                    {product.name}
+                  </h3>
 
-                {/* B2B Specs */}
-                <div className="pt-2 flex justify-center gap-4 text-[10px] uppercase font-bold text-stone-500 border-t border-stone-200 mt-4">
-                  <span>MOQ: 500 Pcs</span>
-                  <span>•</span>
-                  <span>Ready Stock</span>
+                  {/* Specs Line */}
+                  <div className="pt-4 flex justify-center gap-4 text-[10px] uppercase font-bold text-muted-foreground/70 border-t border-border/50">
+                    <span>MOQ: 500 Pcs</span>
+                    <span className="text-accent">•</span>
+                    <span>Ready Stock</span>
+                  </div>
+
+                  {/* Bottom Gold Line (hover) */}
+                  <div className="absolute bottom-0 left-8 right-8 h-px bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
 
-      {/* Global View All Bottom CTA */}
-      <div className="mt-24 text-center">
-        <Link to="/products">
-          <Button size="lg" className="h-16 px-16 bg-accent text-white text-lg font-serif hover:bg-accent/90 transition-all shadow-2xl hover:shadow-accent/20">
-            Explore The Full Catalog
-          </Button>
-        </Link>
+        {/* ═════ Bottom CTA ═════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-16 lg:mt-24 text-center"
+        >
+          <Link to="/products">
+            <Button
+              size="lg"
+              className="h-14 lg:h-16 px-12 lg:px-16 bg-accent text-primary hover:bg-accent-hover text-sm lg:text-base font-bold uppercase tracking-widest transition-all duration-500 shadow-gold-subtle hover:shadow-gold"
+            >
+              Explore The Full Catalog
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </motion.div>
       </div>
-
     </section>
   );
 };
