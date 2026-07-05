@@ -1,4 +1,5 @@
 import { prisma } from './_db.js';
+import { verifyToken } from './_auth_helper.js';
 
 
 export default async function handler(req: any, res: any) {
@@ -56,8 +57,11 @@ export default async function handler(req: any, res: any) {
       const token = authHeader.replace('Bearer ', '').trim();
       const adminPassword = process.env.ADMIN_PASSWORD || 'saimpexadmin';
 
+      const decoded = verifyToken(token);
+      const isStaticAdmin = token === adminPassword;
+
       // Verify token
-      if (token !== adminPassword) {
+      if (!decoded && !isStaticAdmin) {
         return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
       }
 
@@ -72,8 +76,11 @@ export default async function handler(req: any, res: any) {
       const token = authHeader.replace('Bearer ', '').trim();
       const adminPassword = process.env.ADMIN_PASSWORD || 'saimpexadmin';
 
+      const decoded = verifyToken(token);
+      const isStaticAdmin = token === adminPassword;
+
       // Verify token
-      if (token !== adminPassword) {
+      if (!decoded && !isStaticAdmin) {
         return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
       }
 

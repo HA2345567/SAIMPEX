@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Helper to manually load .env file if process.env.DATABASE_URL is not set
 function loadEnv() {

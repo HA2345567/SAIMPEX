@@ -630,9 +630,13 @@ const createMockSupabaseClient = () => {
       if (table === 'user_roles') {
         const activeSession = localStorage.getItem("saimpex_admin_session");
         const session = activeSession ? JSON.parse(activeSession) : null;
-        if (session && session.user && session.user.email) {
-          const email = session.user.email.toLowerCase();
-          if (email.endsWith("@saimpex.com") || email.endsWith("@saimpex.co.in") || email === "saimpex2023@gmail.com") {
+        if (session && session.user) {
+          const email = session.user.email?.toLowerCase() || '';
+          const isSaimpexEmail = email.endsWith("@saimpex.com") || 
+                                email.endsWith("@saimpex.co.in") || 
+                                email === "saimpex2023@gmail.com";
+          const role = session.user.role || (isSaimpexEmail ? 'admin' : null);
+          if (role === 'admin') {
             return { data: { role: 'admin' }, error: null };
           }
         }
@@ -725,24 +729,58 @@ const createMockSupabaseClient = () => {
       },
       signInWithPassword: async (credentials: any) => {
         const { email, password } = credentials;
-        const normalizedEmail = email.trim().toLowerCase();
-        if ((normalizedEmail.endsWith("@saimpex.com") || normalizedEmail.endsWith("@saimpex.co.in") || normalizedEmail === "saimpex2023@gmail.com") && password.length >= 6) {
-          const session = {
-            user: { id: "admin-uid-" + Math.random().toString(36).substring(2, 9), email: normalizedEmail },
-            access_token: password
-          };
-          localStorage.setItem("saimpex_admin_session", JSON.stringify(session));
-          return { data: { session, user: session.user }, error: null };
+        try {
+          const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              action: 'login',
+              email,
+              password,
+            }),
+          });
+          
+          const result = await response.json();
+          
+          if (!response.ok) {
+            return { data: { session: null, user: null }, error: { message: result.error || 'Invalid credentials' } };
+          }
+          
+          localStorage.setItem("saimpex_admin_session", JSON.stringify(result.session));
+          return { data: { session: result.session, user: result.session.user }, error: null };
+        } catch (err: any) {
+          return { data: { session: null, user: null }, error: { message: err.message || 'Network error' } };
         }
-        return { data: { session: null, user: null }, error: { message: "Invalid login credentials" } };
       },
       signUp: async (credentials: any) => {
-        const { email } = credentials;
-        const session = {
-          user: { id: "user-uid-" + Math.random().toString(36).substring(2, 9), email },
-          access_token: "mock-token"
-        };
-        return { data: { session, user: session.user }, error: null };
+        const { email, password, options } = credentials;
+        const fullName = options?.data?.full_name || '';
+        try {
+          const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              action: 'register',
+              email,
+              password,
+              fullName,
+            }),
+          });
+          
+          const result = await response.json();
+          
+          if (!response.ok) {
+            return { data: { session: null, user: null }, error: { message: result.error || 'Registration failed' } };
+          }
+          
+          return { data: { session: null, user: null }, error: null };
+        } catch (err: any) {
+          return { data: { session: null, user: null }, error: { message: err.message || 'Network error' } };
+        }
       }
     },
     functions: {
