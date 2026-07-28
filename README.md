@@ -1,6 +1,9 @@
 # SAIMPEX — Premium Button Wholesale, Retailer & Garment Accessories Supplier
 
+![SAIMPEX Website - Premium Garment Accessories Supplier](public/images/saimpex-hero-screenshot.jpg)
+
 > **S.A. IMPEX** · Delivering world-class garment accessories — premium buttons, zippers, buckles, hooks, rings, and adjusters for global fashion brands.
+
 
 🌐 **Live Site:** [saimpex.co.in](https://www.saimpex.co.in)
 
