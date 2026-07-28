@@ -47,7 +47,7 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    document.title = "Contact Us | SAIMPEX - Premium Button Manufacturer, Retailer & Supplier";
+    document.title = "Contact Us | SAIMPEX - Premium Button Wholesale & Retailer";
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
