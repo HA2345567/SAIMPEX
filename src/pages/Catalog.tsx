@@ -51,11 +51,11 @@ const catalogs: CatalogItem[] = [
     icon: Crown,
     category: "New Collections",
     downloadUrl: "/pdf/new_coming.pdf",
-    imageUrl: "/images/products/royal_crest.png",
+    
   },
   {
     id: 2,
-    title: "Plastic & Polyester Series",
+    title: "Polyester Series",
     description: "Versatile durability meets curated aesthetics. Essential buttons and fasteners for high-volume ready-to-wear lines.",
     pages: "Digital Catalog",
     size: "0.8 MB",
@@ -63,7 +63,7 @@ const catalogs: CatalogItem[] = [
     icon: CircleDot,
     category: "Essentials",
     downloadUrl: "/pdf/polyster_buttons.pdf",
-    imageUrl: "/images/products/wooden_collection_hero.png",
+   
   },
   {
     id: 3,
@@ -75,7 +75,7 @@ const catalogs: CatalogItem[] = [
     icon: Shield,
     category: "Premium Metal",
     downloadUrl: "/pdf/metals_buttons.pdf",
-    imageUrl: "/images/products/antique_brass_button.png",
+    
   },
   {
     id: 4,
@@ -87,7 +87,7 @@ const catalogs: CatalogItem[] = [
     icon: Hexagon,
     category: "Hardware",
     downloadUrl: "/pdf/buckles.pdf",
-    imageUrl: "/images/products/brass_buckle.png",
+    
   },
   {
     id: 5,
@@ -99,7 +99,7 @@ const catalogs: CatalogItem[] = [
     icon: RefreshCw,
     category: "Accessories",
     downloadUrl: "/pdf/ring_adjusters.pdf",
-    imageUrl: "/images/products/gold_slider.png",
+   
   },
   {
     id: 6,
@@ -111,7 +111,7 @@ const catalogs: CatalogItem[] = [
     icon: TreeDeciduous,
     category: "Natural Series",
     downloadUrl: "/pdf/wooden_buttons.pdf",
-    imageUrl: "/images/products/wooden_collection_hero.png",
+    
   },
   {
     id: 7,
@@ -123,7 +123,7 @@ const catalogs: CatalogItem[] = [
     icon: Anchor,
     category: "Trims",
     downloadUrl: "/pdf/stoppers.pdf",
-    imageUrl: "/images/products/stoppers_cords_hero.png",
+    
   },
   {
     id: 8,
@@ -134,7 +134,7 @@ const catalogs: CatalogItem[] = [
     type: "Tech Specs",
     icon: AlignJustify,
     category: "Zippers",
-    imageUrl: "/images/products/gold_zipper.png",
+
   },
 ];
 
@@ -145,7 +145,7 @@ const Catalog = () => {
     document.title = "Catalog & Spec Sheets | SAIMPEX";
   }, []);
 
-  const handleDownload = (catalog: CatalogItem) => {
+  const handleDownload = async (catalog: CatalogItem) => {
     if (catalog.downloadUrl) {
       toast({
         title: "Download Started",
@@ -153,13 +153,27 @@ const Catalog = () => {
         className: "bg-primary text-white border-accent"
       });
 
-      const link = document.createElement('a');
-      link.href = encodeURI(catalog.downloadUrl);
-      link.download = `${catalog.title.replace(/\s+/g, '-')}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      try {
+        const response = await fetch(catalog.downloadUrl);
+        if (!response.ok) throw new Error("File fetch failed");
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
 
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `${catalog.title.replace(/\s+/g, '-')}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => window.URL.revokeObjectURL(blobUrl), 1000);
+      } catch (error) {
+        const link = document.createElement('a');
+        link.href = catalog.downloadUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.click();
+      }
     } else {
       toast({
         title: "Restricted Access",
