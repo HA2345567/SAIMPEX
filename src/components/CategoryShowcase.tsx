@@ -63,7 +63,7 @@ const CategoryShowcase = () => {
             </h2>
           </div>
 
-          <Link to="/products" className="hidden md:inline-flex items-center gap-2 text-primary font-medium text-sm border-b border-primary/20 pb-1 hover:border-accent hover:text-accent transition-colors">
+          <Link to="/catalog" className="hidden md:inline-flex items-center gap-2 text-primary font-medium text-sm border-b border-primary/20 pb-1 hover:border-accent hover:text-accent transition-colors">
             View Full Catalog <ArrowUpRight className="w-4 h-4 ml-1" />
           </Link>
         </div>

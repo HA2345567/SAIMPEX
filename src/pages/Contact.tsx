@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -47,7 +47,7 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    document.title = "Contact Us | SAIMPEX - Premium Button Wholesale";
+    document.title = "Contact Us | SAIMPEX - Premium Button Manufacturer, Retailer & Supplier";
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

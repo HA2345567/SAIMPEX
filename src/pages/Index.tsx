@@ -9,7 +9,7 @@ import CTASection from "@/components/CTASection";
 
 const Index = () => {
   useEffect(() => {
-    document.title = "SAIMPEX - Premium Button Wholesale & Garment Accessories";
+    document.title = "SAIMPEX - Premium Button Manufacturer, Retailer & Garment Accessories Supplier in India";
   }, []);
 
   return (

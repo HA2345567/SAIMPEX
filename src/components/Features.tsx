@@ -29,6 +29,26 @@ const features = [
 ];
 
 const Features = () => {
+  const handleDownloadCompanyProfile = async () => {
+    try {
+      const response = await fetch("/pdf/AII_buttons.pdf");
+      if (!response.ok) throw new Error("File fetch failed");
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = "SAIMPEX-Company-Profile.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => window.URL.revokeObjectURL(blobUrl), 1000);
+    } catch (error) {
+      window.open("/pdf/AII_buttons.pdf", "_blank");
+    }
+  };
+
   return (
     <section className="py-0 bg-[#F2F0EB] text-slate-900 relative">
       <div className="container mx-auto px-0">
@@ -54,7 +74,7 @@ const Features = () => {
               </p>
             </div>
             <div className="hidden lg:block pt-20 relative z-10">
-              <Button variant="link" className="text-slate-900 p-0 text-lg decoration-stone-400 hover:text-accent transition-colors font-serif">
+              <Button onClick={handleDownloadCompanyProfile} variant="link" className="text-slate-900 p-0 text-lg decoration-stone-400 hover:text-accent transition-colors font-serif">
                 Download Company Profile <ArrowUpRight className="ml-2 w-5 h-5 text-accent" />
               </Button>
             </div>
