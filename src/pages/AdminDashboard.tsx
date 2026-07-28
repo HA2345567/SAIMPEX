@@ -55,6 +55,16 @@ const AdminDashboard = () => {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          toast({
+            title: "Session Expired",
+            description: "Your session token has expired. Please sign in again.",
+            variant: "destructive",
+          });
+          await supabase.auth.signOut();
+          navigate("/auth");
+          return;
+        }
         const errData = await response.json().catch(() => ({}));
         throw new Error(errData.error || `Failed to load inquiries: ${response.statusText}`);
       }
