@@ -23,7 +23,7 @@ interface CatalogItem {
   featured?: boolean;
   downloadUrl?: string; // If present, item is available
   category: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 // Mapped Data from public/pdf directory with editorial images
@@ -51,19 +51,19 @@ const catalogs: CatalogItem[] = [
     icon: Crown,
     category: "New Collections",
     downloadUrl: "/pdf/new_coming.pdf",
-    
+    imageUrl: "/images/products/royal_crest.png",
   },
   {
     id: 2,
-    title: "Polyester Series",
+    title: "Polyester & Plastic Series",
     description: "Versatile durability meets curated aesthetics. Essential buttons and fasteners for high-volume ready-to-wear lines.",
     pages: "Digital Catalog",
     size: "0.8 MB",
     type: "Lookbook",
     icon: CircleDot,
     category: "Essentials",
-    downloadUrl: "/pdf/polyster_buttons.pdf",
-   
+    downloadUrl: "/pdf/plastic_buttons.pdf",
+    imageUrl: "/images/products/wooden_collection_hero.png",
   },
   {
     id: 3,
@@ -75,7 +75,7 @@ const catalogs: CatalogItem[] = [
     icon: Shield,
     category: "Premium Metal",
     downloadUrl: "/pdf/metals_buttons.pdf",
-    
+    imageUrl: "/images/products/antique_brass_button.png",
   },
   {
     id: 4,
@@ -87,7 +87,7 @@ const catalogs: CatalogItem[] = [
     icon: Hexagon,
     category: "Hardware",
     downloadUrl: "/pdf/buckles.pdf",
-    
+    imageUrl: "/images/products/brass_buckle.png",
   },
   {
     id: 5,
@@ -99,7 +99,7 @@ const catalogs: CatalogItem[] = [
     icon: RefreshCw,
     category: "Accessories",
     downloadUrl: "/pdf/ring_adjusters.pdf",
-   
+    imageUrl: "/images/products/gold_slider.png",
   },
   {
     id: 6,
@@ -111,7 +111,7 @@ const catalogs: CatalogItem[] = [
     icon: TreeDeciduous,
     category: "Natural Series",
     downloadUrl: "/pdf/wooden_buttons.pdf",
-    
+    imageUrl: "/images/products/wooden_collection_hero.png",
   },
   {
     id: 7,
@@ -123,7 +123,7 @@ const catalogs: CatalogItem[] = [
     icon: Anchor,
     category: "Trims",
     downloadUrl: "/pdf/stoppers.pdf",
-    
+    imageUrl: "/images/products/stoppers_cords_hero.png",
   },
   {
     id: 8,
@@ -134,7 +134,7 @@ const catalogs: CatalogItem[] = [
     type: "Tech Specs",
     icon: AlignJustify,
     category: "Zippers",
-
+    imageUrl: "/images/products/gold_zipper.png",
   },
 ];
 
