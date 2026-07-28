@@ -32,13 +32,13 @@ const catalogs: CatalogItem[] = [
     id: 0,
     title: "Master Collection 2026",
     description: "The complete anthology. Access our entire range of buttons, fasteners, and accessories in one comprehensive document.",
-    pages: "31 Pages",
-    size: "3.3 MB",
+    pages: "Digital Folio",
+    size: "4.4 MB",
     type: "Digital Folio",
     icon: Crown,
     featured: true,
     category: "Full Collection",
-    downloadUrl: "/pdf/All_buttons.pdf",
+    downloadUrl: "/pdf/AII_buttons.pdf",
     imageUrl: "/images/products/royal_crest.png",
   },
   {
@@ -50,19 +50,19 @@ const catalogs: CatalogItem[] = [
     type: "Lookbook",
     icon: Crown,
     category: "New Collections",
-    downloadUrl: "/pdf/new_collections.pdf",
+    downloadUrl: "/pdf/new_coming.pdf",
     imageUrl: "/images/products/royal_crest.png",
   },
   {
     id: 2,
-    title: "Polyester Series",
-    description: "Versatile durability meets curated aesthetics. Essential buttons for high-volume ready-to-wear lines.",
+    title: "Plastic & Polyester Series",
+    description: "Versatile durability meets curated aesthetics. Essential buttons and fasteners for high-volume ready-to-wear lines.",
     pages: "Digital Catalog",
-    size: "0.6 MB",
+    size: "0.8 MB",
     type: "Lookbook",
     icon: CircleDot,
     category: "Essentials",
-    downloadUrl: "/pdf/Polyster_buttons.pdf",
+    downloadUrl: "/pdf/polyster_buttons.pdf",
     imageUrl: "/images/products/wooden_collection_hero.png",
   },
   {
@@ -70,23 +70,23 @@ const catalogs: CatalogItem[] = [
     title: "Metal & Alloys",
     description: "Zinc, Brass, and Copper masterpieces. Defined by weight, finish, and intricate casting details.",
     pages: "Digital Catalog",
-    size: "1.4 MB",
+    size: "1.8 MB",
     type: "Technical Sheet",
     icon: Shield,
     category: "Premium Metal",
-    downloadUrl: "/pdf/Metal buttons.pdf",
+    downloadUrl: "/pdf/metals_buttons.pdf",
     imageUrl: "/images/products/antique_brass_button.png",
   },
   {
     id: 4,
-    title: "Buckles",
+    title: "Buckles Collection",
     description: "Statement hardware for outerwear and belts. Classic and modern finishes.",
     pages: "Digital Catalog",
-    size: "0.2 MB",
+    size: "0.3 MB",
     type: "Tech Specs",
     icon: Hexagon,
     category: "Hardware",
-    downloadUrl: "/pdf/buckles_cords.pdf",
+    downloadUrl: "/pdf/buckles.pdf",
     imageUrl: "/images/products/brass_buckle.png",
   },
   {
@@ -94,11 +94,11 @@ const catalogs: CatalogItem[] = [
     title: "Ring Adjusters",
     description: "Functional sliders and rings that elevate utility into a design statement.",
     pages: "Digital Catalog",
-    size: "0.4 MB",
+    size: "0.6 MB",
     type: "Lookbook",
     icon: RefreshCw,
     category: "Accessories",
-    downloadUrl: "/pdf/Ring adusters.pdf",
+    downloadUrl: "/pdf/ring_adjusters.pdf",
     imageUrl: "/images/products/gold_slider.png",
   },
   {
@@ -110,7 +110,7 @@ const catalogs: CatalogItem[] = [
     type: "Lookbook",
     icon: TreeDeciduous,
     category: "Natural Series",
-    downloadUrl: "/pdf/Wooden.pdf",
+    downloadUrl: "/pdf/wooden_buttons.pdf",
     imageUrl: "/images/products/wooden_collection_hero.png",
   },
   {
@@ -118,11 +118,11 @@ const catalogs: CatalogItem[] = [
     title: "Stoppers & Cords",
     description: "Essential functional trims for sportswear and outerwear functionality.",
     pages: "Digital Catalog",
-    size: "0.3 MB",
+    size: "0.4 MB",
     type: "Tech Specs",
     icon: Anchor,
     category: "Trims",
-    downloadUrl: "/pdf/stopper.pdf",
+    downloadUrl: "/pdf/stoppers.pdf",
     imageUrl: "/images/products/stoppers_cords_hero.png",
   },
   {
@@ -154,7 +154,7 @@ const Catalog = () => {
       });
 
       const link = document.createElement('a');
-      link.href = catalog.downloadUrl; // No need to replace chars if formatted correctly in variable, but safe to raw URL
+      link.href = encodeURI(catalog.downloadUrl);
       link.download = `${catalog.title.replace(/\s+/g, '-')}.pdf`;
       document.body.appendChild(link);
       link.click();
@@ -294,7 +294,7 @@ const Catalog = () => {
                             </div>
                             <div className="flex-1 bg-[#060606] relative">
                               <iframe
-                                src={`${featuredCatalog.downloadUrl}#toolbar=0`}
+                                src={`${encodeURI(featuredCatalog.downloadUrl || '')}#toolbar=0`}
                                 className="w-full h-full rounded-none"
                                 title="Catalog Preview"
                               />
@@ -397,7 +397,7 @@ const Catalog = () => {
                                 </div>
                                 <div className="flex-1 bg-gray-200 relative">
                                   <iframe
-                                    src={`${catalog.downloadUrl}#toolbar=0`}
+                                    src={`${encodeURI(catalog.downloadUrl || '')}#toolbar=0`}
                                     className="w-full h-full border-0"
                                     title={`Preview of ${catalog.title}`}
                                   ></iframe>
